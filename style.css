@@ -22,7 +22,10 @@
   --container: 1120px;
 }
 
-html { scroll-behavior: smooth; scroll-padding-top: 84px; /* offset for sticky nav */ }
+html { scroll-behavior: smooth; }
+
+/* anchor targets land fully below the 68px sticky nav */
+[id] { scroll-margin-top: 70px; }
 
 body {
   background: var(--bg);
