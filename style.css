@@ -24,8 +24,9 @@
 
 html { scroll-behavior: smooth; }
 
-/* anchor targets land fully below the 68px sticky nav */
-[id] { scroll-margin-top: 70px; }
+/* anchor targets land just below the 68px sticky nav; sections bring
+   their own top padding, so only a small extra offset is needed */
+[id] { scroll-margin-top: 20px; }
 
 body {
   background: var(--bg);
