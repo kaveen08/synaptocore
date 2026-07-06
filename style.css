@@ -719,3 +719,117 @@ footer {
   font-size: 0.82rem;
   color: var(--text-faint);
 }
+
+.footer-legal { display: inline-flex; gap: 10px; align-items: center; }
+
+.footer-legal a {
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-legal a:hover { color: var(--accent); }
+
+/* ============================================================
+   RECHTLICHES (AGB / DATENSCHUTZ) — MODALE
+   ============================================================ */
+.legal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(5, 8, 16, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.legal-overlay.open { display: flex; }
+
+.legal-modal {
+  width: min(820px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: clamp(28px, 5vw, 52px);
+  position: relative;
+  animation: legalUp 0.28s ease both;
+}
+
+@keyframes legalUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.legal-modal::before {
+  content: "";
+  position: sticky;
+  display: block;
+  top: calc(-1 * clamp(28px, 5vw, 52px));
+  margin: calc(-1 * clamp(28px, 5vw, 52px)) calc(-1 * clamp(28px, 5vw, 52px)) 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.legal-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  margin: -14px -14px 0 0;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-faint);
+  font-size: 1.25rem;
+  line-height: 1;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  z-index: 2;
+}
+
+.legal-close:hover { color: var(--text); border-color: var(--accent-line); }
+
+.legal-modal h2 {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  margin-bottom: 6px;
+}
+
+.legal-meta {
+  color: var(--text-faint);
+  font-size: 0.84rem;
+  margin-bottom: 28px;
+}
+
+.legal-modal h3 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin: 26px 0 8px;
+  color: var(--text);
+}
+
+.legal-modal p,
+.legal-modal li {
+  color: var(--text-soft);
+  font-size: 0.93rem;
+  line-height: 1.7;
+}
+
+.legal-modal ul {
+  padding-left: 22px;
+  margin: 8px 0;
+}
+
+.legal-modal li { margin-bottom: 6px; }
+
+.legal-modal strong { color: var(--text); }
+
+.legal-modal a { color: var(--accent); text-decoration: none; }
+.legal-modal a:hover { text-decoration: underline; }
+
+body.modal-open { overflow: hidden; }

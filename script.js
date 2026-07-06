@@ -60,4 +60,39 @@
       }, 1400);
     });
   });
+
+  /* ---------- Rechtliches: AGB & Datenschutz (Modale) ---------- */
+  function openLegal(id) {
+    var overlay = document.getElementById("legal-" + id);
+    if (!overlay) return;
+    overlay.classList.add("open");
+    document.body.classList.add("modal-open");
+    overlay.querySelector(".legal-modal").scrollTop = 0;
+  }
+
+  function closeLegal() {
+    document.querySelectorAll(".legal-overlay.open").forEach(function (o) {
+      o.classList.remove("open");
+    });
+    document.body.classList.remove("modal-open");
+  }
+
+  document.querySelectorAll("[data-legal]").forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      openLegal(link.getAttribute("data-legal"));
+    });
+  });
+
+  document.querySelectorAll("[data-legal-close]").forEach(function (btn) {
+    btn.addEventListener("click", closeLegal);
+  });
+
+  document.querySelectorAll(".legal-overlay").forEach(function (o) {
+    o.addEventListener("click", function (e) { if (e.target === o) closeLegal(); });
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeLegal();
+  });
 })();
