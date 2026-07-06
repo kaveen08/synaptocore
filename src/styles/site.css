@@ -1,0 +1,168 @@
+@import "tailwindcss";
+@import "@fontsource-variable/archivo/wght.css";
+@import "@fontsource-variable/azeret-mono/wght.css";
+
+@theme {
+  --font-sans: "Archivo Variable", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Azeret Mono Variable", "SFMono-Regular", Consolas, monospace;
+
+  --color-site: #0b0d0e;
+  --color-panel: #151719;
+  --color-raised: #202326;
+  --color-ink: #f4f3ef;
+  --color-soft: #b8bbb7;
+  --color-signal: #ff6b1a;
+  --color-success: #7fcb87;
+  --color-line: #34383a;
+  --color-danger: #ff8c78;
+
+  --ease-site: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    background: var(--color-site);
+  }
+
+  body {
+    min-width: 320px;
+    margin: 0;
+    overflow-x: hidden;
+    background: var(--color-site);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button,
+  a,
+  input,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: wait;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-site);
+  }
+
+  dialog::backdrop {
+    background: rgb(0 0 0 / 0.82);
+  }
+}
+
+@layer components {
+  .workflow-step {
+    animation: workflow-in 700ms var(--ease-site) both;
+  }
+
+  .workflow-step:nth-child(2) {
+    animation-delay: 110ms;
+  }
+
+  .workflow-step:nth-child(3) {
+    animation-delay: 220ms;
+  }
+
+  .workflow-step:nth-child(4) {
+    animation-delay: 330ms;
+  }
+
+  .legal-copy h3 {
+    margin-top: 1.75rem;
+    color: var(--color-ink);
+    font-size: 1rem;
+    font-weight: 650;
+    line-height: 1.35;
+  }
+
+  .legal-copy p,
+  .legal-copy li {
+    color: var(--color-soft);
+    font-size: 0.9375rem;
+    line-height: 1.75;
+  }
+
+  .legal-copy p {
+    margin-top: 0.65rem;
+  }
+
+  .legal-copy ul {
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  .legal-copy li + li {
+    margin-top: 0.4rem;
+  }
+
+  .legal-copy strong {
+    color: var(--color-ink);
+    font-weight: 650;
+  }
+
+  .legal-copy a {
+    color: var(--color-signal);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
+
+@keyframes workflow-in {
+  from {
+    opacity: 0.64;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

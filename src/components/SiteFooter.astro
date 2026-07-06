@@ -1,0 +1,29 @@
+---
+import BrandMark from "./BrandMark.astro";
+---
+
+<footer class="border-t border-line bg-panel">
+  <div class="mx-auto max-w-[1180px] px-5 py-10 sm:px-8 sm:py-12">
+    <div class="flex flex-col justify-between gap-8 border-b border-line pb-9 md:flex-row md:items-start">
+      <div>
+        <a href="#top" aria-label="Zurück zum Seitenanfang" class="inline-flex min-h-11 items-center">
+          <BrandMark />
+        </a>
+        <p class="mt-4 max-w-[42ch] text-sm leading-6 text-soft">Sichere Workflow-Automatisierung für Schweizer KMU – in den Tools, die bereits im Einsatz sind.</p>
+      </div>
+      <nav aria-label="Fussnavigation" class="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
+        <a class="inline-flex min-h-11 items-center text-soft transition-colors hover:text-ink" href="#leistung">Leistung</a>
+        <a class="inline-flex min-h-11 items-center text-soft transition-colors hover:text-ink" href="#ablauf">Ablauf</a>
+        <a class="inline-flex min-h-11 items-center text-soft transition-colors hover:text-ink" href="#sicherheit">Sicherheit</a>
+        <a class="inline-flex min-h-11 items-center text-soft transition-colors hover:text-ink" href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+    <div class="flex flex-col justify-between gap-4 pt-7 text-xs text-soft sm:flex-row sm:items-center">
+      <span>© 2026 SynaptoCore · Zürich, Schweiz</span>
+      <span class="flex gap-5">
+        <button type="button" data-legal="agb" class="inline-flex min-h-11 items-center underline decoration-line underline-offset-4 transition-colors hover:text-ink">AGB</button>
+        <button type="button" data-legal="datenschutz" class="inline-flex min-h-11 items-center underline decoration-line underline-offset-4 transition-colors hover:text-ink">Datenschutz</button>
+      </span>
+    </div>
+  </div>
+</footer>

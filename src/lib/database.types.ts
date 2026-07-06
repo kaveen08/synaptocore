@@ -36,7 +36,7 @@ export type Database = {
           name: string;
           company: string;
           email: string;
-          phone: string;
+          phone: string | null;
           selected_package: string;
           message: string;
         };
@@ -50,8 +50,8 @@ export type Database = {
           name: string;
           company: string;
           email: string;
-          phone: string;
-          selected_package: string;
+          phone?: string | null;
+          selected_package?: string;
           message?: string;
         };
         Update: {
@@ -64,7 +64,7 @@ export type Database = {
           name?: string;
           company?: string;
           email?: string;
-          phone?: string;
+          phone?: string | null;
           selected_package?: string;
           message?: string;
         };

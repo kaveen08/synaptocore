@@ -1,0 +1,16 @@
+---
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<span class="inline-flex items-center gap-2.5 font-semibold tracking-[-0.025em] text-ink">
+  <span class="relative inline-flex size-5 items-center justify-center" aria-hidden="true">
+    <span class="absolute h-0.5 w-5 bg-signal"></span>
+    <span class="absolute left-0 size-1.5 bg-signal"></span>
+    <span class="absolute right-0 size-1.5 border border-signal bg-site"></span>
+  </span>
+  <span class:list={["text-[1.02rem]", compact && "sr-only sm:not-sr-only"]}>SynaptoCore</span>
+</span>

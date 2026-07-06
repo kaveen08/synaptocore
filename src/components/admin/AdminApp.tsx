@@ -73,6 +73,7 @@ function packageTone(value: string): string {
   if (value.includes("Pilot")) return "border-blue-400/20 bg-blue-400/10 text-blue-200";
   if (value.includes("Core")) return "border-violet-400/20 bg-violet-400/10 text-violet-200";
   if (value.includes("Managed")) return "border-emerald-400/20 bg-emerald-400/10 text-emerald-200";
+  if (value.includes("Erstgespräch")) return "border-amber-400/20 bg-amber-400/10 text-amber-200";
   return "border-border bg-muted text-muted-foreground";
 }
 
@@ -978,9 +979,13 @@ function LeadDetail({
           </a>
         </ContactItem>
         <ContactItem icon={Phone} label="Telefon">
-          <a href={`tel:${lead.phone.replace(/\s/g, "")}`} className="text-sm text-foreground hover:text-primary hover:underline">
-            {lead.phone}
-          </a>
+          {lead.phone ? (
+            <a href={`tel:${lead.phone.replace(/\s/g, "")}`} className="text-sm text-foreground hover:text-primary hover:underline">
+              {lead.phone}
+            </a>
+          ) : (
+            <span className="text-sm text-muted-foreground">Nicht angegeben</span>
+          )}
         </ContactItem>
         <ContactItem icon={Building2} label="Unternehmen">
           <span className="text-sm">{lead.company || "Nicht angegeben"}</span>

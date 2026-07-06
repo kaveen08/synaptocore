@@ -1,305 +1,198 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import ContactSection from "../components/ContactSection.astro";
 import LegalModals from "../components/LegalModals.astro";
+import SecuritySection from "../components/SecuritySection.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import WorkflowDemo from "../components/WorkflowDemo.astro";
+import Layout from "../layouts/Layout.astro";
 ---
+
 <Layout
-  title="SynaptoCore — KI-Workflow-Automatisierung für Schweizer KMUs"
-  description="Wir automatisieren repetitive Administration für Schweizer KMUs — sichere KI-Pipelines mit Make.com, Claude & GPT. DSG-konform, ohne Training öffentlicher Modelle."
+  title="SynaptoCore — Weniger Administration für Schweizer KMU"
+  description="SynaptoCore automatisiert wiederkehrende Büroarbeit in Ihren bestehenden E-Mail-, CRM- und Kalender-Tools. Sicher, kontrolliert und passend zu Ihrem Betrieb."
 >
+  <SiteHeader />
 
-<!-- ================= NAVIGATION ================= -->
-<header class="nav">
-  <div class="container nav-inner">
-    <a class="logo" href="#top" aria-label="Startseite">
-      <span class="logo-mark" aria-hidden="true"></span>
-      SynaptoCore
-    </a>
-    <nav class="nav-links" aria-label="Hauptnavigation">
-      <a href="#was-wir-tun">Was wir tun</a>
-      <a href="#pricing">Kosten</a>
-      <a href="#sicherheit">Sicherheit</a>
-      <a class="nav-cta" href="#kontakt">Kontakt</a>
-    </nav>
-  </div>
-</header>
-
-<!-- ================= HERO ================= -->
-<section class="hero" id="top">
-  <div class="container">
-    <span class="hero-badge"><span class="dot" aria-hidden="true"></span> Jetzt verfügbar: 7 Tage kostenloser Pilot</span>
-    <h1>SynaptoCore</h1>
-    <p class="subtitle">Für Schweizer KMUs &amp; Dienstleister</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="#kontakt">Kostenlosen Pilot starten</a>
-      <a class="btn btn-ghost" href="#was-wir-tun">Mehr erfahren</a>
-    </div>
-    <p class="hero-meta">MAKE.COM &nbsp;·&nbsp; CLAUDE &nbsp;·&nbsp; GPT &nbsp;—&nbsp; SICHER VERBUNDEN MIT IHREN BESTEHENDEN TOOLS</p>
-  </div>
-</section>
-
-<!-- ================= WAS WIR TUN ================= -->
-<section id="was-wir-tun">
-  <div class="container grid-2">
-    <div class="what-copy">
-      <span class="kicker">Was wir tun</span>
-      <h2>Wir eliminieren repetitive Administration.</h2>
-      <p>Handwerksbetriebe, Elektriker, Bauunternehmen und Immobilienmakler verlieren jede Woche Stunden mit E-Mail-Triage, Terminkoordination und dem Abtippen derselben Antworten.</p>
-      <p>Wir verbinden Ihre <strong>bestehenden Tools</strong> — E-Mail, CRM und Kalender — über <strong>sichere KI-Pipelines</strong> (Claude &amp; GPT) miteinander. Keine neue Software, kein Umlernen: Ihre Systeme arbeiten einfach intelligenter zusammen.</p>
-      <div class="result-box">
-        <span class="label">Das Resultat</span>
-        <p>Ihr Posteingang sortiert sich automatisch — und Kundenanfragen liegen als fertig vorformulierte Antwortentwürfe bereit. Sie prüfen, klicken, gesendet.</p>
-      </div>
-    </div>
-    <div class="feature-list">
-      <div class="feature">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-        </div>
+  <main id="main-content">
+    <section id="top" class="border-b border-line py-16 sm:py-24 lg:py-28">
+      <div class="mx-auto grid max-w-[1180px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <div>
-          <h3>Automatische Inbox-Sortierung</h3>
-          <p>Eingehende E-Mails werden erkannt, kategorisiert und priorisiert — Offerten, Reklamationen und Terminanfragen landen sofort am richtigen Ort.</p>
-        </div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <div>
-          <h3>Vorformulierte Kundenantworten</h3>
-          <p>Die KI entwirft Antworten in Ihrem Ton und mit Ihren Konditionen. Sie behalten die volle Kontrolle — nichts wird ohne Ihre Freigabe versendet.</p>
-        </div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        </div>
-        <div>
-          <h3>Nahtlose Tool-Integration</h3>
-          <p>Via Make.com verbinden wir E-Mail, CRM und Kalender zu einem durchgängigen Prozess — ohne Ihre gewohnte Arbeitsweise zu verändern.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+          <p class="font-mono text-xs font-semibold text-signal">Workflow-Automatisierung für Schweizer KMU</p>
+          <h1 class="mt-6 max-w-[11ch] text-[clamp(3.1rem,7.4vw,5.8rem)] font-semibold leading-[0.94] tracking-[-0.04em] text-ink">
+            Weniger Büroarbeit. Mehr Zeit fürs Geschäft.
+          </h1>
+          <p class="mt-7 max-w-[56ch] text-lg leading-8 text-soft sm:text-xl sm:leading-9">
+            Wir verbinden E-Mail, CRM und Kalender zu einem klaren Ablauf. Anfragen werden sortiert, Antworten vorbereitet und Ihr Team behält die Freigabe.
+          </p>
 
-<!-- ================= PRICING ================= -->
-<section id="pricing" class="section-alt">
-  <div class="container">
-    <span class="kicker">Transparente Kosten</span>
-    <h2>Drei klare Stufen. Keine versteckten Kosten.</h2>
-    <p class="lead">Sie starten risikofrei mit einem Live-Test und entscheiden erst danach, ob sich die Investition für Ihren Betrieb lohnt.</p>
-
-    <div class="pricing-table-wrap">
-      <table class="pricing">
-        <thead>
-          <tr>
-            <th scope="col">Paket</th>
-            <th scope="col">Leistung</th>
-            <th scope="col">Preis</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="cell-name">
-              <span class="tier-name">1 · Der Pilot</span><br>
-              <span class="tier-tag">Unverbindlich</span>
-            </td>
-            <td class="cell-desc">
-              <p class="tier-desc">1 Kern-Prozess automatisiert. 7 Tage unverbindlicher Live-Test in Ihrem echten Arbeitsalltag — Sie sehen den Nutzen, bevor Sie einen Rappen zahlen.</p>
-            </td>
-            <td class="cell-price">
-              <span class="tier-price">0 CHF</span><br>
-              <a class="tier-cta" href="#kontakt" data-tier="1 · Der Pilot (0 CHF)">Jetzt anfragen</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="cell-name">
-              <span class="tier-name">2 · Core Solution</span><br>
-              <span class="tier-tag">Einmalig</span>
-            </td>
-            <td class="cell-desc">
-              <p class="tier-desc">Komplette System-Einrichtung, Anbindung Ihrer Tools und finale Übergabe des Workflows — inklusive Dokumentation und Einführung Ihres Teams.</p>
-            </td>
-            <td class="cell-price">
-              <span class="tier-price">2'450 CHF <span class="per">einmalig</span></span>
-              <a class="tier-cta" href="#kontakt" data-tier="2 · Core Solution (2'450 CHF)">Jetzt anfragen</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="cell-name">
-              <span class="tier-name">3 · Managed Service</span><br>
-              <span class="tier-tag">Laufend</span>
-            </td>
-            <td class="cell-desc">
-              <p class="tier-desc">API-Überwachung rund um die Uhr, proaktive Updates bei Software-Änderungen Ihrer Tools sowie persönlicher Support — Ihr Workflow läuft. Immer. Voraussetzung ist die einmalige System-Einrichtung: im Managed-Service-Paket vergünstigt für 2'200 CHF statt 2'450 CHF.</p>
-            </td>
-            <td class="cell-price">
-              <span class="tier-price">240 CHF <span class="per">monatlich · zzgl. einmalig 2'200 CHF Einrichtung</span></span>
-              <a class="tier-cta" href="#kontakt" data-tier="3 · Managed Service (240 CHF/M.)">Jetzt anfragen</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p class="pricing-note">Alle Preise exkl. MwSt. · Kündigung des Managed Service jederzeit auf Monatsende möglich.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= SICHERHEIT & DATENSCHUTZ ================= -->
-<section id="sicherheit">
-  <div class="container">
-    <span class="kicker">Sicherheit &amp; Datenschutz</span>
-    <h2>Schweizer Standards. Ohne Kompromisse.</h2>
-    <p class="lead">Ihre Geschäftsdaten sind Ihr Kapital. Deshalb bauen wir jede Pipeline nach dem Prinzip: so wenig Datenzugriff wie möglich, so viel Kontrolle wie nötig.</p>
-
-    <div class="security-grid">
-      <div class="security-card">
-        <div class="sec-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <h3>DSG-konform</h3>
-        <p>Alle Workflows werden im Einklang mit dem revidierten Schweizer Datenschutzgesetz (DSG) konzipiert und dokumentiert — inklusive klarer Regelung der Datenbearbeitung.</p>
-      </div>
-      <div class="security-card">
-        <div class="sec-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <h3>Offizielle Enterprise-APIs</h3>
-        <p>Wir arbeiten ausschliesslich über die offiziellen Business-Schnittstellen von Anthropic (Claude) und OpenAI (GPT) — verschlüsselt und vertraglich abgesichert.</p>
-      </div>
-      <div class="security-card">
-        <div class="sec-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/><line x1="3" y1="3" x2="21" y2="21"/></svg>
-        </div>
-        <h3>Kein Modell-Training</h3>
-        <p>Daten, die über offizielle APIs verarbeitet werden, fliessen nicht in das Training öffentlicher KI-Modelle ein. Ihre Kundendaten bleiben Ihre Kundendaten.</p>
-      </div>
-    </div>
-
-    <div class="security-statement">
-      <strong>Klartext:</strong> Weil wir ausschliesslich offizielle APIs nutzen, werden Ihre Unternehmensdaten <strong>niemals</strong> zum Training öffentlicher KI-Modelle verwendet.
-    </div>
-  </div>
-</section>
-
-<!-- ================= CTA ================= -->
-<section class="section-alt cta-band">
-  <div class="container">
-    <h2>Bereit, Ihre Administration abzugeben?</h2>
-    <p class="lead">Starten Sie mit dem kostenlosen Pilot — ein Kern-Prozess, 7 Tage live, null Risiko.</p>
-    <a class="btn btn-primary" href="#kontakt">Unverbindliches Erstgespräch buchen</a>
-  </div>
-</section>
-
-<!-- ================= ANFRAGEFORMULAR ================= -->
-<section id="kontakt">
-  <div class="container">
-    <div class="contact-head">
-      <span class="kicker">Anfrageformular</span>
-      <h2>Lassen Sie uns sprechen.</h2>
-      <p class="lead">Erzählen Sie uns kurz, wo Ihnen Administration Zeit stiehlt — wir melden uns innerhalb von 24 Stunden mit einer konkreten Einschätzung.</p>
-    </div>
-
-    <div class="contact-card">
-      <!-- Anfragen werden direkt und RLS-geschützt in Supabase gespeichert. -->
-      <form id="anfrage-form" name="anfrage" method="POST" accept-charset="UTF-8">
-        <div class="form-grid">
-          <div class="form-field">
-            <label for="f-name">Vollständiger Name <span class="req">*</span></label>
-            <input type="text" id="f-name" name="name" placeholder="Max Muster" autocomplete="name" required>
+          <div class="mt-9 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+            <a
+              href="#kontakt"
+              class="inline-flex min-h-12 w-full items-center justify-center bg-signal px-6 text-sm font-bold text-site transition-transform duration-200 ease-site hover:-translate-y-0.5 sm:w-auto"
+            >
+              Erstgespräch anfragen
+            </a>
+            <a
+              href="#ablauf"
+              class="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ink underline decoration-line underline-offset-4 transition-colors hover:decoration-signal"
+            >
+              So läuft es ab
+              <span aria-hidden="true">↓</span>
+            </a>
           </div>
-          <div class="form-field">
-            <label for="f-firma">Firmenname <span class="req">*</span></label>
-            <input type="text" id="f-firma" name="firma" placeholder="Muster Bau AG" autocomplete="organization" required>
-          </div>
-          <div class="form-field">
-            <label for="f-email">E-Mail-Adresse <span class="req">*</span></label>
-            <input type="email" id="f-email" name="email" placeholder="max@musterbau.ch" autocomplete="email" required>
-          </div>
-          <div class="form-field">
-            <label for="f-telefon">Telefonnummer <span class="req">*</span></label>
-            <input type="tel" id="f-telefon" name="telefon" placeholder="+41 79 000 00 00" autocomplete="tel" required>
-          </div>
-          <div class="form-field full">
-            <label for="f-interesse">Interessiert an: <span class="req">*</span></label>
-            <select id="f-interesse" name="interesse" required>
-              <option value="1 · Der Pilot (0 CHF)">1 · Der Pilot (0 CHF)</option>
-              <option value="2 · Core Solution (2'450 CHF)">2 · Core Solution (2'450 CHF)</option>
-              <option value="3 · Managed Service (240 CHF/M.)">3 · Managed Service (240 CHF/M.)</option>
-            </select>
-          </div>
-          <div class="form-field full">
-            <label for="f-nachricht">Nachricht <span style="color:var(--text-faint); font-weight:400;">(optional)</span></label>
-            <textarea id="f-nachricht" name="nachricht" placeholder="Welche Aufgaben kosten Sie aktuell am meisten Zeit?"></textarea>
-          </div>
-          <!-- Honeypot: für Menschen unsichtbar — füllt ein Bot dieses Feld,
-               wird die Anfrage verworfen, ohne den Webhook zu belasten. -->
-          <div class="hp-field" aria-hidden="true">
-            <label for="f-website">Website</label>
-            <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
-          </div>
-          <div class="form-actions">
-            <p class="form-privacy">Ihre Daten werden vertraulich behandelt und ausschliesslich zur Bearbeitung Ihrer Anfrage verwendet.</p>
-            <button type="submit" class="btn btn-primary">Anfrage senden</button>
-          </div>
-          <p class="form-error" id="form-error" role="alert" aria-live="polite" hidden>Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt per E-Mail.</p>
-          <p class="form-error form-cooldown" id="form-cooldown" role="status" aria-live="polite" hidden>Sicherheits-Sperre: Bitte warten Sie eine Minute, bevor Sie eine weitere Anfrage senden.</p>
+
+          <ul class="mt-10 grid gap-3 border-t border-line pt-6 text-sm text-soft sm:grid-cols-3">
+            <li class="flex items-start gap-2">
+              <span class="mt-[0.55rem] size-1.5 shrink-0 bg-signal" aria-hidden="true"></span>
+              Für Schweizer KMU
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-[0.55rem] size-1.5 shrink-0 bg-signal" aria-hidden="true"></span>
+              Bestehende Tools bleiben
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-[0.55rem] size-1.5 shrink-0 bg-signal" aria-hidden="true"></span>
+              Freigabe durch Sie
+            </li>
+          </ul>
         </div>
-      </form>
 
-      <div class="form-success" id="form-success" role="status" aria-live="polite">
-        <div class="success-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <WorkflowDemo />
+      </div>
+    </section>
+
+    <section id="leistung" class="py-20 sm:py-28">
+      <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+        <div class="flex flex-col justify-between gap-6 border-b border-line pb-10 md:flex-row md:items-end">
+          <h2 class="max-w-[14ch] text-4xl font-semibold leading-[1.04] tracking-[-0.035em] text-ink sm:text-5xl">
+            Wiederkehrende Arbeit frisst Zeit in kleinen Schritten.
+          </h2>
+          <p class="max-w-[49ch] text-lg leading-8 text-soft">
+            Genau diese Übergaben automatisieren wir – ohne neue Software einzuführen oder Ihren Betrieb auf den Kopf zu stellen.
+          </p>
         </div>
-        <h3>Vielen Dank!</h3>
-        <p>Ihre Anfrage wurde erfolgreich übermittelt. Wir prüfen Ihre Angaben und kontaktieren Sie innerhalb von 24 Stunden.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ================= FOOTER ================= -->
-<footer id="impressum">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <h4>SynaptoCore</h4>
-        <p>KI-Workflow-Automatisierung für Schweizer KMUs &amp; Dienstleister. Wir verbinden Ihre bestehenden Tools zu sicheren, intelligenten Prozessen.</p>
+        <div class="divide-y divide-line">
+          <article class="grid gap-5 py-9 md:grid-cols-[0.55fr_1fr_1.25fr] md:items-start md:gap-10">
+            <p class="font-mono text-xs text-signal">Eingang</p>
+            <h3 class="text-3xl font-semibold tracking-[-0.025em] text-ink">Sortieren</h3>
+            <p class="max-w-[56ch] text-base leading-7 text-soft">E-Mails werden nach Anliegen, Dringlichkeit und zuständiger Person eingeordnet. Offerten, Reklamationen und Termine landen direkt am richtigen Ort.</p>
+          </article>
+          <article class="grid gap-5 py-9 md:grid-cols-[0.55fr_1fr_1.25fr] md:items-start md:gap-10">
+            <p class="font-mono text-xs text-signal">Übergabe</p>
+            <h3 class="text-3xl font-semibold tracking-[-0.025em] text-ink">Übertragen</h3>
+            <p class="max-w-[56ch] text-base leading-7 text-soft">Relevante Angaben werden in CRM, Kalender oder interne Listen übernommen. Das wiederholte Kopieren zwischen Fenstern entfällt.</p>
+          </article>
+          <article class="grid gap-5 py-9 md:grid-cols-[0.55fr_1fr_1.25fr] md:items-start md:gap-10">
+            <p class="font-mono text-xs text-signal">Nächster Schritt</p>
+            <h3 class="text-3xl font-semibold tracking-[-0.025em] text-ink">Nachfassen</h3>
+            <p class="max-w-[56ch] text-base leading-7 text-soft">Antworten und Erinnerungen werden mit den richtigen Informationen vorbereitet. Ihr Team prüft den Inhalt und entscheidet, was versendet wird.</p>
+          </article>
+        </div>
       </div>
-      <div>
-        <h4>Impressum</h4>
-        <p>
-          SynaptoCore<br>
-          Zürich, Schweiz<br>
-          <a href="mailto:synaptocore@gmail.com" style="color: var(--accent); text-decoration: none; transition: color 0.2s ease;">
-          synaptocore@gmail.com </a>
-        </p>
+    </section>
+
+    <section id="ablauf" class="bg-signal py-20 text-site sm:py-28">
+      <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+        <div class="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+          <div>
+            <p class="font-mono text-xs font-semibold">Vom Engpass zum laufenden Ablauf</p>
+            <h2 class="mt-5 max-w-[11ch] text-4xl font-semibold leading-[1.02] tracking-[-0.035em] sm:text-5xl">
+              Erst verstehen. Dann automatisieren.
+            </h2>
+            <p class="mt-6 max-w-[46ch] text-lg leading-8 text-site/75">
+              Keine Standardlösung von der Stange. Der Workflow entsteht aus Ihrer tatsächlichen Arbeit.
+            </p>
+          </div>
+
+          <ol class="divide-y divide-site/30 border-y border-site/30">
+            <li class="grid gap-4 py-7 sm:grid-cols-[3rem_1fr] sm:gap-7">
+              <span class="font-mono text-sm font-semibold">01</span>
+              <div>
+                <h3 class="text-2xl font-semibold tracking-[-0.02em]">Prozess verstehen</h3>
+                <p class="mt-3 max-w-[58ch] leading-7 text-site/75">Im Erstgespräch identifizieren wir den Ablauf, der häufig vorkommt, klar abgrenzbar ist und Ihrem Team spürbar Zeit kostet.</p>
+              </div>
+            </li>
+            <li class="grid gap-4 py-7 sm:grid-cols-[3rem_1fr] sm:gap-7">
+              <span class="font-mono text-sm font-semibold">02</span>
+              <div>
+                <h3 class="text-2xl font-semibold tracking-[-0.02em]">Systeme verbinden</h3>
+                <p class="mt-3 max-w-[58ch] leading-7 text-site/75">Wir verbinden die vorhandenen Werkzeuge über sichere Schnittstellen und legen fest, welche Schritte automatisch und welche bewusst manuell bleiben.</p>
+              </div>
+            </li>
+            <li class="grid gap-4 py-7 sm:grid-cols-[3rem_1fr] sm:gap-7">
+              <span class="font-mono text-sm font-semibold">03</span>
+              <div>
+                <h3 class="text-2xl font-semibold tracking-[-0.02em]">Sieben Tage testen</h3>
+                <p class="mt-3 max-w-[58ch] leading-7 text-site/75">Ein Kernprozess läuft unverbindlich in Ihrem echten Alltag. Erst wenn der Nutzen sichtbar ist, entscheiden Sie über die weitere Zusammenarbeit.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
       </div>
-      <div>
-        <h4>Kontakt</h4>
-        <p>
-          <a href="mailto:synaptocore@gmail.com" style="color: var(--accent); text-decoration: none; transition: color 0.2s ease;">
-          synaptocore@gmail.com </a><br>
-          <a href="tel:+41788090094">+41 78 809 00 94</a><br>
-        </p>
+    </section>
+
+    <section class="py-20 sm:py-28">
+      <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+        <div class="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+          <div>
+            <h2 class="max-w-[12ch] text-4xl font-semibold leading-[1.04] tracking-[-0.035em] text-ink sm:text-5xl">
+              Was sich sinnvoll automatisieren lässt.
+            </h2>
+            <p class="mt-6 max-w-[44ch] text-lg leading-8 text-soft">Wir beginnen dort, wo klare Regeln und wiederkehrende Informationen zusammenkommen.</p>
+          </div>
+
+          <div class="space-y-4">
+            <article class="border border-line bg-panel p-6 sm:ml-0 sm:p-7">
+              <p class="font-mono text-xs text-signal">Kommunikation</p>
+              <h3 class="mt-4 text-2xl font-semibold tracking-[-0.02em] text-ink">Anfragen erkennen und Antworten vorbereiten</h3>
+              <p class="mt-3 max-w-[58ch] leading-7 text-soft">Eingang sortieren, Informationen ergänzen und einen passenden Entwurf in Ihrem Ton bereitstellen.</p>
+            </article>
+            <article class="border border-line bg-panel p-6 sm:ml-10 sm:p-7">
+              <p class="font-mono text-xs text-signal">Datenpflege</p>
+              <h3 class="mt-4 text-2xl font-semibold tracking-[-0.02em] text-ink">Angaben zwischen Werkzeugen übertragen</h3>
+              <p class="mt-3 max-w-[58ch] leading-7 text-soft">Kontaktdaten, Auftragsdetails und Statusänderungen zuverlässig in die bestehenden Systeme übernehmen.</p>
+            </article>
+            <article class="border border-line bg-panel p-6 sm:ml-20 sm:p-7">
+              <p class="font-mono text-xs text-signal">Koordination</p>
+              <h3 class="mt-4 text-2xl font-semibold tracking-[-0.02em] text-ink">Termine und offene Schritte nachverfolgen</h3>
+              <p class="mt-3 max-w-[58ch] leading-7 text-soft">Erinnerungen auslösen, Rückmeldungen zuordnen und fehlende Angaben rechtzeitig anfordern.</p>
+            </article>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 SynaptoCore — Alle Rechte vorbehalten.</span>
-      <span class="footer-legal">
-        <a href="#" data-legal="agb">AGB</a>
-        <span aria-hidden="true">·</span>
-        <a href="#" data-legal="datenschutz">Datenschutzerklärung</a>
-      </span>
-      <span>Zürich, Schweiz 🇨🇭</span>
-    </div>
-  </div>
-</footer>
+    </section>
 
-<LegalModals />
+    <SecuritySection />
 
-<script>
-  import "../scripts/contact";
-</script>
+    <section class="py-20 sm:py-24">
+      <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+        <div class="grid gap-8 border border-line bg-raised p-6 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-14">
+          <div>
+            <p class="font-mono text-xs font-semibold text-signal">Der risikofreie nächste Schritt</p>
+            <h2 class="mt-5 max-w-[19ch] text-3xl font-semibold leading-[1.08] tracking-[-0.03em] text-ink sm:text-4xl">
+              Erst besprechen. Dann sieben Tage im Betrieb testen.
+            </h2>
+            <p class="mt-4 max-w-[62ch] text-base leading-7 text-soft">Das Gespräch ist unverbindlich. Wenn ein sinnvoller Kernprozess erkennbar ist, setzen wir ihn als kostenlosen Pilot um – ohne automatische Verlängerung.</p>
+          </div>
+          <a
+            href="#kontakt"
+            class="inline-flex min-h-12 w-full items-center justify-center bg-signal px-6 text-sm font-bold text-site transition-transform duration-200 ease-site hover:-translate-y-0.5 sm:w-auto"
+          >
+            Erstgespräch anfragen
+          </a>
+        </div>
+      </div>
+    </section>
 
+    <ContactSection />
+  </main>
+
+  <SiteFooter />
+  <LegalModals />
+
+  <script>
+    import "../scripts/contact";
+  </script>
 </Layout>

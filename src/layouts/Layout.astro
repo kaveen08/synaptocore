@@ -1,4 +1,6 @@
 ---
+import "../styles/site.css";
+
 export interface Props {
   title: string;
   description: string;
@@ -6,7 +8,6 @@ export interface Props {
 }
 
 const { title, description, robots } = Astro.props;
-const base = import.meta.env.BASE_URL;
 const canonical = Astro.site
   ? new URL(Astro.url.pathname, Astro.site)
   : undefined;
@@ -25,11 +26,14 @@ const canonical = Astro.site
 <meta property="og:description" content={description}>
 {canonical && <meta property="og:url" content={canonical}>}
 <meta property="og:locale" content="de_CH">
-<meta name="theme-color" content="#0a0e1a">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0e1a'/%3E%3Crect x='28' y='28' width='44' height='44' rx='9' fill='%233b82f6'/%3E%3C/svg%3E">
-<link rel="stylesheet" href={`${base}style.css?v=3`}>
+<meta name="theme-color" content="#0b0d0e">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230b0d0e'/%3E%3Cpath d='M24 50h52' stroke='%23ff6b1a' stroke-width='10'/%3E%3Crect x='18' y='42' width='16' height='16' fill='%23ff6b1a'/%3E%3Crect x='68' y='42' width='16' height='16' fill='%230b0d0e' stroke='%23ff6b1a' stroke-width='5'/%3E%3C/svg%3E">
 </head>
 <body>
+<a href="#main-content" class="fixed left-4 top-4 z-50 -translate-y-24 bg-signal px-4 py-3 text-sm font-bold text-site transition-transform focus:translate-y-0">
+  Zum Inhalt springen
+</a>
 <slot />
 </body>
 </html>
