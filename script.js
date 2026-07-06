@@ -1,12 +1,17 @@
+const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/placeholder_webhook_id";
+
+/* Make.com-Konfiguration: Ersetzen Sie die URL oben durch Ihre Live-Webhook-URL. */
+
 (function () {
   "use strict";
 
   var form      = document.getElementById("anfrage-form");
   var success   = document.getElementById("form-success");
+  var errorBox  = document.getElementById("form-error");
   var submitBtn = form.querySelector('button[type="submit"]');
   var tierSelect = document.getElementById("f-interesse");
 
-  /* ---------- Formular-Übermittlung ---------- */
+  /* ---------- Formular-Übermittlung (Make.com-Webhook) ---------- */
   function showSuccess() {
     form.classList.add("is-hidden");
     setTimeout(function () {
@@ -16,35 +21,43 @@
     }, 400); // matches the CSS transition duration
   }
 
-  form.addEventListener("submit", function (event) {
+  function setLoading(loading) {
+    submitBtn.disabled = loading;
+    submitBtn.textContent = loading ? "Wird gesendet..." : "Anfrage senden";
+  }
+
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
+    errorBox.hidden = true;
+    setLoading(true);
 
-    var action = form.getAttribute("action");
+    var payload = {
+      name:             document.getElementById("f-name").value.trim(),
+      company:          document.getElementById("f-firma").value.trim(),
+      email:            document.getElementById("f-email").value.trim(),
+      phone:            document.getElementById("f-telefon").value.trim(),
+      selected_package: tierSelect.value,
+      message:          document.getElementById("f-nachricht").value.trim()
+    };
 
-    // Keine Action-URL hinterlegt → reiner Demo-/Vorschaumodus
-    if (!action) {
-      showSuccess();
-      return;
-    }
-
-    // Action-URL vorhanden (z.B. Formspree) → Daten per fetch senden
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Wird gesendet…";
-
-    fetch(action, {
-      method: "POST",
-      body: new FormData(form),
-      headers: { Accept: "application/json" }
-    })
-      .then(function (response) {
-        if (!response.ok) throw new Error("HTTP " + response.status);
-        showSuccess();
-      })
-      .catch(function () {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Anfrage senden";
-        alert("Die Anfrage konnte nicht übermittelt werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt per E-Mail.");
+    try {
+      var response = await fetch(MAKE_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
       });
+
+      if (response.status === 200) {
+        showSuccess();
+        return;
+      }
+
+      throw new Error("HTTP " + response.status);
+    } catch (error) {
+      console.error("Die Anfrage konnte nicht übermittelt werden:", error);
+      setLoading(false);
+      errorBox.hidden = false;
+    }
   });
 
   /* ---------- Pricing → Formular-Routing ---------- */

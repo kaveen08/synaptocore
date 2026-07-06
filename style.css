@@ -603,6 +603,22 @@ table.pricing tbody tr:hover { background: rgba(59, 130, 246, 0.05); }
   max-width: 42ch;
 }
 
+.form-error {
+  grid-column: 1 / -1;
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.10);
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  animation: errorFadeIn 0.3s ease both;
+}
+
+@keyframes errorFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
 button.btn {
   border: none;
   cursor: pointer;

@@ -204,15 +204,10 @@
 
     <div class="contact-card">
       <!--
-        Fallback-Anbindung: Um echte Anfragen zu empfangen, einfach eine
-        Action-URL eintragen, z.B. Formspree:
-          action="https://formspree.io/f/IHRE-FORM-ID"
-        Das Skript unten erkennt die URL automatisch und sendet die Daten
-        per fetch(). Ohne Action-URL wird nur die Erfolgsmeldung angezeigt.
-        (Bei Hosting auf Netlify alternativ das Attribut data-netlify="true"
-        ergänzen und das JS-Intercept entfernen.)
+        Anbindung an Make.com: Die Webhook-URL wird zentral in script.js
+        gepflegt — Konstante MAKE_WEBHOOK_URL, ganz oben in der Datei.
       -->
-      <form id="anfrage-form" name="anfrage" method="POST" action="" accept-charset="UTF-8">
+      <form id="anfrage-form" name="anfrage" method="POST" accept-charset="UTF-8">
         <div class="form-grid">
           <div class="form-field">
             <label for="f-name">Vollständiger Name <span class="req">*</span></label>
@@ -246,6 +241,7 @@
             <p class="form-privacy">Ihre Daten werden vertraulich behandelt und ausschliesslich zur Bearbeitung Ihrer Anfrage verwendet.</p>
             <button type="submit" class="btn btn-primary">Anfrage senden</button>
           </div>
+          <p class="form-error" id="form-error" role="alert" aria-live="polite" hidden>Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt per E-Mail.</p>
         </div>
       </form>
 
