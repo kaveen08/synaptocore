@@ -619,6 +619,13 @@ table.pricing tbody tr:hover { background: rgba(59, 130, 246, 0.05); }
   to   { opacity: 1; transform: none; }
 }
 
+/* Cooldown-Warnung (Rate-Limit): amber statt rot */
+.form-cooldown {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.10);
+  border-color: rgba(251, 191, 36, 0.35);
+}
+
 button.btn {
   border: none;
   cursor: pointer;

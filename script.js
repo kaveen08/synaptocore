@@ -1,4 +1,4 @@
-const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/placeholder_webhook_id";
+const MAKE_WEBHOOK_URL = "https://hook.eu1.make.com/nkn98sdyvqhedzivdbhkbc6m1m5qo0lh";
 
 /* Make.com-Konfiguration: Ersetzen Sie die URL oben durch Ihre Live-Webhook-URL. */
 
@@ -8,8 +8,24 @@ const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/placeholder_webhook_id";
   var form      = document.getElementById("anfrage-form");
   var success   = document.getElementById("form-success");
   var errorBox  = document.getElementById("form-error");
+  var cooldownBox = document.getElementById("form-cooldown");
   var submitBtn = form.querySelector('button[type="submit"]');
   var tierSelect = document.getElementById("f-interesse");
+
+  /* ---------- Rate-Limiting (Spam-Schutz) ---------- */
+  var COOLDOWN_MS  = 60 * 1000; /* max. 1 Anfrage pro Minute */
+  var COOLDOWN_KEY = "synapto-last-submit";
+
+  function cooldownActive() {
+    try {
+      var ts = Number(sessionStorage.getItem(COOLDOWN_KEY) || 0);
+      return ts > 0 && (Date.now() - ts) < COOLDOWN_MS;
+    } catch (e) { return false; }
+  }
+
+  function markSubmitted() {
+    try { sessionStorage.setItem(COOLDOWN_KEY, String(Date.now())); } catch (e) {}
+  }
 
   /* ---------- Formular-Übermittlung (Make.com-Webhook) ---------- */
   function showSuccess() {
@@ -29,6 +45,15 @@ const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/placeholder_webhook_id";
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
     errorBox.hidden = true;
+    cooldownBox.hidden = true;
+
+    /* Cooldown-Guard: blockt erneute Anfragen innerhalb von 60 Sekunden,
+       ohne den Webhook aufzurufen — schont das Make.com-Kontingent. */
+    if (cooldownActive()) {
+      cooldownBox.hidden = false;
+      return;
+    }
+
     setLoading(true);
 
     var payload = {
@@ -48,6 +73,7 @@ const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/placeholder_webhook_id";
       });
 
       if (response.status === 200) {
+        markSubmitted();
         showSuccess();
         return;
       }
