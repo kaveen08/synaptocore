@@ -5,16 +5,18 @@ project credentials.
 
 ## 1. Add the public project configuration
 
-Copy `.env.example` to `.env` and replace the placeholders with the values from
-Supabase Dashboard -> Project Settings -> API:
+Copy `.env.example` to `.env`. The file must contain these exact variable names
+and project values:
 
 ```env
-PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
-PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_REPLACE_ME
+PUBLIC_SUPABASE_URL=https://kcynzqtltrgtgwbhsjsc.supabase.co
+PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_SP2Hm8vCCsgfCTxMud1X5A_yJeLgWkh
 ```
 
-The publishable key is designed for browser use. Never put a secret key or the
-legacy `service_role` key in a `PUBLIC_` variable.
+Do not use `SUPABASE_URL` or `SUPABASE_KEY`: Astro only exposes variables with
+the `PUBLIC_` prefix to this browser-based integration. The provided key is a
+publishable key designed for browser use. Never put a secret key or the legacy
+`service_role` key in a `PUBLIC_` variable.
 
 ## 2. Apply the database migration
 
@@ -25,7 +27,7 @@ With the Supabase CLI:
 
 ```powershell
 npx supabase login
-npx supabase link --project-ref YOUR_PROJECT_REF
+npx supabase link --project-ref kcynzqtltrgtgwbhsjsc
 npx supabase db push
 ```
 

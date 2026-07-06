@@ -1,107 +1,21 @@
 ---
-const base = import.meta.env.BASE_URL;
+import AdminApp from "../../components/admin/AdminApp";
+import "../../styles/admin.css";
 ---
-<!DOCTYPE html>
-<html lang="de-CH">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SynaptoCore — Admin Dashboard</title>
-<meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0a0e1a">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0e1a'/%3E%3Crect x='28' y='28' width='44' height='44' rx='9' fill='%233b82f6'/%3E%3C/svg%3E">
-<link rel="stylesheet" href={`${base}admin/admin-style.css?v=2`}>
-</head>
-<body class="locked">
-
-<!-- ================= LOGIN-GUARD ================= -->
-<div class="auth-overlay open" id="auth-overlay">
-  <form class="auth-card" id="auth-form" autocomplete="off">
-    <div class="auth-brand">
-      <span class="mark"></span> SynaptoCore <small>Admin</small>
-    </div>
-    <h1>Interner Bereich</h1>
-    <p class="auth-sub">Bitte melden Sie sich an, um das Lead-Dashboard zu öffnen.</p>
-
-    <label for="auth-user">E-Mail-Adresse</label>
-    <input type="email" id="auth-user" autocomplete="username" required>
-
-    <label for="auth-pass">Passwort</label>
-    <input type="password" id="auth-pass" autocomplete="current-password" required>
-
-    <p class="auth-error" id="auth-error" hidden>Zugangsdaten ungültig — bitte erneut versuchen.</p>
-
-    <button type="submit" class="btn-primary auth-submit">Anmelden</button>
-  </form>
-</div>
-
-<!-- ================= APP ================= -->
-<div class="app">
-
-  <!-- ================= SIDEBAR ================= -->
-  <aside class="sidebar">
-    <div class="brand">
-      <span class="mark"></span> SynaptoCore <small>Admin</small>
-    </div>
-
-    <div class="side-label">
-      Ordner
-      <button class="btn-icon" id="btn-add-folder" title="Neuen Ordner erstellen">+</button>
-    </div>
-
-    <nav id="folder-list" aria-label="Ordner"></nav>
-
-    <div class="side-foot">
-      Supabase Backend<br>
-      <code>Leads &amp; Ordner live synchronisiert</code>
-      <div class="foot-actions">
-        <button class="btn-mini" id="btn-export">Export JSON</button>
-        <button class="btn-mini" id="btn-logout">Abmelden</button>
-      </div>
-    </div>
-  </aside>
-
-  <!-- ================= HAUPTBEREICH ================= -->
-  <main class="main">
-    <header class="topbar">
-      <h1 id="view-title">Inbox</h1>
-      <span class="count-pill" id="view-count">0</span>
-      <input type="search" class="search" id="search" placeholder="Suchen: Name, Firma, E-Mail, Nachricht …">
-    </header>
-
-    <div class="lead-list" id="lead-list"></div>
-  </main>
-</div>
-
-<!-- ================= REPLY-MODAL ================= -->
-<div class="overlay" id="reply-overlay">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="reply-title">
-    <button class="modal-close" id="reply-close" aria-label="Schliessen">×</button>
-    <h2 id="reply-title">Antwort verfassen</h2>
-    <p class="to-line">An: <span id="reply-to"></span></p>
-
-    <div class="context-box" id="reply-context"></div>
-
-    <label for="reply-subject">Betreff</label>
-    <input type="text" id="reply-subject">
-
-    <label for="reply-body">Nachricht</label>
-    <textarea id="reply-body" placeholder="Ihre Antwort — oder AI Assist nutzen …"></textarea>
-
-    <div class="modal-actions">
-      <button class="btn-ai" id="btn-ai">✨ AI Assist</button>
-      <span class="spacer"></span>
-      <a class="btn-ghost" id="btn-mailto" href="#" target="_blank" rel="noopener">Im E-Mail-Programm öffnen</a>
-      <button class="btn-primary" id="btn-send">Senden &amp; als beantwortet markieren</button>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<script>
-  import "../../scripts/admin";
-</script>
-
-</body>
+<!doctype html>
+<html lang="de-CH" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SynaptoCore — Lead Operations</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#0a0e1a" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0e1a'/%3E%3Crect x='28' y='28' width='44' height='44' rx='9' fill='%233b82f6'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <AdminApp client:load />
+  </body>
 </html>
