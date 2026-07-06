@@ -23,8 +23,8 @@ const base = import.meta.env.BASE_URL;
     <h1>Interner Bereich</h1>
     <p class="auth-sub">Bitte melden Sie sich an, um das Lead-Dashboard zu öffnen.</p>
 
-    <label for="auth-user">Benutzername</label>
-    <input type="text" id="auth-user" autocomplete="username" required>
+    <label for="auth-user">E-Mail-Adresse</label>
+    <input type="email" id="auth-user" autocomplete="username" required>
 
     <label for="auth-pass">Passwort</label>
     <input type="password" id="auth-pass" autocomplete="current-password" required>
@@ -52,8 +52,8 @@ const base = import.meta.env.BASE_URL;
     <nav id="folder-list" aria-label="Ordner"></nav>
 
     <div class="side-foot">
-      Webhook-Anbindung (Make.com):<br>
-      <code>receiveNewLead(data)</code> in der Browser-Konsole verfügbar.
+      Supabase Backend<br>
+      <code>Leads &amp; Ordner live synchronisiert</code>
       <div class="foot-actions">
         <button class="btn-mini" id="btn-export">Export JSON</button>
         <button class="btn-mini" id="btn-logout">Abmelden</button>
@@ -99,7 +99,9 @@ const base = import.meta.env.BASE_URL;
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src={`${base}admin/admin-script.js?v=2`}></script>
+<script>
+  import "../../scripts/admin";
+</script>
 
 </body>
 </html>

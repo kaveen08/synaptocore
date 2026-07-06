@@ -2,3 +2,8 @@
 node_modules/
 dist/
 .astro/
+
+# Local environment values
+.env
+.env.*
+!.env.example

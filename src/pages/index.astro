@@ -201,10 +201,7 @@ import LegalModals from "../components/LegalModals.astro";
     </div>
 
     <div class="contact-card">
-      <!--
-        Anbindung an Make.com: Die Webhook-URL wird zentral in script.js
-        gepflegt — Konstante MAKE_WEBHOOK_URL, ganz oben in der Datei.
-      -->
+      <!-- Anfragen werden direkt und RLS-geschützt in Supabase gespeichert. -->
       <form id="anfrage-form" name="anfrage" method="POST" accept-charset="UTF-8">
         <div class="form-grid">
           <div class="form-field">
@@ -300,5 +297,9 @@ import LegalModals from "../components/LegalModals.astro";
 </footer>
 
 <LegalModals />
+
+<script>
+  import "../scripts/contact";
+</script>
 
 </Layout>
