@@ -626,6 +626,16 @@ table.pricing tbody tr:hover { background: rgba(59, 130, 246, 0.05); }
   border-color: rgba(251, 191, 36, 0.35);
 }
 
+/* Honeypot: ausserhalb des Viewports, aber für Bots "sichtbar" */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 button.btn {
   border: none;
   cursor: pointer;

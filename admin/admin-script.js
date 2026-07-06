@@ -122,9 +122,8 @@
       : "id-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8);
   }
 
-  /* ---------- Seed-Daten (erster Start) ---------- */
+  /* ---------- Ausgangszustand (erster Start): leer, produktiv ---------- */
   function seedState() {
-    var now = Date.now();
     return {
       activeFolder: "inbox",
       folders: [
@@ -133,36 +132,24 @@
         { id: "pilot",    name: "Pilot Active", locked: true },
         { id: "closed",   name: "Closed",      locked: true }
       ],
-      leads: [
-        {
-          id: uid(), folderId: "inbox", unread: true, repliedAt: null, source: "website",
-          createdAt: now - 1000 * 60 * 35,
-          name: "Sandra Keller", firma: "Keller Immobilien GmbH",
-          email: "s.keller@keller-immo.ch", telefon: "+41 79 512 33 08",
-          interesse: "1 · Der Pilot (0 CHF)",
-          nachricht: "Wir erhalten täglich 40–60 Anfragen über verschiedene Portale und verlieren viel Zeit mit dem Sortieren. Der kostenlose Pilot klingt interessant — wie schnell könnten wir starten?"
-        },
-        {
-          id: uid(), folderId: "inbox", unread: true, repliedAt: null, source: "gmail",
-          createdAt: now - 1000 * 60 * 60 * 5,
-          name: "Beat Zgraggen", firma: "Zgraggen Elektro AG",
-          email: "info@zgraggen-elektro.ch", telefon: "+41 78 664 91 12",
-          interesse: "2 · Core Solution (2'450 CHF)",
-          nachricht: "Unsere Offert-Anfragen kommen per Mail, Telefon und WhatsApp rein. Wir möchten das zentralisieren und die Offerten teilautomatisiert vorbereiten lassen. Was genau beinhaltet die System-Einrichtung?"
-        },
-        {
-          id: uid(), folderId: "progress", unread: false, repliedAt: now - 1000 * 60 * 60 * 20, source: "website",
-          createdAt: now - 1000 * 60 * 60 * 26,
-          name: "Marco Bianchi", firma: "Bianchi Bau AG",
-          email: "m.bianchi@bianchibau.ch", telefon: "+41 76 220 47 55",
-          interesse: "3 · Managed Service (240 CHF/M.)",
-          nachricht: "Wir haben bereits Make.com im Einsatz, brauchen aber jemanden, der die Workflows überwacht und bei API-Änderungen anpasst."
-        }
-      ]
+      leads: []
     };
   }
 
   var state = loadState() || seedState();
+
+  /* Einmalige Bereinigung: Demo- und Test-Leads aus früheren Versionen
+     werden automatisch entfernt (kommerzieller Betrieb = nur echte Daten). */
+  var DEMO_EMAILS = [
+    "s.keller@keller-immo.ch", "info@zgraggen-elektro.ch", "m.bianchi@bianchibau.ch",
+    "p.huerlimann@ht-treuhand.ch", "info@ferrari-garten.ch", "n.roth@rothpartner.ch",
+    "test@test.ch"
+  ];
+  state.leads = state.leads.filter(function (l) {
+    return l.source !== "demo" &&
+           DEMO_EMAILS.indexOf(String(l.email || "").toLowerCase()) === -1;
+  });
+
   saveState();
 
   /* ---------- DOM-Referenzen ---------- */
@@ -614,17 +601,6 @@
      ========================================================== */
   document.getElementById("btn-add-folder").addEventListener("click", createFolder);
   $search.addEventListener("input", renderLeads);
-
-  document.getElementById("btn-demo").addEventListener("click", function () {
-    var samples = [
-      { name: "Petra Hürlimann", firma: "Hürlimann Treuhand", email: "p.huerlimann@ht-treuhand.ch", telefon: "+41 79 331 20 87", interesse: "1 · Der Pilot (0 CHF)", nachricht: "Unsere Mandanten-Mails stapeln sich — wie schnell liesse sich eine Triage einrichten?" },
-      { name: "Luca Ferrari", firma: "Ferrari Gartenbau AG", email: "info@ferrari-garten.ch", telefon: "+41 76 908 15 42", interesse: "2 · Core Solution (2'450 CHF)", nachricht: "Wir möchten Offerten aus Website-Anfragen automatisch vorbereiten lassen." },
-      { name: "Nadine Roth", firma: "Roth & Partner Immobilien", email: "n.roth@rothpartner.ch", telefon: "+41 78 445 60 19", interesse: "3 · Managed Service (240 CHF/M.)", nachricht: "Wer kümmert sich um die Workflows, wenn sich eine API ändert? Genau das suchen wir." }
-    ];
-    var s = samples[Math.floor(Math.random() * samples.length)];
-    s.source = "demo";
-    window.receiveNewLead(s);
-  });
 
   document.getElementById("btn-export").addEventListener("click", function () {
     var blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });

@@ -47,6 +47,15 @@ const MAKE_WEBHOOK_URL = "https://hook.eu1.make.com/nkn98sdyvqhedzivdbhkbc6m1m5q
     errorBox.hidden = true;
     cooldownBox.hidden = true;
 
+    /* Honeypot-Guard: echte Besucher sehen das Feld nie — ist es gefüllt,
+       war ein Bot am Werk. Erfolgsmeldung zeigen, aber nichts senden. */
+    var honeypot = document.getElementById("f-website");
+    if (honeypot && honeypot.value) {
+      markSubmitted();
+      showSuccess();
+      return;
+    }
+
     /* Cooldown-Guard: blockt erneute Anfragen innerhalb von 60 Sekunden,
        ohne den Webhook aufzurufen — schont das Make.com-Kontingent. */
     if (cooldownActive()) {
