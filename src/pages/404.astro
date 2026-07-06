@@ -1,3 +1,6 @@
+---
+const base = import.meta.env.BASE_URL;
+---
 <!DOCTYPE html>
 <html lang="de-CH">
 <head>
@@ -48,7 +51,7 @@ a.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(59, 130, 
   <span class="mark" aria-hidden="true"></span>
   <h1>404 — Seite nicht gefunden</h1>
   <p>Diese Seite existiert nicht (mehr). Zurück zur Startseite?</p>
-  <a class="btn" href="/synaptocore/">Zur Startseite</a>
+  <a class="btn" href={base}>Zur Startseite</a>
 </main>
 </body>
 </html>
