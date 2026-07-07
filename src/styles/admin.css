@@ -46,41 +46,40 @@
   --radius-2xl: calc(var(--radius) * 1.7);
 }
 
-:root,
-.dark {
-  color-scheme: dark;
-  --background: #0a0e1a;
-  --foreground: #f4f6fb;
-  --card: #10162a;
-  --card-foreground: #f4f6fb;
-  --popover: #10162a;
-  --popover-foreground: #f4f6fb;
-  --primary: #3b82f6;
+:root {
+  color-scheme: light;
+  --background: #f7f8fa;
+  --foreground: #111827;
+  --card: #ffffff;
+  --card-foreground: #111827;
+  --popover: #ffffff;
+  --popover-foreground: #111827;
+  --primary: #1d4ed8;
   --primary-foreground: #ffffff;
-  --secondary: #182038;
-  --secondary-foreground: #f4f6fb;
-  --muted: #141c31;
-  --muted-foreground: #a7b0c4;
-  --accent: #18233c;
-  --accent-foreground: #f4f6fb;
-  --destructive: #f87171;
-  --border: #1e2740;
-  --input: #2a3654;
-  --ring: #60a5fa;
-  --chart-1: #60a5fa;
-  --chart-2: #a78bfa;
-  --chart-3: #34d399;
-  --chart-4: #fbbf24;
-  --chart-5: #fb7185;
+  --secondary: #eef1f5;
+  --secondary-foreground: #111827;
+  --muted: #eef1f5;
+  --muted-foreground: #64748b;
+  --accent: #eff4ff;
+  --accent-foreground: #1d4ed8;
+  --destructive: #b42318;
+  --border: #e5e8ec;
+  --input: #d8dde5;
+  --ring: #93b4f5;
+  --chart-1: #1d4ed8;
+  --chart-2: #7c3aed;
+  --chart-3: #047857;
+  --chart-4: #b54708;
+  --chart-5: #be123c;
   --radius: 0.625rem;
-  --sidebar: #0d1222;
-  --sidebar-foreground: #f4f6fb;
-  --sidebar-primary: #3b82f6;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #182038;
-  --sidebar-accent-foreground: #f4f6fb;
-  --sidebar-border: #1a233b;
-  --sidebar-ring: #60a5fa;
+  --sidebar: #0f1c3d;
+  --sidebar-foreground: #e6eaf4;
+  --sidebar-primary: #9db9ff;
+  --sidebar-primary-foreground: #0f1c3d;
+  --sidebar-accent: #1b2a52;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #23335f;
+  --sidebar-ring: #9db9ff;
 }
 
 @layer base {
@@ -112,20 +111,9 @@
   }
 
   ::selection {
-    background: color-mix(in oklch, var(--primary) 55%, transparent);
+    background: color-mix(in oklch, var(--primary) 25%, transparent);
     color: var(--foreground);
   }
-}
-
-.stage-rail::before {
-  content: "";
-  position: absolute;
-  top: 1.25rem;
-  bottom: 1.25rem;
-  left: 1.34rem;
-  width: 1px;
-  background: var(--sidebar-border);
-  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

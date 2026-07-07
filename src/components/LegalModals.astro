@@ -2,18 +2,18 @@
 <dialog
   id="legal-agb"
   aria-labelledby="agb-title"
-  class="m-auto max-h-[88svh] w-[min(880px,calc(100%-2rem))] overflow-y-auto border border-line bg-panel p-0 text-ink"
+  class="m-auto max-h-[88svh] w-[min(880px,calc(100%-2rem))] overflow-y-auto rounded-xl border border-line bg-white p-0 text-ink shadow-lift"
 >
   <div class="legal-copy relative p-5 sm:p-8 lg:p-10">
     <button
-      class="sticky top-4 float-right ml-4 grid size-11 place-items-center border border-line bg-raised text-2xl leading-none text-soft transition-colors hover:border-signal hover:text-ink"
+      class="sticky top-4 float-right ml-4 grid size-11 place-items-center rounded-lg border border-line bg-surface text-2xl leading-none text-soft transition-colors hover:border-primary hover:text-ink"
       type="button"
       data-legal-close
       aria-label="Schliessen"
     >×</button>
-    <p class="font-mono text-xs font-semibold text-signal">Rechtliches</p>
+    <p class="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">Rechtliches</p>
     <h2 id="agb-title" class="mt-4 max-w-[22ch] text-3xl font-semibold leading-tight tracking-[-0.03em] text-ink sm:text-4xl">Allgemeine Geschäftsbedingungen (AGB)</h2>
-    <p class="mt-3 font-mono text-xs text-soft">SynaptoCore, Zürich, Schweiz · Stand: Juli 2026</p>
+    <p class="mt-3 font-mono text-xs text-faint">SynaptoCore, Zürich, Schweiz · Stand: Juli 2026</p>
 
     <h3>1. Geltungsbereich</h3>
     <p>Diese Allgemeinen Geschäftsbedingungen gelten für sämtliche Leistungen von SynaptoCore, Zürich (nachfolgend «SynaptoCore»), gegenüber ihren Geschäftskunden. Das Angebot richtet sich ausschliesslich an Unternehmen und Selbständigerwerbende (B2B), nicht an Konsumentinnen und Konsumenten. Abweichende Bedingungen des Kunden gelten nur, wenn SynaptoCore ihnen ausdrücklich schriftlich zugestimmt hat.</p>
@@ -58,18 +58,18 @@
 <dialog
   id="legal-datenschutz"
   aria-labelledby="ds-title"
-  class="m-auto max-h-[88svh] w-[min(880px,calc(100%-2rem))] overflow-y-auto border border-line bg-panel p-0 text-ink"
+  class="m-auto max-h-[88svh] w-[min(880px,calc(100%-2rem))] overflow-y-auto rounded-xl border border-line bg-white p-0 text-ink shadow-lift"
 >
   <div class="legal-copy relative p-5 sm:p-8 lg:p-10">
     <button
-      class="sticky top-4 float-right ml-4 grid size-11 place-items-center border border-line bg-raised text-2xl leading-none text-soft transition-colors hover:border-signal hover:text-ink"
+      class="sticky top-4 float-right ml-4 grid size-11 place-items-center rounded-lg border border-line bg-surface text-2xl leading-none text-soft transition-colors hover:border-primary hover:text-ink"
       type="button"
       data-legal-close
       aria-label="Schliessen"
     >×</button>
-    <p class="font-mono text-xs font-semibold text-signal">Rechtliches</p>
+    <p class="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">Rechtliches</p>
     <h2 id="ds-title" class="mt-4 text-3xl font-semibold leading-tight tracking-[-0.03em] text-ink sm:text-4xl">Datenschutzerklärung</h2>
-    <p class="mt-3 font-mono text-xs text-soft">SynaptoCore, Zürich, Schweiz · Stand: Juli 2026</p>
+    <p class="mt-3 font-mono text-xs text-faint">SynaptoCore, Zürich, Schweiz · Stand: Juli 2026</p>
 
     <h3>1. Verantwortliche Stelle</h3>
     <p>Verantwortlich für die Datenbearbeitung im Zusammenhang mit dieser Website und unseren Dienstleistungen ist:<br>
@@ -79,7 +79,7 @@
     <p>Wir bearbeiten Personendaten gemäss dem revidierten Schweizer Bundesgesetz über den Datenschutz (DSG, in Kraft seit 1.&nbsp;September&nbsp;2023) nach den Grundsätzen der Rechtmässigkeit, Verhältnismässigkeit und Zweckbindung.</p>
 
     <h3>3. Welche Daten wir bearbeiten</h3>
-    <p>Über das Anfrageformular dieser Website erheben wir: Name, Firmenname, E-Mail-Adresse, Telefonnummer, das gewählte Paket sowie Ihre freiwillige Nachricht. Beim Besuch der Website können durch den Hosting-Anbieter zudem technische Zugriffsdaten (z.&nbsp;B. IP-Adresse, Browsertyp, Zeitpunkt des Zugriffs) in Server-Logs erfasst werden.</p>
+    <p>Über das Anfrageformular dieser Website erheben wir Name, Firmenname, E-Mail-Adresse und Ihre Nachricht. Zur Missbrauchsprävention verarbeiten wir ausserdem einen pseudonymisierten Prüfwert der IP-Adresse für höchstens 24 Stunden. Beim Besuch der Website können durch den Hosting-Anbieter technische Zugriffsdaten (z.&nbsp;B. IP-Adresse, Browsertyp, Zeitpunkt des Zugriffs) in Server-Logs erfasst werden.</p>
 
     <h3>4. Zwecke der Bearbeitung</h3>
     <p>Ihre Daten verwenden wir ausschliesslich zur Bearbeitung Ihrer Anfrage, zur Offert- und Vertragsabwicklung sowie zur Kommunikation mit Ihnen. Es erfolgt kein Verkauf und keine Weitergabe Ihrer Daten zu Werbezwecken.</p>
@@ -87,19 +87,22 @@
     <h3>5. Hosting</h3>
     <p>Diese Website wird über Vercel (Vercel Inc., USA) bereitgestellt. Dabei können technische Zugriffsdaten (z.&nbsp;B. IP-Adresse, Browsertyp und Zeitpunkt des Zugriffs) durch Vercel in Server-Logs verarbeitet werden. Es werden durch uns keine Tracking- oder Analyse-Cookies eingesetzt.</p>
 
-    <h3>6. KI-Dienste im Kundenauftrag</h3>
+    <h3>6. Formularschutz und E-Mail-Versand</h3>
+    <p>Zum Schutz des Anfrageformulars vor automatisiertem Missbrauch verwenden wir Cloudflare Turnstile (Cloudflare Inc., USA). Die Sicherheitsprüfung wird serverseitig verifiziert. Für interne Benachrichtigungen, Eingangsbestätigungen und die anschliessende Kommunikation verwenden wir Gmail und die Gmail API (Google LLC, USA). Dabei werden die im Formular eingegebenen Kontaktdaten und Nachrichten zur Zustellung der E-Mails verarbeitet.</p>
+
+    <h3>7. KI-Dienste im Kundenauftrag</h3>
     <p>Bei der Erbringung unserer Dienstleistungen setzen wir die Dienste von Anthropic (Claude) und OpenAI (GPT) ein — <strong>ausschliesslich über deren offizielle Business-API-Endpunkte</strong>. Diese unterscheiden sich grundlegend von den öffentlichen, kostenlosen KI-Angeboten: Die Anbieter sichern vertraglich zu, dass über die API übermittelte Daten <strong>niemals zum Training öffentlicher KI-Modelle verwendet werden</strong>. Unternehmens- und Kundendaten unserer Auftraggeber bleiben damit vollständig geschützt. Die Übertragung erfolgt verschlüsselt (TLS).</p>
 
-    <h3>7. Weitergabe an Dritte</h3>
-    <p>Eine Weitergabe von Personendaten an Dritte erfolgt nur, soweit dies zur Vertragserfüllung erforderlich ist (z.&nbsp;B. an die unter Ziffer 5 und 6 genannten technischen Dienstleister) oder eine gesetzliche Pflicht besteht. Mit Dienstleistern, die im Auftrag Daten bearbeiten, bestehen entsprechende Vereinbarungen.</p>
+    <h3>8. Weitergabe an Dritte</h3>
+    <p>Eine Weitergabe von Personendaten an Dritte erfolgt nur, soweit dies zur Bearbeitung Ihrer Anfrage, zur Vertragserfüllung oder zum sicheren Betrieb der Website erforderlich ist (z.&nbsp;B. an die unter Ziffer 5 bis 7 genannten technischen Dienstleister) oder eine gesetzliche Pflicht besteht. Mit Dienstleistern, die im Auftrag Daten bearbeiten, bestehen entsprechende Vereinbarungen.</p>
 
-    <h3>8. Aufbewahrung</h3>
+    <h3>9. Aufbewahrung</h3>
     <p>Wir bewahren Personendaten nur so lange auf, wie es für die genannten Zwecke erforderlich ist oder gesetzliche Aufbewahrungspflichten bestehen. Anfragedaten ohne Vertragsabschluss werden spätestens nach 12 Monaten gelöscht.</p>
 
-    <h3>9. Ihre Rechte</h3>
+    <h3>10. Ihre Rechte</h3>
     <p>Sie haben das Recht auf Auskunft über die zu Ihrer Person bearbeiteten Daten, auf Berichtigung unrichtiger Daten, auf Löschung sowie auf Datenherausgabe bzw. -übertragung, soweit das DSG dies vorsieht. Wenden Sie sich dazu per E-Mail an <a href="mailto:synaptocore@gmail.com">synaptocore@gmail.com</a>.</p>
 
-    <h3>10. Änderungen</h3>
+    <h3>11. Änderungen</h3>
     <p>Wir können diese Datenschutzerklärung bei Bedarf anpassen. Es gilt die jeweils auf dieser Website publizierte Fassung.</p>
   </div>
 </dialog>

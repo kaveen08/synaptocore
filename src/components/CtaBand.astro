@@ -1,0 +1,33 @@
+---
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  text?: string;
+}
+
+const {
+  eyebrow = "Der risikofreie nächste Schritt",
+  heading = "Erst besprechen. Dann sieben Tage im Betrieb testen.",
+  text = "Das Gespräch ist unverbindlich. Wenn ein sinnvoller Kernprozess erkennbar ist, setzen wir ihn als kostenlosen Pilot um – ohne automatische Verlängerung.",
+} = Astro.props;
+---
+
+<section class="py-20 sm:py-24">
+  <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+    <div class="grid gap-8 rounded-2xl bg-primary p-8 text-white sm:p-12 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-14">
+      <div>
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-white/70">{eyebrow}</p>
+        <h2 class="mt-4 max-w-[22ch] text-3xl font-semibold leading-[1.1] tracking-[-0.02em] sm:text-4xl">
+          {heading}
+        </h2>
+        <p class="mt-4 max-w-[62ch] text-base leading-7 text-white/80">{text}</p>
+      </div>
+      <a
+        href="/kontakt/"
+        class="inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-white px-6 text-sm font-bold text-primary transition-colors duration-200 hover:bg-primary-tint sm:w-auto"
+      >
+        Erstgespräch anfragen
+      </a>
+    </div>
+  </div>
+</section>

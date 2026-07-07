@@ -1,0 +1,51 @@
+---
+import CtaBand from "../components/CtaBand.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+---
+
+<PageLayout
+  title="Ablauf — SynaptoCore"
+  description="In drei Schritten vom Erstgespräch zum getesteten Workflow: Prozess verstehen, Systeme verbinden, sieben Tage unverbindlich im echten Alltag testen."
+>
+  <section id="ablauf" class="py-20 sm:py-28">
+    <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+      <div class="max-w-2xl">
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">Vom Engpass zum laufenden Ablauf</p>
+        <h1 class="mt-5 max-w-[16ch] text-4xl font-semibold leading-[1.06] tracking-[-0.03em] text-ink sm:text-5xl">
+          Erst verstehen. Dann automatisieren.
+        </h1>
+        <p class="mt-6 max-w-[46ch] text-lg leading-8 text-soft">
+          Keine Standardlösung von der Stange. Der Workflow entsteht aus Ihrer tatsächlichen Arbeit.
+        </p>
+      </div>
+
+      <ol class="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
+        <li class="relative">
+          <div class="flex items-center gap-4">
+            <span class="grid size-11 shrink-0 place-items-center rounded-full border-2 border-primary bg-white font-mono text-sm font-semibold text-primary">01</span>
+            <span class="hidden h-px flex-1 bg-line md:block" aria-hidden="true"></span>
+          </div>
+          <h2 class="mt-5 text-2xl font-semibold tracking-[-0.02em] text-ink">Prozess verstehen</h2>
+          <p class="mt-3 max-w-[46ch] leading-7 text-soft">Im Erstgespräch identifizieren wir den Ablauf, der häufig vorkommt, klar abgrenzbar ist und Ihrem Team spürbar Zeit kostet.</p>
+        </li>
+        <li class="relative">
+          <div class="flex items-center gap-4">
+            <span class="grid size-11 shrink-0 place-items-center rounded-full border-2 border-primary bg-white font-mono text-sm font-semibold text-primary">02</span>
+            <span class="hidden h-px flex-1 bg-line md:block" aria-hidden="true"></span>
+          </div>
+          <h2 class="mt-5 text-2xl font-semibold tracking-[-0.02em] text-ink">Systeme verbinden</h2>
+          <p class="mt-3 max-w-[46ch] leading-7 text-soft">Wir verbinden die vorhandenen Werkzeuge über sichere Schnittstellen und legen fest, welche Schritte automatisch und welche bewusst manuell bleiben.</p>
+        </li>
+        <li class="relative">
+          <div class="flex items-center gap-4">
+            <span class="grid size-11 shrink-0 place-items-center rounded-full border-2 border-primary bg-white font-mono text-sm font-semibold text-primary">03</span>
+          </div>
+          <h2 class="mt-5 text-2xl font-semibold tracking-[-0.02em] text-ink">Sieben Tage testen</h2>
+          <p class="mt-3 max-w-[46ch] leading-7 text-soft">Ein Kernprozess läuft unverbindlich in Ihrem echten Alltag. Erst wenn der Nutzen sichtbar ist, entscheiden Sie sich für eines der beiden Pakete.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>

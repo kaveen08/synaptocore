@@ -1,0 +1,23 @@
+---
+import LegalModals from "../components/LegalModals.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Layout from "./Layout.astro";
+
+export interface Props {
+  title: string;
+  description: string;
+  robots?: string;
+}
+
+const { title, description, robots } = Astro.props;
+---
+
+<Layout title={title} description={description} robots={robots}>
+  <SiteHeader />
+  <main id="main-content">
+    <slot />
+  </main>
+  <SiteFooter />
+  <LegalModals />
+</Layout>

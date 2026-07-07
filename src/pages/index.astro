@@ -1,198 +1,123 @@
 ---
-import ContactSection from "../components/ContactSection.astro";
-import LegalModals from "../components/LegalModals.astro";
-import SecuritySection from "../components/SecuritySection.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import SiteHeader from "../components/SiteHeader.astro";
+import CtaBand from "../components/CtaBand.astro";
 import WorkflowDemo from "../components/WorkflowDemo.astro";
-import Layout from "../layouts/Layout.astro";
+import PageLayout from "../layouts/PageLayout.astro";
 ---
 
-<Layout
+<PageLayout
   title="SynaptoCore — Weniger Administration für Schweizer KMU"
   description="SynaptoCore automatisiert wiederkehrende Büroarbeit in Ihren bestehenden E-Mail-, CRM- und Kalender-Tools. Sicher, kontrolliert und passend zu Ihrem Betrieb."
 >
-  <SiteHeader />
+  <section id="top" class="py-16 sm:py-24 lg:py-28">
+    <div class="mx-auto grid max-w-[1180px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+      <div>
+        <h1 class="max-w-[13ch] text-[clamp(2.6rem,5.6vw,4.2rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-ink">
+          Weniger Büroarbeit. Mehr Zeit fürs Geschäft.
+        </h1>
+        <p class="mt-6 max-w-[56ch] text-lg leading-8 text-soft sm:text-xl sm:leading-9">
+          Wir verbinden E-Mail, CRM und Kalender zu einem klaren Ablauf. Anfragen werden sortiert, Antworten vorbereitet und Ihr Team behält die Freigabe.
+        </p>
 
-  <main id="main-content">
-    <section id="top" class="border-b border-line py-16 sm:py-24 lg:py-28">
-      <div class="mx-auto grid max-w-[1180px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-        <div>
-          <p class="font-mono text-xs font-semibold text-signal">Workflow-Automatisierung für Schweizer KMU</p>
-          <h1 class="mt-6 max-w-[11ch] text-[clamp(3.1rem,7.4vw,5.8rem)] font-semibold leading-[0.94] tracking-[-0.04em] text-ink">
-            Weniger Büroarbeit. Mehr Zeit fürs Geschäft.
-          </h1>
-          <p class="mt-7 max-w-[56ch] text-lg leading-8 text-soft sm:text-xl sm:leading-9">
-            Wir verbinden E-Mail, CRM und Kalender zu einem klaren Ablauf. Anfragen werden sortiert, Antworten vorbereitet und Ihr Team behält die Freigabe.
-          </p>
-
-          <div class="mt-9 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-            <a
-              href="#kontakt"
-              class="inline-flex min-h-12 w-full items-center justify-center bg-signal px-6 text-sm font-bold text-site transition-transform duration-200 ease-site hover:-translate-y-0.5 sm:w-auto"
-            >
-              Erstgespräch anfragen
-            </a>
-            <a
-              href="#ablauf"
-              class="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ink underline decoration-line underline-offset-4 transition-colors hover:decoration-signal"
-            >
-              So läuft es ab
-              <span aria-hidden="true">↓</span>
-            </a>
-          </div>
-
-          <ul class="mt-10 grid gap-3 border-t border-line pt-6 text-sm text-soft sm:grid-cols-3">
-            <li class="flex items-start gap-2">
-              <span class="mt-[0.55rem] size-1.5 shrink-0 bg-signal" aria-hidden="true"></span>
-              Für Schweizer KMU
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="mt-[0.55rem] size-1.5 shrink-0 bg-signal" aria-hidden="true"></span>
-              Bestehende Tools bleiben
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="mt-[0.55rem] size-1.5 shrink-0 bg-signal" aria-hidden="true"></span>
-              Freigabe durch Sie
-            </li>
-          </ul>
-        </div>
-
-        <WorkflowDemo />
-      </div>
-    </section>
-
-    <section id="leistung" class="py-20 sm:py-28">
-      <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
-        <div class="flex flex-col justify-between gap-6 border-b border-line pb-10 md:flex-row md:items-end">
-          <h2 class="max-w-[14ch] text-4xl font-semibold leading-[1.04] tracking-[-0.035em] text-ink sm:text-5xl">
-            Wiederkehrende Arbeit frisst Zeit in kleinen Schritten.
-          </h2>
-          <p class="max-w-[49ch] text-lg leading-8 text-soft">
-            Genau diese Übergaben automatisieren wir – ohne neue Software einzuführen oder Ihren Betrieb auf den Kopf zu stellen.
-          </p>
-        </div>
-
-        <div class="divide-y divide-line">
-          <article class="grid gap-5 py-9 md:grid-cols-[0.55fr_1fr_1.25fr] md:items-start md:gap-10">
-            <p class="font-mono text-xs text-signal">Eingang</p>
-            <h3 class="text-3xl font-semibold tracking-[-0.025em] text-ink">Sortieren</h3>
-            <p class="max-w-[56ch] text-base leading-7 text-soft">E-Mails werden nach Anliegen, Dringlichkeit und zuständiger Person eingeordnet. Offerten, Reklamationen und Termine landen direkt am richtigen Ort.</p>
-          </article>
-          <article class="grid gap-5 py-9 md:grid-cols-[0.55fr_1fr_1.25fr] md:items-start md:gap-10">
-            <p class="font-mono text-xs text-signal">Übergabe</p>
-            <h3 class="text-3xl font-semibold tracking-[-0.025em] text-ink">Übertragen</h3>
-            <p class="max-w-[56ch] text-base leading-7 text-soft">Relevante Angaben werden in CRM, Kalender oder interne Listen übernommen. Das wiederholte Kopieren zwischen Fenstern entfällt.</p>
-          </article>
-          <article class="grid gap-5 py-9 md:grid-cols-[0.55fr_1fr_1.25fr] md:items-start md:gap-10">
-            <p class="font-mono text-xs text-signal">Nächster Schritt</p>
-            <h3 class="text-3xl font-semibold tracking-[-0.025em] text-ink">Nachfassen</h3>
-            <p class="max-w-[56ch] text-base leading-7 text-soft">Antworten und Erinnerungen werden mit den richtigen Informationen vorbereitet. Ihr Team prüft den Inhalt und entscheidet, was versendet wird.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="ablauf" class="bg-signal py-20 text-site sm:py-28">
-      <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
-        <div class="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
-          <div>
-            <p class="font-mono text-xs font-semibold">Vom Engpass zum laufenden Ablauf</p>
-            <h2 class="mt-5 max-w-[11ch] text-4xl font-semibold leading-[1.02] tracking-[-0.035em] sm:text-5xl">
-              Erst verstehen. Dann automatisieren.
-            </h2>
-            <p class="mt-6 max-w-[46ch] text-lg leading-8 text-site/75">
-              Keine Standardlösung von der Stange. Der Workflow entsteht aus Ihrer tatsächlichen Arbeit.
-            </p>
-          </div>
-
-          <ol class="divide-y divide-site/30 border-y border-site/30">
-            <li class="grid gap-4 py-7 sm:grid-cols-[3rem_1fr] sm:gap-7">
-              <span class="font-mono text-sm font-semibold">01</span>
-              <div>
-                <h3 class="text-2xl font-semibold tracking-[-0.02em]">Prozess verstehen</h3>
-                <p class="mt-3 max-w-[58ch] leading-7 text-site/75">Im Erstgespräch identifizieren wir den Ablauf, der häufig vorkommt, klar abgrenzbar ist und Ihrem Team spürbar Zeit kostet.</p>
-              </div>
-            </li>
-            <li class="grid gap-4 py-7 sm:grid-cols-[3rem_1fr] sm:gap-7">
-              <span class="font-mono text-sm font-semibold">02</span>
-              <div>
-                <h3 class="text-2xl font-semibold tracking-[-0.02em]">Systeme verbinden</h3>
-                <p class="mt-3 max-w-[58ch] leading-7 text-site/75">Wir verbinden die vorhandenen Werkzeuge über sichere Schnittstellen und legen fest, welche Schritte automatisch und welche bewusst manuell bleiben.</p>
-              </div>
-            </li>
-            <li class="grid gap-4 py-7 sm:grid-cols-[3rem_1fr] sm:gap-7">
-              <span class="font-mono text-sm font-semibold">03</span>
-              <div>
-                <h3 class="text-2xl font-semibold tracking-[-0.02em]">Sieben Tage testen</h3>
-                <p class="mt-3 max-w-[58ch] leading-7 text-site/75">Ein Kernprozess läuft unverbindlich in Ihrem echten Alltag. Erst wenn der Nutzen sichtbar ist, entscheiden Sie über die weitere Zusammenarbeit.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </div>
-    </section>
-
-    <section class="py-20 sm:py-28">
-      <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
-        <div class="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
-          <div>
-            <h2 class="max-w-[12ch] text-4xl font-semibold leading-[1.04] tracking-[-0.035em] text-ink sm:text-5xl">
-              Was sich sinnvoll automatisieren lässt.
-            </h2>
-            <p class="mt-6 max-w-[44ch] text-lg leading-8 text-soft">Wir beginnen dort, wo klare Regeln und wiederkehrende Informationen zusammenkommen.</p>
-          </div>
-
-          <div class="space-y-4">
-            <article class="border border-line bg-panel p-6 sm:ml-0 sm:p-7">
-              <p class="font-mono text-xs text-signal">Kommunikation</p>
-              <h3 class="mt-4 text-2xl font-semibold tracking-[-0.02em] text-ink">Anfragen erkennen und Antworten vorbereiten</h3>
-              <p class="mt-3 max-w-[58ch] leading-7 text-soft">Eingang sortieren, Informationen ergänzen und einen passenden Entwurf in Ihrem Ton bereitstellen.</p>
-            </article>
-            <article class="border border-line bg-panel p-6 sm:ml-10 sm:p-7">
-              <p class="font-mono text-xs text-signal">Datenpflege</p>
-              <h3 class="mt-4 text-2xl font-semibold tracking-[-0.02em] text-ink">Angaben zwischen Werkzeugen übertragen</h3>
-              <p class="mt-3 max-w-[58ch] leading-7 text-soft">Kontaktdaten, Auftragsdetails und Statusänderungen zuverlässig in die bestehenden Systeme übernehmen.</p>
-            </article>
-            <article class="border border-line bg-panel p-6 sm:ml-20 sm:p-7">
-              <p class="font-mono text-xs text-signal">Koordination</p>
-              <h3 class="mt-4 text-2xl font-semibold tracking-[-0.02em] text-ink">Termine und offene Schritte nachverfolgen</h3>
-              <p class="mt-3 max-w-[58ch] leading-7 text-soft">Erinnerungen auslösen, Rückmeldungen zuordnen und fehlende Angaben rechtzeitig anfordern.</p>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <SecuritySection />
-
-    <section class="py-20 sm:py-24">
-      <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
-        <div class="grid gap-8 border border-line bg-raised p-6 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-14">
-          <div>
-            <p class="font-mono text-xs font-semibold text-signal">Der risikofreie nächste Schritt</p>
-            <h2 class="mt-5 max-w-[19ch] text-3xl font-semibold leading-[1.08] tracking-[-0.03em] text-ink sm:text-4xl">
-              Erst besprechen. Dann sieben Tage im Betrieb testen.
-            </h2>
-            <p class="mt-4 max-w-[62ch] text-base leading-7 text-soft">Das Gespräch ist unverbindlich. Wenn ein sinnvoller Kernprozess erkennbar ist, setzen wir ihn als kostenlosen Pilot um – ohne automatische Verlängerung.</p>
-          </div>
+        <div class="mt-9 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
           <a
-            href="#kontakt"
-            class="inline-flex min-h-12 w-full items-center justify-center bg-signal px-6 text-sm font-bold text-site transition-transform duration-200 ease-site hover:-translate-y-0.5 sm:w-auto"
+            href="/kontakt/"
+            class="inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-primary px-6 text-sm font-bold text-white shadow-card transition-colors duration-200 hover:bg-primary-strong sm:w-auto"
           >
             Erstgespräch anfragen
           </a>
+          <a
+            href="/ablauf/"
+            class="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ink underline decoration-line underline-offset-4 transition-colors hover:decoration-primary"
+          >
+            So läuft es ab
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
-    </section>
 
-    <ContactSection />
-  </main>
+      <WorkflowDemo />
+    </div>
+  </section>
 
-  <SiteFooter />
-  <LegalModals />
+  <section aria-label="Vier Zusicherungen" class="border-y border-line bg-surface">
+    <ul class="mx-auto grid max-w-[1180px] gap-x-8 gap-y-3 px-5 py-6 text-sm font-medium text-soft sm:grid-cols-2 sm:px-8 lg:grid-cols-4 lg:py-7">
+      <li class="flex items-center gap-2.5">
+        <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-primary" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m4 10 4 4 8-9"></path></svg>
+        Kostenloser 7-Tage-Pilot
+      </li>
+      <li class="flex items-center gap-2.5">
+        <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-primary" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m4 10 4 4 8-9"></path></svg>
+        Konform mit Schweizer DSG
+      </li>
+      <li class="flex items-center gap-2.5">
+        <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-primary" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m4 10 4 4 8-9"></path></svg>
+        Ihre Tools bleiben im Einsatz
+      </li>
+      <li class="flex items-center gap-2.5">
+        <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-primary" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m4 10 4 4 8-9"></path></svg>
+        Freigabe bleibt bei Ihnen
+      </li>
+    </ul>
+  </section>
 
-  <script>
-    import "../scripts/contact";
-  </script>
-</Layout>
+  <section class="py-20 sm:py-28">
+    <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+      <div class="max-w-2xl">
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">Ein Überblick</p>
+        <h2 class="mt-5 max-w-[18ch] text-4xl font-semibold leading-[1.06] tracking-[-0.03em] text-ink sm:text-5xl">
+          Alles, was Sie über SynaptoCore wissen müssen.
+        </h2>
+        <p class="mt-6 max-w-[52ch] text-lg leading-8 text-soft">
+          Wählen Sie einen Bereich, um mehr zu erfahren – oder fragen Sie direkt ein unverbindliches Erstgespräch an.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <a href="/leistungen/" class="group rounded-xl border border-line bg-white p-7 shadow-card transition-colors hover:border-primary">
+          <h3 class="flex items-center justify-between gap-3 text-xl font-semibold tracking-[-0.02em] text-ink">
+            Leistungen
+            <span class="text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+          </h3>
+          <p class="mt-3 text-base leading-7 text-soft">Sortieren, Übertragen, Nachfassen – die drei Bausteine unserer Automatisierung.</p>
+        </a>
+        <a href="/ablauf/" class="group rounded-xl border border-line bg-white p-7 shadow-card transition-colors hover:border-primary">
+          <h3 class="flex items-center justify-between gap-3 text-xl font-semibold tracking-[-0.02em] text-ink">
+            Ablauf
+            <span class="text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+          </h3>
+          <p class="mt-3 text-base leading-7 text-soft">In drei Schritten vom Erstgespräch zum getesteten Workflow.</p>
+        </a>
+        <a href="/preise/" class="group rounded-xl border border-line bg-white p-7 shadow-card transition-colors hover:border-primary">
+          <h3 class="flex items-center justify-between gap-3 text-xl font-semibold tracking-[-0.02em] text-ink">
+            Preise
+            <span class="text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+          </h3>
+          <p class="mt-3 text-base leading-7 text-soft">Pilot, Core Solution und Managed Service – klar und ohne versteckte Kosten.</p>
+        </a>
+        <a href="/sicherheit/" class="group rounded-xl border border-line bg-white p-7 shadow-card transition-colors hover:border-primary">
+          <h3 class="flex items-center justify-between gap-3 text-xl font-semibold tracking-[-0.02em] text-ink">
+            Sicherheit
+            <span class="text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+          </h3>
+          <p class="mt-3 text-base leading-7 text-soft">DSG-konform, offizielle APIs und die Freigabe bleibt immer bei Ihnen.</p>
+        </a>
+        <a href="/faq/" class="group rounded-xl border border-line bg-white p-7 shadow-card transition-colors hover:border-primary">
+          <h3 class="flex items-center justify-between gap-3 text-xl font-semibold tracking-[-0.02em] text-ink">
+            FAQ
+            <span class="text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+          </h3>
+          <p class="mt-3 text-base leading-7 text-soft">Antworten auf die Fragen, die Betriebe uns am Anfang stellen.</p>
+        </a>
+        <a href="/kontakt/" class="group rounded-xl border border-primary bg-primary-tint p-7 shadow-card transition-colors hover:bg-white">
+          <h3 class="flex items-center justify-between gap-3 text-xl font-semibold tracking-[-0.02em] text-primary">
+            Kontakt
+            <span class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+          </h3>
+          <p class="mt-3 text-base leading-7 text-soft">Beschreiben Sie uns Ihren Engpass. Wir melden uns innerhalb von 24 Stunden.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>

@@ -6,15 +6,27 @@
   --font-sans: "Archivo Variable", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "Azeret Mono Variable", "SFMono-Regular", Consolas, monospace;
 
-  --color-site: #0b0d0e;
-  --color-panel: #151719;
-  --color-raised: #202326;
-  --color-ink: #f4f3ef;
-  --color-soft: #b8bbb7;
-  --color-signal: #ff6b1a;
-  --color-success: #7fcb87;
-  --color-line: #34383a;
-  --color-danger: #ff8c78;
+  --color-bg: #ffffff;
+  --color-surface: #f7f8fa;
+  --color-surface-strong: #eef1f5;
+  --color-ink: #111827;
+  --color-soft: #4b5563;
+  --color-faint: #6b7280;
+  --color-line: #e5e8ec;
+  --color-primary: #1d4ed8;
+  --color-primary-strong: #1e40af;
+  --color-primary-tint: #eff4ff;
+  --color-success: #047857;
+  --color-success-tint: #ecfdf3;
+  --color-danger: #b42318;
+  --color-danger-tint: #fef3f2;
+  --color-warn: #b54708;
+  --color-warn-tint: #fffaeb;
+  --color-navy: #0f1c3d;
+  --color-navy-soft: #1b2a52;
+
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.06), 0 1px 3px rgb(16 24 40 / 0.1);
+  --shadow-lift: 0 4px 6px -2px rgb(16 24 40 / 0.05), 0 12px 16px -4px rgb(16 24 40 / 0.1);
 
   --ease-site: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -29,14 +41,14 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5.5rem;
-    background: var(--color-site);
+    background: var(--color-bg);
   }
 
   body {
     min-width: 320px;
     margin: 0;
     overflow-x: hidden;
-    background: var(--color-site);
+    background: var(--color-bg);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: 1rem;
@@ -72,17 +84,17 @@
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-signal);
+    outline: 3px solid var(--color-primary);
     outline-offset: 3px;
   }
 
   ::selection {
-    background: var(--color-signal);
-    color: var(--color-site);
+    background: var(--color-primary);
+    color: #ffffff;
   }
 
   dialog::backdrop {
-    background: rgb(0 0 0 / 0.82);
+    background: rgb(15 28 61 / 0.4);
   }
 }
 
@@ -138,7 +150,7 @@
   }
 
   .legal-copy a {
-    color: var(--color-signal);
+    color: var(--color-primary);
     text-decoration: underline;
     text-underline-offset: 0.2em;
   }

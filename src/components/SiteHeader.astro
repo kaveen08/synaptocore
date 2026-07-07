@@ -1,22 +1,44 @@
 ---
 import BrandMark from "./BrandMark.astro";
+
+const links = [
+  { href: "/leistungen/", label: "Leistungen" },
+  { href: "/ablauf/", label: "Ablauf" },
+  { href: "/preise/", label: "Preise" },
+  { href: "/sicherheit/", label: "Sicherheit" },
+  { href: "/faq/", label: "FAQ" },
+];
+
+const path = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-40 border-b border-line bg-site">
+<header class="sticky top-0 z-40 border-b border-line bg-white/90 backdrop-blur-md">
   <div class="mx-auto flex h-[72px] max-w-[1180px] items-center justify-between gap-4 px-5 sm:px-8">
-    <a href="#top" aria-label="SynaptoCore Startseite" class="inline-flex min-h-11 shrink-0 items-center rounded-sm">
+    <a href="/" aria-label="SynaptoCore Startseite" class="inline-flex min-h-11 shrink-0 items-center rounded-md">
       <BrandMark />
     </a>
 
     <nav aria-label="Hauptnavigation" class="hidden items-center gap-7 md:flex">
-      <a class="inline-flex min-h-11 items-center text-sm font-medium text-soft transition-colors duration-200 hover:text-ink" href="#leistung">Leistung</a>
-      <a class="inline-flex min-h-11 items-center text-sm font-medium text-soft transition-colors duration-200 hover:text-ink" href="#ablauf">Ablauf</a>
-      <a class="inline-flex min-h-11 items-center text-sm font-medium text-soft transition-colors duration-200 hover:text-ink" href="#sicherheit">Sicherheit</a>
+      {links.map((link) => {
+        const active = path === link.href;
+        return (
+          <a
+            class:list={[
+              "inline-flex min-h-11 items-center text-sm font-medium transition-colors duration-200",
+              active ? "text-primary" : "text-soft hover:text-ink",
+            ]}
+            href={link.href}
+            aria-current={active ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        );
+      })}
     </nav>
 
     <a
-      href="#kontakt"
-      class="inline-flex min-h-11 items-center justify-center bg-signal px-4 text-sm font-semibold text-site transition-transform duration-200 ease-site hover:-translate-y-0.5 sm:px-5"
+      href="/kontakt/"
+      class="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 text-sm font-semibold text-white shadow-card transition-colors duration-200 hover:bg-primary-strong sm:px-5"
     >
       <span class="sm:hidden">Gespräch</span>
       <span class="hidden sm:inline">Erstgespräch anfragen</span>

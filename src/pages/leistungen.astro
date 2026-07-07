@@ -1,0 +1,82 @@
+---
+import CtaBand from "../components/CtaBand.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+---
+
+<PageLayout
+  title="Leistungen — SynaptoCore"
+  description="Sortieren, Übertragen, Nachfassen: die drei Bausteine, mit denen SynaptoCore wiederkehrende Büroarbeit in Ihren bestehenden Tools automatisiert."
+>
+  <section id="leistung" class="py-20 sm:py-28">
+    <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+      <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <h1 class="max-w-[16ch] text-4xl font-semibold leading-[1.06] tracking-[-0.03em] text-ink sm:text-5xl">
+          Wiederkehrende Arbeit frisst Zeit in kleinen Schritten.
+        </h1>
+        <p class="max-w-[49ch] text-lg leading-8 text-soft">
+          Genau diese Übergaben automatisieren wir – ohne neue Software einzuführen oder Ihren Betrieb auf den Kopf zu stellen.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        <article class="rounded-xl border border-line bg-white p-7 shadow-card">
+          <span class="grid size-11 place-items-center rounded-lg bg-primary-tint text-primary" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h10M4 18h6"></path></svg>
+          </span>
+          <p class="mt-5 font-mono text-xs uppercase tracking-[0.1em] text-faint">Eingang</p>
+          <h2 class="mt-2 text-2xl font-semibold tracking-[-0.02em] text-ink">Sortieren</h2>
+          <p class="mt-3 text-base leading-7 text-soft">E-Mails werden nach Anliegen, Dringlichkeit und zuständiger Person eingeordnet. Offerten, Reklamationen und Termine landen direkt am richtigen Ort.</p>
+        </article>
+        <article class="rounded-xl border border-line bg-white p-7 shadow-card">
+          <span class="grid size-11 place-items-center rounded-lg bg-primary-tint text-primary" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 7h12m0 0-4-4m4 4-4 4M16 17H4m0 0 4 4m-4-4 4-4"></path></svg>
+          </span>
+          <p class="mt-5 font-mono text-xs uppercase tracking-[0.1em] text-faint">Übergabe</p>
+          <h2 class="mt-2 text-2xl font-semibold tracking-[-0.02em] text-ink">Übertragen</h2>
+          <p class="mt-3 text-base leading-7 text-soft">Relevante Angaben werden in CRM, Kalender oder interne Listen übernommen. Das wiederholte Kopieren zwischen Fenstern entfällt.</p>
+        </article>
+        <article class="rounded-xl border border-line bg-white p-7 shadow-card">
+          <span class="grid size-11 place-items-center rounded-lg bg-primary-tint text-primary" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>
+          </span>
+          <p class="mt-5 font-mono text-xs uppercase tracking-[0.1em] text-faint">Nächster Schritt</p>
+          <h2 class="mt-2 text-2xl font-semibold tracking-[-0.02em] text-ink">Nachfassen</h2>
+          <p class="mt-3 text-base leading-7 text-soft">Antworten und Erinnerungen werden mit den richtigen Informationen vorbereitet. Ihr Team prüft den Inhalt und entscheidet, was versendet wird.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-surface py-20 sm:py-28">
+    <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+      <div class="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+        <div>
+          <h2 class="max-w-[14ch] text-4xl font-semibold leading-[1.06] tracking-[-0.03em] text-ink sm:text-5xl">
+            Was sich sinnvoll automatisieren lässt.
+          </h2>
+          <p class="mt-6 max-w-[44ch] text-lg leading-8 text-soft">Wir beginnen dort, wo klare Regeln und wiederkehrende Informationen zusammenkommen.</p>
+        </div>
+
+        <div class="grid gap-5">
+          <article class="rounded-xl border border-line bg-white p-6 sm:p-7">
+            <p class="font-mono text-xs uppercase tracking-[0.1em] text-primary">Kommunikation</p>
+            <h3 class="mt-3 text-2xl font-semibold tracking-[-0.02em] text-ink">Anfragen erkennen und Antworten vorbereiten</h3>
+            <p class="mt-3 max-w-[58ch] leading-7 text-soft">Eingang sortieren, Informationen ergänzen und einen passenden Entwurf in Ihrem Ton bereitstellen.</p>
+          </article>
+          <article class="rounded-xl border border-line bg-white p-6 sm:p-7">
+            <p class="font-mono text-xs uppercase tracking-[0.1em] text-primary">Datenpflege</p>
+            <h3 class="mt-3 text-2xl font-semibold tracking-[-0.02em] text-ink">Angaben zwischen Werkzeugen übertragen</h3>
+            <p class="mt-3 max-w-[58ch] leading-7 text-soft">Kontaktdaten, Auftragsdetails und Statusänderungen zuverlässig in die bestehenden Systeme übernehmen.</p>
+          </article>
+          <article class="rounded-xl border border-line bg-white p-6 sm:p-7">
+            <p class="font-mono text-xs uppercase tracking-[0.1em] text-primary">Koordination</p>
+            <h3 class="mt-3 text-2xl font-semibold tracking-[-0.02em] text-ink">Termine und offene Schritte nachverfolgen</h3>
+            <p class="mt-3 max-w-[58ch] leading-7 text-soft">Erinnerungen auslösen, Rückmeldungen zuordnen und fehlende Angaben rechtzeitig anfordern.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>

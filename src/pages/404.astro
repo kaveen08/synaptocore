@@ -10,20 +10,20 @@ const base = import.meta.env.BASE_URL;
   description="Die angeforderte Seite wurde nicht gefunden."
   robots="noindex"
 >
-  <main id="main-content" class="grid min-h-svh place-items-center px-5 py-16 text-center">
+  <main id="main-content" class="grid min-h-svh place-items-center bg-surface px-5 py-16 text-center">
     <div class="max-w-2xl">
-      <a href={base} aria-label="SynaptoCore Startseite" class="inline-flex min-h-11 items-center">
+      <a href={base} aria-label="SynaptoCore Startseite" class="inline-flex min-h-11 items-center rounded-md">
         <BrandMark />
       </a>
-      <p class="mt-16 font-mono text-sm font-semibold text-signal">Fehler 404</p>
-      <h1 class="mt-5 text-[clamp(3rem,9vw,5.5rem)] font-semibold leading-[0.96] tracking-[-0.04em] text-ink">
+      <p class="mt-16 inline-block rounded-full bg-primary-tint px-3.5 py-1.5 font-mono text-sm font-semibold text-primary">Fehler 404</p>
+      <h1 class="mt-6 text-[clamp(2.6rem,7vw,4.5rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink">
         Hier endet der Ablauf.
       </h1>
       <p class="mx-auto mt-6 max-w-[46ch] text-lg leading-8 text-soft">
         Diese Seite existiert nicht oder wurde verschoben. Auf der Startseite finden Sie wieder den richtigen Einstieg.
       </p>
       <a
-        class="mt-9 inline-flex min-h-12 items-center justify-center bg-signal px-6 text-sm font-bold text-site transition-transform duration-200 ease-site hover:-translate-y-0.5"
+        class="mt-9 inline-flex min-h-12 items-center justify-center rounded-lg bg-primary px-6 text-sm font-bold text-white shadow-card transition-colors duration-200 hover:bg-primary-strong"
         href={base}
       >
         Zur Startseite
