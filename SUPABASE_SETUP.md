@@ -87,14 +87,14 @@ Cloudflare Turnstile and Google OAuth credentials; never commit those values.
 ### Gmail API
 
 1. In Google Cloud, enable the Gmail API and create an OAuth client for
-   `synaptocore@gmail.com`.
+   `info@synaptocore.ch`.
 2. Request offline access with the narrow scopes
    `https://www.googleapis.com/auth/gmail.send` and
    `https://www.googleapis.com/auth/gmail.metadata`.
 3. Put the consent app in production and complete any Google verification
    required for durable restricted-scope access. Do not rely on a seven-day
    testing refresh token.
-4. Generate one refresh token for `synaptocore@gmail.com`.
+4. Generate one refresh token for `info@synaptocore.ch`.
 
 Create an ignored file such as `supabase/functions/.env.production` from
 `supabase/functions/.env.example`, replace every placeholder, then upload it:

@@ -283,7 +283,7 @@ Deno.serve(async (request) => {
   try {
     const supabase = adminClient();
     const inbox = Deno.env.get("GMAIL_ACCOUNT")?.trim() ||
-      "synaptocore@gmail.com";
+      "info@synaptocore.ch";
     const adminUrl = requireEnvironment("ADMIN_URL");
     const accessToken = await getGmailAccessToken(gmailCredentials());
 

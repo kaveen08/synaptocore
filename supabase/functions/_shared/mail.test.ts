@@ -60,7 +60,7 @@ test("escapes untrusted lead values in HTML email bodies", () => {
   assert.equal(escapeHtml("<script>"), "&lt;script&gt;");
   const notification = ownerNotification(
     lead,
-    "synaptocore@gmail.com",
+    "info@synaptocore.ch",
     "https://example.com/admin/",
   );
   assert.doesNotMatch(notification.html, /<script>alert/u);
@@ -70,18 +70,18 @@ test("escapes untrusted lead values in HTML email bodies", () => {
 test("sets the customer as Reply-To on the owner notification", () => {
   const notification = ownerNotification(
     lead,
-    "synaptocore@gmail.com",
+    "info@synaptocore.ch",
     "https://example.com/admin/",
   );
-  assert.equal(notification.to, "synaptocore@gmail.com");
+  assert.equal(notification.to, "info@synaptocore.ch");
   assert.equal(notification.replyTo, lead.email);
 });
 
 test("builds confirmation copy and a multipart MIME message", () => {
-  const confirmation = customerConfirmation(lead, "synaptocore@gmail.com");
+  const confirmation = customerConfirmation(lead, "info@synaptocore.ch");
   const mime = buildMimeMessage({
     ...confirmation,
-    fromEmail: "synaptocore@gmail.com",
+    fromEmail: "info@synaptocore.ch",
     fromName: "SynaptoCore",
     messageId: "<test@synaptocore.local>",
   });

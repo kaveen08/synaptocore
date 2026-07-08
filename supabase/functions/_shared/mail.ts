@@ -170,7 +170,7 @@ export function customerConfirmation(
       "",
       "Freundliche Grüsse",
       "SynaptoCore · Zürich",
-      "synaptocore@gmail.com · +41 78 809 00 94",
+      "info@synaptocore.ch · +41 78 809 00 94",
     ].join("\n"),
     html: emailShell(`
       <p style="margin:0 0 22px;font-size:16px;line-height:1.7">Guten Tag ${name}</p>
