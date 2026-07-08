@@ -1,0 +1,130 @@
+---
+import CtaBand from "../components/CtaBand.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+---
+
+<PageLayout
+  title="Über uns — SynaptoCore"
+  description="SynaptoCore ist ein junges Schweizer Unternehmen aus Zürich. Zwei Gründer mit einem Ziel: Schweizer KMU von wiederkehrender Büroarbeit entlasten."
+>
+  <section id="ueber-uns" class="py-20 sm:py-28">
+    <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+      <div class="max-w-3xl">
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">Über uns</p>
+        <h1 class="mt-5 max-w-[20ch] text-4xl font-semibold leading-[1.06] tracking-[-0.03em] text-ink sm:text-5xl">
+          Zwei Gründer, ein Ziel: Schweizer KMU von Büroarbeit entlasten.
+        </h1>
+        <p class="mt-6 max-w-[58ch] text-lg leading-8 text-soft">
+          SynaptoCore ist ein junges Schweizer Unternehmen aus Zürich. Wir automatisieren wiederkehrende Büroarbeit in den Werkzeugen, die Betriebe bereits nutzen – sicher, nachvollziehbar und mit der Freigabe immer beim Kunden.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-line bg-surface py-20 sm:py-28">
+    <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+      <div class="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+        <div>
+          <p class="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">Wie wir angefangen haben</p>
+          <h2 class="mt-5 max-w-[14ch] text-4xl font-semibold leading-[1.06] tracking-[-0.03em] text-ink sm:text-5xl">
+            Aus dem Arbeitsalltag entstanden.
+          </h2>
+        </div>
+        <div class="max-w-[62ch] space-y-5 text-lg leading-8 text-soft">
+          <p>
+            Die Idee zu SynaptoCore entstand nicht am Reissbrett, sondern im Arbeitsalltag. Während unserer Ausbildung und im Betrieb haben wir aus erster Hand erlebt, wie viel Zeit täglich für wiederkehrende Aufgaben verloren geht: E-Mails sortieren, Angaben von einem System ins nächste übertragen, Termine nachfassen – Aufgaben, die wichtig sind, aber selten das, wofür ein Betrieb eigentlich brennt.
+          </p>
+          <p>
+            Wir waren überzeugt, dass sich moderne KI genau hier sinnvoll einsetzen lässt: nicht als weiteres kompliziertes Tool, sondern als stille Unterstützung in den Programmen, die ohnehin schon im Einsatz sind. Daraus ist SynaptoCore entstanden – ein junges Unternehmen mit Sitz in Zürich, das sich ganz auf die Entlastung Schweizer KMU konzentriert.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 sm:py-28">
+    <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+      <div class="max-w-2xl">
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">Wofür wir stehen</p>
+        <h2 class="mt-5 max-w-[20ch] text-4xl font-semibold leading-[1.06] tracking-[-0.03em] text-ink sm:text-5xl">
+          Technik, die entlastet – ohne die Kontrolle abzugeben.
+        </h2>
+        <p class="mt-6 max-w-[54ch] text-lg leading-8 text-soft">
+          Unser Ziel ist einfach: Betrieben Zeit zurückgeben, ohne dass sie ihre Arbeitsweise umstellen müssen. Automatisierung soll sich in den bestehenden Alltag einfügen – und der Mensch behält jederzeit die Entscheidung.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-5 sm:grid-cols-2">
+        <article class="rounded-xl border border-line bg-white p-6 shadow-card">
+          <span class="grid size-9 place-items-center rounded-lg bg-primary-tint text-primary" aria-hidden="true">
+            <svg viewBox="0 0 20 20" class="size-4.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 10 4 4 8-9"></path></svg>
+          </span>
+          <h3 class="mt-4 text-base font-semibold text-ink">Kontrolle bleibt beim Kunden</h3>
+          <p class="mt-2 text-sm leading-6 text-soft">Antworten und Aktionen werden vorbereitet, aber nie eigenmächtig ausgelöst. Sie geben frei, wir setzen um.</p>
+        </article>
+        <article class="rounded-xl border border-line bg-white p-6 shadow-card">
+          <span class="grid size-9 place-items-center rounded-lg bg-primary-tint text-primary" aria-hidden="true">
+            <svg viewBox="0 0 20 20" class="size-4.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 10 4 4 8-9"></path></svg>
+          </span>
+          <h3 class="mt-4 text-base font-semibold text-ink">Datensicherheit & Schweizer DSG</h3>
+          <p class="mt-2 text-sm leading-6 text-soft">Wir arbeiten DSG-konform und ausschliesslich über offizielle Business-APIs. Ihre Daten fliessen nicht in öffentliche KI-Modelle.</p>
+        </article>
+        <article class="rounded-xl border border-line bg-white p-6 shadow-card">
+          <span class="grid size-9 place-items-center rounded-lg bg-primary-tint text-primary" aria-hidden="true">
+            <svg viewBox="0 0 20 20" class="size-4.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 10 4 4 8-9"></path></svg>
+          </span>
+          <h3 class="mt-4 text-base font-semibold text-ink">Ehrlichkeit & Transparenz</h3>
+          <p class="mt-2 text-sm leading-6 text-soft">Klare Pakete, klare Preise, keine versteckten Kosten. Wir versprechen nur, was wir halten können.</p>
+        </article>
+        <article class="rounded-xl border border-line bg-white p-6 shadow-card">
+          <span class="grid size-9 place-items-center rounded-lg bg-primary-tint text-primary" aria-hidden="true">
+            <svg viewBox="0 0 20 20" class="size-4.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 10 4 4 8-9"></path></svg>
+          </span>
+          <h3 class="mt-4 text-base font-semibold text-ink">Persönliche Betreuung</h3>
+          <p class="mt-2 text-sm leading-6 text-soft">Bei uns sprechen Sie direkt mit den Gründern. Kurze Wege, echte Ansprechpartner, Betreuung auf Augenhöhe.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-surface py-20 sm:py-28">
+    <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+      <div class="max-w-2xl">
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">Die Gründer</p>
+        <h2 class="mt-5 text-4xl font-semibold leading-[1.06] tracking-[-0.03em] text-ink sm:text-5xl">
+          Wer hinter SynaptoCore steht.
+        </h2>
+      </div>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
+        <article class="flex flex-col rounded-xl border border-line bg-white p-7 shadow-card">
+          <div class="flex items-center gap-4">
+            <span class="grid size-14 shrink-0 place-items-center rounded-full bg-primary-tint font-mono text-lg font-semibold text-primary" aria-hidden="true">KK</span>
+            <div>
+              <h3 class="text-xl font-semibold tracking-[-0.02em] text-ink">Kaveen Kanesalingam</h3>
+              <p class="mt-0.5 font-mono text-xs uppercase tracking-[0.1em] text-faint">Technik & Entwicklung</p>
+            </div>
+          </div>
+          <p class="mt-5 leading-7 text-soft">
+            Kaveen verantwortet die technische Umsetzung bei SynaptoCore – von der Anbindung bestehender Systeme bis zu den Automatisierungen, die im Hintergrund laufen. Er absolviert seine Ausbildung zum Informatiker EFZ in der Fachrichtung Plattformentwicklung mit Berufsmaturität und bringt aktuelles technisches Handwerk direkt in die Praxis. Sein Anspruch: Lösungen, die zuverlässig laufen und sich nahtlos in vorhandene Tools einfügen.
+          </p>
+        </article>
+
+        <article class="flex flex-col rounded-xl border border-line bg-white p-7 shadow-card">
+          <div class="flex items-center gap-4">
+            <span class="grid size-14 shrink-0 place-items-center rounded-full bg-primary-tint font-mono text-lg font-semibold text-primary" aria-hidden="true">SC</span>
+            <div>
+              <h3 class="text-xl font-semibold tracking-[-0.02em] text-ink">Sowmian Chandrakumar</h3>
+              <p class="mt-0.5 font-mono text-xs uppercase tracking-[0.1em] text-faint">Beratung & Vertrieb</p>
+            </div>
+          </div>
+          <p class="mt-5 leading-7 text-soft">
+            Sowmian ist die erste Ansprechperson für Kundinnen und Kunden. Er führt die Erstgespräche, versteht die Abläufe im Betrieb und übersetzt sie in konkrete Automatisierungen. Als gelernter Kaufmann EFZ kennt er die administrative Seite eines Betriebs aus eigener Erfahrung und weiss, wo im Alltag am meisten Zeit verloren geht. Sein Fokus liegt auf ehrlicher Beratung und einer Umsetzung, die zum jeweiligen Betrieb passt.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
