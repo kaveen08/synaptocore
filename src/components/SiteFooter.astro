@@ -12,30 +12,27 @@ import BrandMark from "./BrandMark.astro";
         <p class="mt-4 max-w-[42ch] text-sm leading-6 text-white/70">Sichere Workflow-Automatisierung für Schweizer KMU – in den Tools, die bereits im Einsatz sind.</p>
       </div>
 
-      <div class="flex flex-col gap-10 sm:flex-row sm:gap-16">
-        <nav aria-label="Fussnavigation" class="grid grid-cols-2 gap-x-10 gap-y-1 text-sm font-medium sm:grid-cols-1 sm:gap-y-0">
-          <a class="inline-flex min-h-10 items-center text-white/70 transition-colors hover:text-white" href="/leistungen/">Leistungen</a>
-          <a class="inline-flex min-h-10 items-center text-white/70 transition-colors hover:text-white" href="/ablauf/">Ablauf</a>
-          <a class="inline-flex min-h-10 items-center text-white/70 transition-colors hover:text-white" href="/preise/">Preise</a>
-          <a class="inline-flex min-h-10 items-center text-white/70 transition-colors hover:text-white" href="/sicherheit/">Sicherheit</a>
-          <a class="inline-flex min-h-10 items-center text-white/70 transition-colors hover:text-white" href="/faq/">FAQ</a>
-          <a class="inline-flex min-h-10 items-center text-white/70 transition-colors hover:text-white" href="/ueber-uns/">Über uns</a>
-          <a class="inline-flex min-h-10 items-center text-white/70 transition-colors hover:text-white" href="/kontakt/">Kontakt</a>
-        </nav>
-
-        <div class="text-sm">
-          <p class="font-mono text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white/50">Kontakt</p>
-          <div class="mt-2 flex flex-col gap-1">
-            <a class="inline-flex min-h-10 items-center font-medium text-white/70 transition-colors hover:text-white" href="mailto:synaptocore@gmail.com">synaptocore@gmail.com</a>
-            <a class="inline-flex min-h-10 items-center font-medium text-white/70 transition-colors hover:text-white" href="tel:+41788090094">+41 78 809 00 94</a>
-          </div>
+      <div class="text-sm">
+        <p class="font-mono text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white/50">Kontakt</p>
+        <div class="mt-2 flex flex-col gap-1">
+          <a class="inline-flex min-h-10 items-center font-medium text-white/70 transition-colors hover:text-white" href="mailto:synaptocore@gmail.com">synaptocore@gmail.com</a>
+          <a class="inline-flex min-h-10 items-center font-medium text-white/70 transition-colors hover:text-white" href="tel:+41788090094">+41 78 809 00 94</a>
         </div>
       </div>
     </div>
 
-    <div class="flex flex-col justify-between gap-4 pt-7 text-xs text-white/60 sm:flex-row sm:items-center">
-      <span>© 2026 SynaptoCore · Zürich, Schweiz</span>
-      <span class="flex gap-5">
+    <div class="flex flex-col items-center justify-between gap-6 pt-7 text-xs text-white/60 lg:flex-row">
+      <span class="order-2 lg:order-1">© 2026 SynaptoCore · Zürich, Schweiz</span>
+      <nav aria-label="Fussnavigation" class="order-1 flex flex-wrap justify-center gap-x-5 gap-y-1 text-sm font-medium lg:order-2">
+        <a class="inline-flex min-h-9 items-center text-white/70 transition-colors hover:text-white" href="/leistungen/">Leistungen</a>
+        <a class="inline-flex min-h-9 items-center text-white/70 transition-colors hover:text-white" href="/ablauf/">Ablauf</a>
+        <a class="inline-flex min-h-9 items-center text-white/70 transition-colors hover:text-white" href="/preise/">Preise</a>
+        <a class="inline-flex min-h-9 items-center text-white/70 transition-colors hover:text-white" href="/sicherheit/">Sicherheit</a>
+        <a class="inline-flex min-h-9 items-center text-white/70 transition-colors hover:text-white" href="/faq/">FAQ</a>
+        <a class="inline-flex min-h-9 items-center text-white/70 transition-colors hover:text-white" href="/ueber-uns/">Über uns</a>
+        <a class="inline-flex min-h-9 items-center text-white/70 transition-colors hover:text-white" href="/kontakt/">Kontakt</a>
+      </nav>
+      <span class="order-3 flex gap-5">
         <button type="button" data-legal="impressum" class="inline-flex min-h-11 items-center underline decoration-white/30 underline-offset-4 transition-colors hover:text-white">Impressum</button>
         <button type="button" data-legal="agb" class="inline-flex min-h-11 items-center underline decoration-white/30 underline-offset-4 transition-colors hover:text-white">AGB</button>
         <button type="button" data-legal="datenschutz" class="inline-flex min-h-11 items-center underline decoration-white/30 underline-offset-4 transition-colors hover:text-white">Datenschutz</button>
