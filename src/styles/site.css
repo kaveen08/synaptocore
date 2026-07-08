@@ -123,6 +123,10 @@
     line-height: 1.35;
   }
 
+  .legal-copy > h3:first-child {
+    margin-top: 0;
+  }
+
   .legal-copy p,
   .legal-copy li {
     color: var(--color-soft);

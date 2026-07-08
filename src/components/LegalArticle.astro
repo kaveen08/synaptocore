@@ -1,0 +1,26 @@
+---
+export interface Props {
+  title: string;
+  updated: string;
+}
+
+const { title, updated } = Astro.props;
+---
+
+<section class="border-b border-line bg-surface py-16 sm:py-20">
+  <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+    <p class="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">Rechtliches</p>
+    <h1 class="mt-5 max-w-[24ch] text-4xl font-semibold leading-[1.08] tracking-[-0.03em] text-ink sm:text-5xl">
+      {title}
+    </h1>
+    <p class="mt-4 font-mono text-xs text-faint">{updated}</p>
+  </div>
+</section>
+
+<section class="py-12 sm:py-16">
+  <div class="mx-auto max-w-[860px] px-5 sm:px-8">
+    <article class="legal-copy">
+      <slot />
+    </article>
+  </div>
+</section>
