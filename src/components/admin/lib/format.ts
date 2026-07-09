@@ -24,3 +24,43 @@ export function relativeTime(value: string): string {
   if (days < 7) return `vor ${days} ${days === 1 ? "Tag" : "Tagen"}`;
   return new Date(value).toLocaleDateString("de-CH");
 }
+
+const appointmentFormatter = new Intl.DateTimeFormat("de-CH", {
+  weekday: "short",
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  timeZone: "Europe/Zurich",
+});
+
+const appointmentDateFormatter = new Intl.DateTimeFormat("de-CH", {
+  weekday: "long",
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+  timeZone: "Europe/Zurich",
+});
+
+const appointmentTimeFormatter = new Intl.DateTimeFormat("de-CH", {
+  hour: "2-digit",
+  minute: "2-digit",
+  timeZone: "Europe/Zurich",
+});
+
+export function appointmentDateTime(value: string): string {
+  return appointmentFormatter.format(new Date(value));
+}
+
+export function appointmentDate(value: string): string {
+  return appointmentDateFormatter.format(new Date(value));
+}
+
+export function appointmentTime(value: string): string {
+  return appointmentTimeFormatter.format(new Date(value));
+}
+
+export function toLocalDateInputValue(value: Date): string {
+  return value.toISOString().slice(0, 10);
+}

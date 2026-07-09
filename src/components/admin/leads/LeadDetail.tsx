@@ -1,5 +1,6 @@
 import {
   Building2,
+  CalendarDays,
   Check,
   CircleCheck,
   Clock3,
@@ -23,7 +24,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
-import { packageShort, packageTone, relativeTime } from "../lib/format";
+import { appointmentDateTime, packageShort, packageTone, relativeTime } from "../lib/format";
 import type { Folder, Lead, LeadMailEvent } from "../lib/types";
 
 const kindLabels: Record<string, string> = {
@@ -168,6 +169,11 @@ export function LeadDetail({
               {new Date(lead.created_at).toLocaleString("de-CH", { dateStyle: "medium", timeStyle: "short" })}
             </span>
           </ContactItem>
+          {lead.appointment_start && (
+            <ContactItem icon={CalendarDays} label={lead.appointment_status === "cancelled" ? "Termin abgesagt" : "Termin"}>
+              <span className="text-sm">{appointmentDateTime(lead.appointment_start)}</span>
+            </ContactItem>
+          )}
         </dl>
 
         <Separator className="my-6" />

@@ -1,5 +1,6 @@
 import {
   Archive,
+  CalendarDays,
   ChevronDown,
   Circle,
   Clock3,
@@ -77,6 +78,22 @@ export function Sidebar({
             <LayoutDashboard className="size-3.5" />
           </span>
           Übersicht
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onNavigate({ name: "appointments" })}
+          className={cn(
+            "mt-1 flex h-10 w-full items-center gap-3 rounded-lg px-2.5 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+            view.name === "appointments"
+              ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
+              : "text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground",
+          )}
+        >
+          <span className={cn("grid size-6 place-items-center rounded-md", view.name === "appointments" && "text-sidebar-primary")}>
+            <CalendarDays className="size-3.5" />
+          </span>
+          Termine
         </button>
 
         <div className="mt-6 mb-3 flex items-center justify-between px-2">

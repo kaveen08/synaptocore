@@ -1,11 +1,11 @@
-import { FolderInput, Mail, MailOpen, Reply } from "lucide-react";
+import { CalendarDays, FolderInput, Mail, MailOpen, Reply } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
-import { packageShort, packageTone, relativeTime } from "../lib/format";
+import { appointmentDateTime, packageShort, packageTone, relativeTime } from "../lib/format";
 import type { Folder, Lead } from "../lib/types";
 
 export function LeadRow({
@@ -67,6 +67,19 @@ export function LeadRow({
               {showFolder && folderName && (
                 <Badge variant="secondary" className="font-normal">
                   {folderName}
+                </Badge>
+              )}
+              {lead.appointment_start && (
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    "font-normal",
+                    lead.appointment_status === "cancelled"
+                      ? "border-amber-200 bg-amber-50 text-amber-700"
+                      : "border-blue-200 bg-blue-50 text-blue-700",
+                  )}
+                >
+                  <CalendarDays /> {appointmentDateTime(lead.appointment_start)}
                 </Badge>
               )}
             </div>

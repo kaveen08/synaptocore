@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import type { AdminView } from "../lib/types";
 
 function parseHash(): AdminView {
+  if (window.location.hash === "#/appointments") return { name: "appointments" };
   const match = window.location.hash.match(/^#\/leads\/(.+)$/);
   if (match) return { name: "leads", folderId: decodeURIComponent(match[1]) };
   return { name: "dashboard" };
 }
 
 function toHash(view: AdminView): string {
-  return view.name === "dashboard" ? "#/dashboard" : `#/leads/${encodeURIComponent(view.folderId)}`;
+  if (view.name === "dashboard") return "#/dashboard";
+  if (view.name === "appointments") return "#/appointments";
+  return `#/leads/${encodeURIComponent(view.folderId)}`;
 }
 
 /** View state synced to location.hash so refresh and back/forward work. */

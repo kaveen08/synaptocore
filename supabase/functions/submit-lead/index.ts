@@ -156,12 +156,22 @@ Deno.serve(async (request) => {
       }, 429);
     }
 
-    const { error } = await supabase.rpc("create_website_lead", {
+    const { error } = await supabase.rpc("create_appointment_lead", {
+      p_slot_id: payload.data.slotId,
       p_name: payload.data.name,
       p_company: payload.data.company,
       p_email: payload.data.email,
+      p_phone: payload.data.phone,
       p_message: payload.data.message,
     });
+    if (error?.message === "slot_unavailable") {
+      return json(request, {
+        ok: false,
+        code: "slot_unavailable",
+        message:
+          "Dieser Termin ist nicht mehr verfÃ¼gbar. Bitte wÃ¤hlen Sie einen anderen Termin.",
+      }, 409);
+    }
     if (error) throw error;
 
     return json(request, { ok: true }, 201);

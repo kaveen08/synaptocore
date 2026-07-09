@@ -1,4 +1,4 @@
-import { Download, LayoutDashboard, LogOut, Menu, Plus, RefreshCw, Search, X } from "lucide-react";
+import { CalendarDays, Download, LayoutDashboard, LogOut, Menu, Plus, RefreshCw, Search, X } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,11 +14,13 @@ export function Topbar({
   searchRef,
   refreshing,
   userEmail,
+  searchEnabled = true,
   onSearchChange,
   onRefresh,
   onExport,
   onCreateFolder,
   onNavigateDashboard,
+  onNavigateAppointments,
   onSignOut,
 }: {
   title: string;
@@ -28,11 +30,13 @@ export function Topbar({
   searchRef: React.RefObject<HTMLInputElement | null>;
   refreshing: boolean;
   userEmail?: string;
+  searchEnabled?: boolean;
   onSearchChange: (value: string) => void;
   onRefresh: () => void;
   onExport: () => void;
   onCreateFolder: () => void;
   onNavigateDashboard: () => void;
+  onNavigateAppointments: () => void;
   onSignOut: () => void;
 }) {
   return (
@@ -49,7 +53,7 @@ export function Topbar({
         {subtitle && <p className="mt-0.5 hidden text-xs text-muted-foreground sm:block">{subtitle}</p>}
       </div>
 
-      <div className="relative hidden w-full max-w-sm md:block">
+      {searchEnabled && <div className="relative hidden w-full max-w-sm md:block">
         <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           ref={searchRef}
@@ -70,7 +74,7 @@ export function Topbar({
             <X />
           </Button>
         )}
-      </div>
+      </div>}
 
       <Button
         variant="ghost"
@@ -92,6 +96,9 @@ export function Topbar({
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={onNavigateDashboard}>
             <LayoutDashboard /> Übersicht
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={onNavigateAppointments}>
+            <CalendarDays /> Termine
           </DropdownMenuItem>
           <DropdownMenuItem onClick={onExport}>
             <Download /> Exportieren

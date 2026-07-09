@@ -11,8 +11,11 @@ export type LeadForMail = {
   name: string;
   company: string;
   email: string;
+  phone?: string | null;
   message: string;
   created_at: string;
+  appointment_start?: string | null;
+  appointment_status?: "booked" | "cancelled" | null;
 };
 
 export type MimeMessageInput = MailContent & {
@@ -104,6 +107,19 @@ function emailShell(content: string): string {
 </html>`;
 }
 
+export function formatAppointment(value?: string | null): string | null {
+  if (!value) return null;
+  return new Intl.DateTimeFormat("de-CH", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Europe/Zurich",
+  }).format(new Date(value));
+}
+
 export function ownerNotification(
   lead: LeadForMail,
   inbox: string,
@@ -112,19 +128,28 @@ export function ownerNotification(
   const name = escapeHtml(lead.name);
   const company = escapeHtml(lead.company);
   const email = escapeHtml(lead.email);
+  const phone = lead.phone ? escapeHtml(lead.phone) : "";
   const message = escapeHtml(lead.message).replaceAll("\n", "<br>");
-  const subject = `Neue Website-Anfrage: ${lead.company} — ${lead.name}`;
+  const appointment = formatAppointment(lead.appointment_start);
+  const subject = appointment
+    ? `Neue Terminbuchung: ${lead.company} - ${lead.name}`
+    : `Neue Website-Anfrage: ${lead.company} - ${lead.name}`;
+  const detailLines = [
+    `Name: ${lead.name}`,
+    `Firma: ${lead.company}`,
+    `E-Mail: ${lead.email}`,
+    lead.phone ? `Telefon: ${lead.phone}` : null,
+    appointment ? `Termin: ${appointment}` : null,
+  ].filter((line): line is string => Boolean(line));
 
   return {
     to: inbox,
     replyTo: lead.email,
     subject,
     text: [
-      "Neue Website-Anfrage",
+      appointment ? "Neue Terminbuchung" : "Neue Website-Anfrage",
       "",
-      `Name: ${lead.name}`,
-      `Firma: ${lead.company}`,
-      `E-Mail: ${lead.email}`,
+      ...detailLines,
       "",
       "Anliegen:",
       lead.message,
@@ -134,12 +159,14 @@ export function ownerNotification(
       "Antworten Sie direkt auf diese E-Mail, um den Kunden zu erreichen.",
     ].join("\n"),
     html: emailShell(`
-      <p style="margin:0 0 8px;color:#5b6577;font-size:13px">Neue Website-Anfrage</p>
+      <p style="margin:0 0 8px;color:#5b6577;font-size:13px">${appointment ? "Neue Terminbuchung" : "Neue Website-Anfrage"}</p>
       <h1 style="margin:0 0 24px;font-size:24px;line-height:1.25">${company} · ${name}</h1>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:15px;line-height:1.6">
         <tr><td style="width:90px;color:#5b6577;padding:3px 0">Name</td><td>${name}</td></tr>
         <tr><td style="color:#5b6577;padding:3px 0">Firma</td><td>${company}</td></tr>
         <tr><td style="color:#5b6577;padding:3px 0">E-Mail</td><td><a href="mailto:${email}" style="color:#1d4ed8">${email}</a></td></tr>
+        ${phone ? `<tr><td style="color:#5b6577;padding:3px 0">Telefon</td><td>${phone}</td></tr>` : ""}
+        ${appointment ? `<tr><td style="color:#5b6577;padding:3px 0">Termin</td><td>${escapeHtml(appointment)}</td></tr>` : ""}
       </table>
       <hr style="border:0;border-top:1px solid #dfe3ea;margin:24px 0">
       <p style="margin:0 0 8px;color:#5b6577;font-size:13px">Anliegen</p>
@@ -157,7 +184,13 @@ export function customerConfirmation(
   inbox: string,
 ): MailContent {
   const name = escapeHtml(lead.name);
-  const subject = "Ihre Anfrage bei SynaptoCore ist eingegangen";
+  const appointment = formatAppointment(lead.appointment_start);
+  const subject = appointment
+    ? "Ihr Termin bei SynaptoCore ist reserviert"
+    : "Ihre Anfrage bei SynaptoCore ist eingegangen";
+  const appointmentText = appointment
+    ? `Ihr Erstgespräch ist für ${appointment} reserviert. Falls der Termin nicht passt, antworten Sie bitte direkt auf diese E-Mail.`
+    : "Vielen Dank für Ihre Anfrage. Wir prüfen Ihre Angaben und melden uns innerhalb von 24 Stunden mit einer ersten Einschätzung.";
 
   return {
     to: lead.email,
@@ -166,7 +199,7 @@ export function customerConfirmation(
     text: [
       `Guten Tag ${lead.name}`,
       "",
-      "Vielen Dank für Ihre Anfrage. Wir prüfen Ihre Angaben und melden uns innerhalb von 24 Stunden mit einer ersten Einschätzung.",
+      appointmentText,
       "",
       "Freundliche Grüsse",
       "SynaptoCore · Zürich",
@@ -174,8 +207,8 @@ export function customerConfirmation(
     ].join("\n"),
     html: emailShell(`
       <p style="margin:0 0 22px;font-size:16px;line-height:1.7">Guten Tag ${name}</p>
-      <h1 style="margin:0 0 18px;font-size:25px;line-height:1.25">Ihre Anfrage ist bei uns eingegangen.</h1>
-      <p style="margin:0;font-size:16px;line-height:1.7">Vielen Dank für Ihre Anfrage. Wir prüfen Ihre Angaben und melden uns innerhalb von 24 Stunden mit einer ersten Einschätzung.</p>
+      <h1 style="margin:0 0 18px;font-size:25px;line-height:1.25">${appointment ? "Ihr Termin ist reserviert." : "Ihre Anfrage ist bei uns eingegangen."}</h1>
+      <p style="margin:0;font-size:16px;line-height:1.7">${escapeHtml(appointmentText)}</p>
       <hr style="border:0;border-top:1px solid #dfe3ea;margin:26px 0">
       <p style="margin:0;color:#5b6577;font-size:14px;line-height:1.7">Freundliche Grüsse<br><strong style="color:#172033">SynaptoCore · Zürich</strong><br><a href="mailto:${
       escapeHtml(inbox)

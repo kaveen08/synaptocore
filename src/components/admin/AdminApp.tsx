@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 
 import { AccessDenied } from "./auth/AccessDenied";
+import { AppointmentsView } from "./appointments/AppointmentsView";
 import { LoadingScreen } from "./auth/LoadingScreen";
 import { LoginScreen } from "./auth/LoginScreen";
 import { DashboardView } from "./dashboard/DashboardView";
@@ -45,6 +46,10 @@ export default function AdminApp() {
   const selectedLead = data.leads.find((lead) => lead.id === selectedLeadId) ?? null;
   const unreadCount = data.leads.filter((lead) => lead.unread).length;
   const openCount = data.leads.filter((lead) => lead.folder_id !== "closed").length;
+  const bookedAppointmentCount = data.appointmentBookings.filter((booking) => booking.status === "booked").length;
+  const availableAppointmentCount = data.appointmentSlots.filter(
+    (slot) => !data.appointmentBookings.some((booking) => booking.slot_id === slot.id && booking.status === "booked"),
+  ).length;
   const modalOpen =
     mobileLeadOpen || replyOpen || Boolean(folderDialog) || Boolean(deleteLeadTarget) || Boolean(deleteFolderTarget);
 
@@ -55,6 +60,11 @@ export default function AdminApp() {
   }
 
   function handleOpenLeadFromDashboard(lead: Lead) {
+    setView({ name: "leads", folderId: lead.folder_id });
+    handleOpenLead(lead, window.innerWidth < 1024);
+  }
+
+  function handleOpenLeadFromAppointments(lead: Lead) {
     setView({ name: "leads", folderId: lead.folder_id });
     handleOpenLead(lead, window.innerWidth < 1024);
   }
@@ -159,26 +169,52 @@ export default function AdminApp() {
 
         <main className="flex min-w-0 flex-col overflow-hidden">
           <Topbar
-            title={view.name === "dashboard" ? "Übersicht" : activeFolder?.name ?? "Anfragen"}
-            subtitle={`${openCount} offen · ${unreadCount} ungelesen`}
+            title={
+              view.name === "dashboard"
+                ? "Übersicht"
+                : view.name === "appointments"
+                  ? "Termine"
+                  : activeFolder?.name ?? "Anfragen"
+            }
+            subtitle={
+              view.name === "appointments"
+                ? `${availableAppointmentCount} frei · ${bookedAppointmentCount} gebucht`
+                : `${openCount} offen · ${unreadCount} ungelesen`
+            }
             count={
               view.name === "leads"
                 ? data.leads.filter((lead) => lead.folder_id === activeFolder?.id).length
+                : view.name === "appointments"
+                  ? data.appointmentSlots.length
                 : undefined
             }
             searchTerm={searchTerm}
             searchRef={searchRef}
             refreshing={data.refreshing}
             userEmail={data.session?.user.email}
+            searchEnabled={view.name !== "appointments"}
             onSearchChange={handleSearchChange}
             onRefresh={() => void data.loadData(true)}
             onExport={data.exportData}
             onCreateFolder={() => openFolderDialog("create")}
             onNavigateDashboard={() => setView({ name: "dashboard" })}
+            onNavigateAppointments={() => setView({ name: "appointments" })}
             onSignOut={data.signOut}
           />
 
-          {view.name === "dashboard" ? (
+          {view.name === "appointments" ? (
+            <AppointmentsView
+              slots={data.appointmentSlots}
+              bookings={data.appointmentBookings}
+              leads={data.leads}
+              busy={data.mutationBusy}
+              onCreateSlot={data.createAppointmentSlot}
+              onDeleteSlot={(slot) => void data.deleteAppointmentSlot(slot)}
+              onCancelBooking={(booking) => void data.cancelAppointmentBooking(booking)}
+              onReopenBooking={(booking) => void data.reopenAppointmentBooking(booking)}
+              onOpenLead={handleOpenLeadFromAppointments}
+            />
+          ) : view.name === "dashboard" ? (
             <DashboardView
               leads={data.leads}
               folders={data.folders}

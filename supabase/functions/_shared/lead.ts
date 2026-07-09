@@ -1,7 +1,9 @@
 export type LeadSubmission = {
+  slotId: string;
   name: string;
   company: string;
   email: string;
+  phone: string;
   message: string;
   website: string;
   turnstileToken: string;
@@ -16,6 +18,8 @@ export type LeadValidationResult =
   };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/u;
+const UUID_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu;
 
 function stringValue(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -32,9 +36,11 @@ export function validateLeadSubmission(value: unknown): LeadValidationResult {
 
   const payload = value as Record<string, unknown>;
   const data: LeadSubmission = {
+    slotId: stringValue(payload.slotId),
     name: stringValue(payload.name),
     company: stringValue(payload.company),
     email: stringValue(payload.email).toLowerCase(),
+    phone: stringValue(payload.phone),
     message: stringValue(payload.message),
     website: stringValue(payload.website),
     turnstileToken: stringValue(payload.turnstileToken),
@@ -76,6 +82,23 @@ export function validateLeadSubmission(value: unknown): LeadValidationResult {
       ok: false,
       code: "invalid_request",
       message: "Ungültige Anfrage.",
+    };
+  }
+  if (!data.website && !UUID_PATTERN.test(data.slotId)) {
+    return {
+      ok: false,
+      code: "invalid_request",
+      message: "Bitte wÃ¤hlen Sie einen verfÃ¼gbaren Termin.",
+    };
+  }
+  if (
+    !data.website &&
+    (!data.phone || data.phone.length > 60 || /[\r\n]/u.test(data.phone))
+  ) {
+    return {
+      ok: false,
+      code: "invalid_request",
+      message: "Bitte geben Sie eine gÃ¼ltige Telefonnummer ein.",
     };
   }
   if (

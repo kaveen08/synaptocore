@@ -35,6 +35,11 @@ type Lead = LeadForMail & {
   replied_at: string | null;
 };
 
+type BookingForMail = {
+  status: "booked" | "cancelled";
+  appointment_slots: { starts_at: string } | { starts_at: string }[] | null;
+};
+
 function gmailCredentials(): GmailCredentials {
   return {
     clientId: requireEnvironment("GOOGLE_CLIENT_ID"),
@@ -52,6 +57,13 @@ function mailContent(
   return event.kind === "owner_notification"
     ? ownerNotification(lead, inbox, adminUrl)
     : customerConfirmation(lead, inbox);
+}
+
+function appointmentStart(booking: BookingForMail | null): string | null {
+  const slot = Array.isArray(booking?.appointment_slots)
+    ? booking?.appointment_slots[0]
+    : booking?.appointment_slots;
+  return slot?.starts_at ?? null;
 }
 
 function safeError(error: unknown): string {
@@ -99,14 +111,30 @@ async function processMailQueue(
   for (const rawEvent of data ?? []) {
     const event = rawEvent as MailEvent;
     try {
-      const { data: lead, error: leadError } = await supabase
-        .from("leads")
-        .select("id,name,company,email,message,created_at,folder_id,replied_at")
-        .eq("id", event.lead_id)
-        .single();
+      const [{ data: lead, error: leadError }, { data: booking, error: bookingError }] =
+        await Promise.all([
+          supabase
+            .from("leads")
+            .select("id,name,company,email,phone,message,created_at,folder_id,replied_at")
+            .eq("id", event.lead_id)
+            .single(),
+          supabase
+            .from("appointment_bookings")
+            .select("status,appointment_slots(starts_at)")
+            .eq("lead_id", event.lead_id)
+            .order("created_at", { ascending: false })
+            .limit(1)
+            .maybeSingle(),
+        ]);
       if (leadError) throw leadError;
+      if (bookingError) throw bookingError;
 
-      const content = mailContent(event, lead as Lead, inbox, adminUrl);
+      const leadForMail = {
+        ...(lead as Lead),
+        appointment_start: appointmentStart(booking as BookingForMail | null),
+        appointment_status: (booking as BookingForMail | null)?.status ?? null,
+      };
+      const content = mailContent(event, leadForMail, inbox, adminUrl);
       let result: GmailMessage | undefined;
 
       // A previous Gmail request may have succeeded before its database update

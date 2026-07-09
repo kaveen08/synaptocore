@@ -1,6 +1,72 @@
 export type Database = {
   public: {
     Tables: {
+      appointment_slots: {
+        Row: {
+          id: string;
+          starts_at: string;
+          deleted_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          starts_at: string;
+          deleted_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          starts_at?: string;
+          deleted_at?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      appointment_bookings: {
+        Row: {
+          id: string;
+          slot_id: string;
+          lead_id: string;
+          status: "booked" | "cancelled";
+          booked_at: string;
+          cancelled_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          slot_id: string;
+          lead_id: string;
+          status?: "booked" | "cancelled";
+          booked_at?: string;
+          cancelled_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          slot_id?: string;
+          lead_id?: string;
+          status?: "booked" | "cancelled";
+          booked_at?: string;
+          cancelled_at?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "appointment_bookings_slot_id_fkey";
+            columns: ["slot_id"];
+            isOneToOne: false;
+            referencedRelation: "appointment_slots";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "appointment_bookings_lead_id_fkey";
+            columns: ["lead_id"];
+            isOneToOne: true;
+            referencedRelation: "leads";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       folders: {
         Row: {
           id: string;
@@ -193,6 +259,24 @@ export type Database = {
           p_message: string;
         };
         Returns: string;
+      };
+      create_appointment_lead: {
+        Args: {
+          p_slot_id: string;
+          p_name: string;
+          p_company: string;
+          p_email: string;
+          p_phone: string;
+          p_message: string;
+        };
+        Returns: string;
+      };
+      list_available_appointment_slots: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          id: string;
+          starts_at: string;
+        }[];
       };
       record_lead_submission_attempt: {
         Args: {
