@@ -23,7 +23,7 @@ const publishableKey =
   ?? import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
 const COOLDOWN_MS = 60_000;
-const COOLDOWN_KEY = "synapto-last-submit";
+const COOLDOWN_KEY = "systemio-last-submit";
 const TIME_ZONE = "Europe/Zurich";
 const messages = [errorBox, verificationBox, cooldownBox, rateLimitBox, slotRequiredBox, slotUnavailableBox];
 const securityConfigured = submitButton?.dataset.securityConfigured === "true";

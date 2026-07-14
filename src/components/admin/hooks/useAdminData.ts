@@ -361,7 +361,7 @@ export function useAdminData() {
     const url = URL.createObjectURL(new Blob([content], { type: "application/json" }));
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = `synaptocore-leads-${new Date().toISOString().slice(0, 10)}.json`;
+    anchor.download = `systemio-leads-${new Date().toISOString().slice(0, 10)}.json`;
     anchor.click();
     URL.revokeObjectURL(url);
     toast.success("Export erstellt.");

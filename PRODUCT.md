@@ -6,7 +6,7 @@ product
 
 ## Users
 
-SynaptoCore staff who review incoming website enquiries, qualify prospects, move
+Systemio staff who review incoming website enquiries, qualify prospects, move
 leads through the sales workflow, and prepare follow-up messages. The dashboard
 is an internal daily-use tool, usually operated by one person but designed to
 remain clear when more staff are added.
@@ -35,7 +35,7 @@ look generated from a generic component gallery.
 2. Keep customer context visible while actions remain close at hand.
 3. Use familiar controls consistently so the interface disappears into the task.
 4. Explain empty, loading, and failure states with a clear next step.
-5. Preserve SynaptoCore's dark, precise identity without sacrificing readability.
+5. Preserve Systemio's dark, precise identity without sacrificing readability.
 
 ## Accessibility & Inclusion
 

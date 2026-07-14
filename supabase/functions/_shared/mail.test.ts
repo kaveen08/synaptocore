@@ -73,7 +73,7 @@ test("escapes untrusted lead values in HTML email bodies", () => {
   assert.equal(escapeHtml("<script>"), "&lt;script&gt;");
   const notification = ownerNotification(
     lead,
-    "info@synaptocore.ch",
+    "info@systemio.ch",
     "https://example.com/admin/",
   );
   assert.doesNotMatch(notification.html, /<script>/u);
@@ -83,25 +83,25 @@ test("escapes untrusted lead values in HTML email bodies", () => {
 test("sets the customer as Reply-To on the owner notification", () => {
   const notification = ownerNotification(
     lead,
-    "info@synaptocore.ch",
+    "info@systemio.ch",
     "https://example.com/admin/",
   );
-  assert.equal(notification.to, "info@synaptocore.ch");
+  assert.equal(notification.to, "info@systemio.ch");
   assert.equal(notification.replyTo, lead.email);
 });
 
 test("builds appointment confirmation copy and a multipart MIME message", () => {
-  const confirmation = customerConfirmation(lead, "info@synaptocore.ch");
+  const confirmation = customerConfirmation(lead, "info@systemio.ch");
   const mime = buildMimeMessage({
     ...confirmation,
-    fromEmail: "info@synaptocore.ch",
-    fromName: "SynaptoCore",
-    messageId: "<test@synaptocore.local>",
+    fromEmail: "info@systemio.ch",
+    fromName: "Systemio",
+    messageId: "<test@systemio.local>",
   });
   assert.match(confirmation.subject, /Termin/u);
   assert.match(confirmation.text, /reserviert/u);
   assert.match(mime, /Content-Type: multipart\/alternative/u);
-  assert.match(mime, /Message-ID: <test@synaptocore\.local>/u);
+  assert.match(mime, /Message-ID: <test@systemio\.local>/u);
 });
 
 test("formats appointment times for the Zurich booking flow", () => {

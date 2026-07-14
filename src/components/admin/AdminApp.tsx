@@ -120,7 +120,7 @@ export default function AdminApp() {
 
   function openReply(lead: Lead) {
     setSelectedLeadId(lead.id);
-    setReplySubject(`Re: Ihre Anfrage bei SynaptoCore — ${packageShort(lead.selected_package)}`);
+    setReplySubject(`Re: Ihre Anfrage bei Systemio — ${packageShort(lead.selected_package)}`);
     setReplyBody("");
     setReplyOpen(true);
   }

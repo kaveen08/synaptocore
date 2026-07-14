@@ -1,7 +1,12 @@
-export function BrandMark() {
+export function BrandMark({ inverted = false }: { inverted?: boolean }) {
   return (
-    <span className="relative grid size-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
-      <span className="size-2 rounded-[2px] bg-current" />
-    </span>
+    <img
+      src={inverted ? "/systemio-mark-white.svg" : "/systemio-mark.svg"}
+      alt=""
+      aria-hidden="true"
+      className="size-8 shrink-0 object-contain"
+      width="165"
+      height="165"
+    />
   );
 }

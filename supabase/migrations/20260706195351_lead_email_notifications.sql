@@ -69,7 +69,7 @@ create policy "Admins can view lead mail delivery"
 on public.lead_mail_events
 for select
 to authenticated
-using ((select synaptocore_private.is_admin()));
+using ((select systemio_private.is_admin()));
 
 create or replace function public.create_website_lead(
   p_name text,
@@ -122,13 +122,13 @@ begin
       v_lead_id,
       'owner_notification',
       now(),
-      format('<lead-%s-owner@synaptocore.local>', v_lead_id)
+      format('<lead-%s-owner@systemio.local>', v_lead_id)
     ),
     (
       v_lead_id,
       'customer_confirmation',
       now(),
-      format('<lead-%s-confirmation@synaptocore.local>', v_lead_id)
+      format('<lead-%s-confirmation@systemio.local>', v_lead_id)
     );
 
   return v_lead_id;
@@ -239,7 +239,7 @@ as $$
 declare
   v_updated integer;
 begin
-  if not (select synaptocore_private.is_admin()) then
+  if not (select systemio_private.is_admin()) then
     raise exception 'not authorized' using errcode = '42501';
   end if;
 

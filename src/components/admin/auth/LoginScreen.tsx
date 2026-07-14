@@ -29,8 +29,8 @@ export function LoginScreen() {
     <main className="grid min-h-svh bg-background lg:grid-cols-[minmax(320px,0.8fr)_minmax(520px,1.2fr)]">
       <section className="hidden bg-sidebar p-10 text-sidebar-foreground lg:flex lg:flex-col lg:justify-between">
         <div className="flex items-center gap-3 text-sm font-semibold">
-          <BrandMark />
-          SynaptoCore
+          <BrandMark inverted />
+          Systemio
         </div>
         <div className="max-w-sm">
           <p className="text-3xl font-semibold leading-tight tracking-[-0.035em] text-balance">
@@ -47,7 +47,7 @@ export function LoginScreen() {
         <form className="w-full max-w-sm" onSubmit={signIn}>
           <div className="mb-9 flex items-center gap-3 lg:hidden">
             <BrandMark />
-            <span className="text-sm font-semibold">SynaptoCore</span>
+            <span className="text-sm font-semibold">Systemio</span>
           </div>
           <div className="mb-7">
             <div className="mb-5 flex size-10 items-center justify-center rounded-lg border border-border bg-card">

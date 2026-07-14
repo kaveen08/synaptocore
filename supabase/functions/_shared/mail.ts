@@ -59,7 +59,7 @@ export function base64UrlEncode(value: string): string {
 }
 
 export function buildMimeMessage(input: MimeMessageInput): string {
-  const boundary = `synaptocore-${crypto.randomUUID()}`;
+  const boundary = `systemio-${crypto.randomUUID()}`;
   const headers = [
     `From: ${encodedHeader(input.fromName)} <${headerSafe(input.fromEmail)}>`,
     `To: ${headerSafe(input.to)}`,
@@ -186,8 +186,8 @@ export function customerConfirmation(
   const name = escapeHtml(lead.name);
   const appointment = formatAppointment(lead.appointment_start);
   const subject = appointment
-    ? "Ihr Termin bei SynaptoCore ist reserviert"
-    : "Ihre Anfrage bei SynaptoCore ist eingegangen";
+    ? "Ihr Termin bei Systemio ist reserviert"
+    : "Ihre Anfrage bei Systemio ist eingegangen";
   const appointmentText = appointment
     ? `Ihr Erstgespräch ist für ${appointment} reserviert. Falls der Termin nicht passt, antworten Sie bitte direkt auf diese E-Mail.`
     : "Vielen Dank für Ihre Anfrage. Wir prüfen Ihre Angaben und melden uns innerhalb von 24 Stunden mit einer ersten Einschätzung.";
@@ -202,15 +202,15 @@ export function customerConfirmation(
       appointmentText,
       "",
       "Freundliche Grüsse",
-      "SynaptoCore · Zürich",
-      "info@synaptocore.ch · +41 78 809 00 94",
+      "Systemio · Zürich",
+      "info@systemio.ch · +41 78 809 00 94",
     ].join("\n"),
     html: emailShell(`
       <p style="margin:0 0 22px;font-size:16px;line-height:1.7">Guten Tag ${name}</p>
       <h1 style="margin:0 0 18px;font-size:25px;line-height:1.25">${appointment ? "Ihr Termin ist reserviert." : "Ihre Anfrage ist bei uns eingegangen."}</h1>
       <p style="margin:0;font-size:16px;line-height:1.7">${escapeHtml(appointmentText)}</p>
       <hr style="border:0;border-top:1px solid #dfe3ea;margin:26px 0">
-      <p style="margin:0;color:#5b6577;font-size:14px;line-height:1.7">Freundliche Grüsse<br><strong style="color:#172033">SynaptoCore · Zürich</strong><br><a href="mailto:${
+      <p style="margin:0;color:#5b6577;font-size:14px;line-height:1.7">Freundliche Grüsse<br><strong style="color:#172033">Systemio · Zürich</strong><br><a href="mailto:${
       escapeHtml(inbox)
     }" style="color:#1d4ed8">${escapeHtml(inbox)}</a> · +41 78 809 00 94</p>
     `),

@@ -49,15 +49,15 @@ create policy "Admins can manage appointment slots"
 on public.appointment_slots
 for all
 to authenticated
-using ((select synaptocore_private.is_admin()))
-with check ((select synaptocore_private.is_admin()));
+using ((select systemio_private.is_admin()))
+with check ((select systemio_private.is_admin()));
 
 create policy "Admins can manage appointment bookings"
 on public.appointment_bookings
 for all
 to authenticated
-using ((select synaptocore_private.is_admin()))
-with check ((select synaptocore_private.is_admin()));
+using ((select systemio_private.is_admin()))
+with check ((select systemio_private.is_admin()));
 
 create or replace function public.list_available_appointment_slots()
 returns table (
@@ -178,13 +178,13 @@ begin
       v_lead_id,
       'owner_notification',
       now(),
-      format('<lead-%s-owner@synaptocore.local>', v_lead_id)
+      format('<lead-%s-owner@systemio.local>', v_lead_id)
     ),
     (
       v_lead_id,
       'customer_confirmation',
       now(),
-      format('<lead-%s-confirmation@synaptocore.local>', v_lead_id)
+      format('<lead-%s-confirmation@systemio.local>', v_lead_id)
     );
 
   return v_lead_id;

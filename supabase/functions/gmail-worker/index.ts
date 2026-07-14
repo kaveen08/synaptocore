@@ -156,8 +156,8 @@ async function processMailQueue(
         ...content,
         fromEmail: inbox,
         fromName: event.kind === "owner_notification"
-          ? "SynaptoCore Website"
-          : "SynaptoCore",
+          ? "Systemio Website"
+          : "Systemio",
         messageId: event.rfc_message_id,
       });
 
@@ -311,7 +311,7 @@ Deno.serve(async (request) => {
   try {
     const supabase = adminClient();
     const inbox = Deno.env.get("GMAIL_ACCOUNT")?.trim() ||
-      "info@synaptocore.ch";
+      "info@systemio.ch";
     const adminUrl = requireEnvironment("ADMIN_URL");
     const accessToken = await getGmailAccessToken(gmailCredentials());
 

@@ -56,9 +56,9 @@ export function Sidebar({
   return (
     <aside className="hidden min-h-0 flex-col bg-sidebar text-sidebar-foreground lg:flex">
       <div className="flex h-16 items-center gap-3 border-b border-sidebar-border px-5">
-        <BrandMark />
+        <BrandMark inverted />
         <div>
-          <p className="text-sm font-semibold leading-none">SynaptoCore</p>
+          <p className="text-sm font-semibold leading-none">Systemio</p>
           <p className="mt-1 text-[11px] text-sidebar-foreground/60">Lead Operations</p>
         </div>
       </div>

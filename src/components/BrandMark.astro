@@ -8,11 +8,10 @@ interface Props {
 const { compact = false, inverted = false } = Astro.props;
 ---
 
-<span class:list={["inline-flex items-center gap-2.5 font-semibold tracking-[-0.02em]", inverted ? "text-white" : "text-ink"]}>
-  <span class="relative inline-flex size-5 items-center justify-center" aria-hidden="true">
-    <span class:list={["absolute h-0.5 w-5", inverted ? "bg-white" : "bg-primary"]}></span>
-    <span class:list={["absolute left-0 size-1.5 rounded-[3px]", inverted ? "bg-white" : "bg-primary"]}></span>
-    <span class:list={["absolute right-0 size-1.5 rounded-[3px] border", inverted ? "border-white bg-navy" : "border-primary bg-bg"]}></span>
-  </span>
-  <span class:list={["text-[1.02rem]", compact && "sr-only sm:not-sr-only"]}>SynaptoCore</span>
-</span>
+<img
+  src={inverted ? "/systemio-logo-white.svg" : "/systemio-logo.svg"}
+  alt="Systemio"
+  class:list={["h-7 w-auto", compact && "sm:h-7"]}
+  width="690"
+  height="170"
+/>

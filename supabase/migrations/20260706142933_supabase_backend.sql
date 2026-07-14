@@ -1,16 +1,16 @@
--- SynaptoCore backend: public lead intake and authenticated admin dashboard.
+-- Systemio backend: public lead intake and authenticated admin dashboard.
 
-create schema if not exists synaptocore_private;
+create schema if not exists systemio_private;
 
-create table synaptocore_private.admin_users (
+create table systemio_private.admin_users (
   user_id uuid primary key references auth.users (id) on delete cascade,
   created_at timestamptz not null default now()
 );
 
-revoke all on schema synaptocore_private from public, anon, authenticated;
-revoke all on table synaptocore_private.admin_users from public, anon, authenticated;
+revoke all on schema systemio_private from public, anon, authenticated;
+revoke all on table systemio_private.admin_users from public, anon, authenticated;
 
-create or replace function synaptocore_private.is_admin()
+create or replace function systemio_private.is_admin()
 returns boolean
 language sql
 stable
@@ -21,14 +21,14 @@ as $$
     (select auth.uid()) is not null
     and exists (
       select 1
-      from synaptocore_private.admin_users
+      from systemio_private.admin_users
       where user_id = (select auth.uid())
     );
 $$;
 
-revoke all on function synaptocore_private.is_admin() from public;
-grant usage on schema synaptocore_private to authenticated;
-grant execute on function synaptocore_private.is_admin() to authenticated;
+revoke all on function systemio_private.is_admin() from public;
+grant usage on schema systemio_private to authenticated;
+grant execute on function systemio_private.is_admin() to authenticated;
 
 create table public.folders (
   id text primary key,
@@ -100,15 +100,15 @@ create policy "Admins can manage folders"
 on public.folders
 for all
 to authenticated
-using ((select synaptocore_private.is_admin()))
-with check ((select synaptocore_private.is_admin()));
+using ((select systemio_private.is_admin()))
+with check ((select systemio_private.is_admin()));
 
 create policy "Admins can manage leads"
 on public.leads
 for all
 to authenticated
-using ((select synaptocore_private.is_admin()))
-with check ((select synaptocore_private.is_admin()));
+using ((select systemio_private.is_admin()))
+with check ((select systemio_private.is_admin()));
 
-comment on table synaptocore_private.admin_users is
-  'Allowlist for users who may access the SynaptoCore admin dashboard.';
+comment on table systemio_private.admin_users is
+  'Allowlist for users who may access the Systemio admin dashboard.';

@@ -17,5 +17,5 @@ export function buildDraft(lead: Lead): string {
     body = `vielen Dank für Ihre Anfrage zum Managed Service.\n\n${context}Gerne besprechen wir Ihre bestehende Umgebung und den laufenden Betreuungsbedarf in einem kurzen Call. Wann erreichen wir Sie am besten?`;
   }
 
-  return `Guten Tag ${lead.name}\n\n${body}\n\nFreundliche Grüsse\nSynaptoCore · Zürich\ninfo@synaptocore.ch · +41 78 809 00 94`;
+  return `Guten Tag ${lead.name}\n\n${body}\n\nFreundliche Grüsse\nSystemio · Zürich\ninfo@systemio.ch · +41 78 809 00 94`;
 }

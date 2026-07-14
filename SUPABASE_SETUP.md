@@ -42,7 +42,7 @@ user that should access `/admin/`. Then run this in the SQL Editor, replacing
 the email:
 
 ```sql
-insert into synaptocore_private.admin_users (user_id)
+insert into systemio_private.admin_users (user_id)
 select id
 from auth.users
 where email = 'admin@example.com'
@@ -87,14 +87,14 @@ Cloudflare Turnstile and Google OAuth credentials; never commit those values.
 ### Gmail API
 
 1. In Google Cloud, enable the Gmail API and create an OAuth client for
-   `info@synaptocore.ch`.
+   `info@systemio.ch`.
 2. Request offline access with the narrow scopes
    `https://www.googleapis.com/auth/gmail.send` and
    `https://www.googleapis.com/auth/gmail.metadata`.
 3. Put the consent app in production and complete any Google verification
    required for durable restricted-scope access. Do not rely on a seven-day
    testing refresh token.
-4. Generate one refresh token for `info@synaptocore.ch`.
+4. Generate one refresh token for `info@systemio.ch`.
 
 Create an ignored file such as `supabase/functions/.env.production` from
 `supabase/functions/.env.example`, replace every placeholder, then upload it:
@@ -122,12 +122,12 @@ match the deployed project URL and the `AUTOMATION_SECRET` function secret:
 ```sql
 select vault.create_secret(
   'https://kcynzqtltrgtgwbhsjsc.supabase.co',
-  'synaptocore_project_url'
+  'systemio_project_url'
 );
 
 select vault.create_secret(
   'REPLACE_WITH_AUTOMATION_SECRET',
-  'synaptocore_automation_secret'
+  'systemio_automation_secret'
 );
 ```
 
@@ -138,21 +138,21 @@ create extension if not exists pg_cron;
 create extension if not exists pg_net;
 
 select cron.schedule(
-  'synaptocore-gmail-worker',
+  'systemio-gmail-worker',
   '* * * * *',
   $$
   select net.http_post(
     url := (
       select decrypted_secret
       from vault.decrypted_secrets
-      where name = 'synaptocore_project_url'
+      where name = 'systemio_project_url'
     ) || '/functions/v1/gmail-worker',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
       'x-automation-secret', (
         select decrypted_secret
         from vault.decrypted_secrets
-        where name = 'synaptocore_automation_secret'
+        where name = 'systemio_automation_secret'
       )
     ),
     body := '{}'::jsonb
