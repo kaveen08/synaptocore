@@ -122,7 +122,28 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
                   data-action="contact"
                   data-theme="light"
                   data-size="flexible"
+                  data-retry="auto"
+                  data-retry-interval="8000"
+                  data-callback="onTurnstileSuccess"
+                  data-expired-callback="onTurnstileExpired"
+                  data-error-callback="onTurnstileError"
                 ></div>
+                <div
+                  id="turnstile-connection-error"
+                  class="mt-3 rounded-lg border border-warn/40 bg-warn-tint p-3 text-sm text-warn"
+                  role="status"
+                  aria-live="polite"
+                  hidden
+                >
+                  <p id="turnstile-connection-error-text"></p>
+                  <button
+                    id="turnstile-retry"
+                    type="button"
+                    class="mt-2 inline-flex min-h-10 items-center font-semibold underline decoration-current underline-offset-4 transition-opacity hover:opacity-75"
+                  >
+                    Sicherheitsprüfung erneut laden
+                  </button>
+                </div>
               ) : (
                 <p class="rounded-lg border border-danger/40 bg-danger-tint p-3 text-sm text-danger" role="alert">
                   Die Sicherheitsprüfung ist noch nicht konfiguriert. Bitte kontaktieren Sie uns direkt per E-Mail.
@@ -221,5 +242,41 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       </div>
     </div>
   </div>
+  <script is:inline>
+    const turnstileError = document.querySelector("#turnstile-connection-error");
+    const turnstileErrorText = document.querySelector("#turnstile-connection-error-text");
+
+    function hideTurnstileError() {
+      if (turnstileError) turnstileError.hidden = true;
+    }
+
+    window.onTurnstileSuccess = function () {
+      hideTurnstileError();
+    };
+
+    window.onTurnstileExpired = function () {
+      if (!turnstileError || !turnstileErrorText) return;
+      turnstileErrorText.textContent = "Die Sicherheitsprüfung ist abgelaufen. Laden Sie sie bitte erneut, bevor Sie die Anfrage senden.";
+      turnstileError.hidden = false;
+    };
+
+    window.onTurnstileError = function (errorCode) {
+      if (!turnstileError || !turnstileErrorText) return false;
+
+      const code = String(errorCode);
+      turnstileErrorText.textContent = code.startsWith("110")
+        ? "Die Sicherheitsprüfung ist auf dieser Website noch nicht richtig eingerichtet. Bitte kontaktieren Sie uns direkt per E-Mail."
+        : "Die Sicherheitsprüfung kann keine Verbindung zu Cloudflare herstellen. Deaktivieren Sie bitte Werbe- oder Tracking-Blocker, VPN oder Proxy und laden Sie die Prüfung erneut. Alternativ erreichen Sie uns direkt per E-Mail.";
+      turnstileError.hidden = false;
+
+      // Returning false keeps Cloudflare's built-in retry behaviour active.
+      return false;
+    };
+
+    document.querySelector("#turnstile-retry")?.addEventListener("click", function () {
+      hideTurnstileError();
+      window.turnstile?.reset();
+    });
+  </script>
   <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </section>
