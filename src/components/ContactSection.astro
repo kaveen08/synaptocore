@@ -1,7 +1,3 @@
----
-const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
----
-
 <section id="kontakt" class="border-t border-line bg-surface py-20 sm:py-28">
   <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
     <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
@@ -114,43 +110,6 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
               <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off" />
             </div>
 
-            <div class="sm:col-span-2">
-              {turnstileSiteKey ? (
-                <div
-                  class="cf-turnstile"
-                  data-sitekey={turnstileSiteKey}
-                  data-action="contact"
-                  data-theme="light"
-                  data-size="flexible"
-                  data-retry="auto"
-                  data-retry-interval="8000"
-                  data-callback="onTurnstileSuccess"
-                  data-expired-callback="onTurnstileExpired"
-                  data-error-callback="onTurnstileError"
-                ></div>
-                <div
-                  id="turnstile-connection-error"
-                  class="mt-3 rounded-lg border border-warn/40 bg-warn-tint p-3 text-sm text-warn"
-                  role="status"
-                  aria-live="polite"
-                  hidden
-                >
-                  <p id="turnstile-connection-error-text"></p>
-                  <button
-                    id="turnstile-retry"
-                    type="button"
-                    class="mt-2 inline-flex min-h-10 items-center font-semibold underline decoration-current underline-offset-4 transition-opacity hover:opacity-75"
-                  >
-                    Sicherheitsprüfung erneut laden
-                  </button>
-                </div>
-              ) : (
-                <p class="rounded-lg border border-danger/40 bg-danger-tint p-3 text-sm text-danger" role="alert">
-                  Die Sicherheitsprüfung ist noch nicht konfiguriert. Bitte kontaktieren Sie uns direkt per E-Mail.
-                </p>
-              )}
-            </div>
-
             <p
               class="sm:col-span-2 rounded-lg border border-warn/40 bg-warn-tint p-3 text-sm text-warn"
               id="form-slot-required"
@@ -182,16 +141,6 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
               Ihre Anfrage konnte nicht gesendet werden. Die Eingaben bleiben erhalten – bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.
             </p>
             <p
-              class="sm:col-span-2 rounded-lg border border-danger/40 bg-danger-tint p-3 text-sm text-danger"
-              id="form-verification-error"
-              role="alert"
-              aria-live="assertive"
-              tabindex="-1"
-              hidden
-            >
-              Die Sicherheitsprüfung ist abgelaufen oder fehlgeschlagen. Bitte bestätigen Sie sie erneut.
-            </p>
-            <p
               class="sm:col-span-2 rounded-lg border border-warn/40 bg-warn-tint p-3 text-sm text-warn"
               id="form-cooldown"
               role="status"
@@ -217,8 +166,6 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
               <button
                 type="submit"
                 class="inline-flex min-h-12 w-full shrink-0 items-center justify-center rounded-lg bg-primary px-6 text-sm font-bold text-white shadow-card transition-colors duration-200 hover:bg-primary-strong disabled:opacity-60 sm:w-auto"
-                data-security-configured={turnstileSiteKey ? "true" : "false"}
-                disabled={!turnstileSiteKey}
               >
                 Termin buchen
               </button>
@@ -242,41 +189,4 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       </div>
     </div>
   </div>
-  <script is:inline>
-    const turnstileError = document.querySelector("#turnstile-connection-error");
-    const turnstileErrorText = document.querySelector("#turnstile-connection-error-text");
-
-    function hideTurnstileError() {
-      if (turnstileError) turnstileError.hidden = true;
-    }
-
-    window.onTurnstileSuccess = function () {
-      hideTurnstileError();
-    };
-
-    window.onTurnstileExpired = function () {
-      if (!turnstileError || !turnstileErrorText) return;
-      turnstileErrorText.textContent = "Die Sicherheitsprüfung ist abgelaufen. Laden Sie sie bitte erneut, bevor Sie die Anfrage senden.";
-      turnstileError.hidden = false;
-    };
-
-    window.onTurnstileError = function (errorCode) {
-      if (!turnstileError || !turnstileErrorText) return false;
-
-      const code = String(errorCode);
-      turnstileErrorText.textContent = code.startsWith("110")
-        ? "Die Sicherheitsprüfung ist auf dieser Website noch nicht richtig eingerichtet. Bitte kontaktieren Sie uns direkt per E-Mail."
-        : "Die Sicherheitsprüfung kann keine Verbindung zu Cloudflare herstellen. Deaktivieren Sie bitte Werbe- oder Tracking-Blocker, VPN oder Proxy und laden Sie die Prüfung erneut. Alternativ erreichen Sie uns direkt per E-Mail.";
-      turnstileError.hidden = false;
-
-      // Returning false keeps Cloudflare's built-in retry behaviour active.
-      return false;
-    };
-
-    document.querySelector("#turnstile-retry")?.addEventListener("click", function () {
-      hideTurnstileError();
-      window.turnstile?.reset();
-    });
-  </script>
-  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </section>

@@ -70,19 +70,7 @@ npm run build
 
 The notification code is versioned in `supabase/functions/submit-lead` and
 `supabase/functions/gmail-worker`. Production activation additionally requires
-Cloudflare Turnstile and Google OAuth credentials; never commit those values.
-
-### Cloudflare Turnstile
-
-1. Create a Turnstile widget for the production website and restrict it to the
-   website hostnames.
-2. Add its public site key to the website build environment:
-
-   ```env
-   PUBLIC_TURNSTILE_SITE_KEY=...
-   ```
-
-3. Keep the Turnstile secret for the Supabase function secrets below.
+Google OAuth credentials; never commit those values.
 
 ### Gmail API
 
@@ -105,8 +93,8 @@ npx supabase functions deploy submit-lead gmail-worker --use-api
 ```
 
 `RATE_LIMIT_SECRET` and `AUTOMATION_SECRET` must be different random values of
-at least 32 bytes. `ALLOWED_ORIGINS` and `TURNSTILE_HOSTNAMES` are comma-separated
-production values. `ADMIN_URL` must be the absolute production `/admin/` URL.
+at least 32 bytes. `ALLOWED_ORIGINS` is a comma-separated list of production
+origins. `ADMIN_URL` must be the absolute production `/admin/` URL.
 
 ### Database and scheduled worker
 

@@ -6,7 +6,6 @@ type AppointmentSlot = {
 const form = document.querySelector<HTMLFormElement>("#anfrage-form");
 const success = document.querySelector<HTMLElement>("#form-success");
 const errorBox = document.querySelector<HTMLElement>("#form-error");
-const verificationBox = document.querySelector<HTMLElement>("#form-verification-error");
 const cooldownBox = document.querySelector<HTMLElement>("#form-cooldown");
 const rateLimitBox = document.querySelector<HTMLElement>("#form-rate-limit");
 const slotRequiredBox = document.querySelector<HTMLElement>("#form-slot-required");
@@ -25,19 +24,10 @@ const publishableKey =
 const COOLDOWN_MS = 60_000;
 const COOLDOWN_KEY = "systemio-last-submit";
 const TIME_ZONE = "Europe/Zurich";
-const messages = [errorBox, verificationBox, cooldownBox, rateLimitBox, slotRequiredBox, slotUnavailableBox];
-const securityConfigured = submitButton?.dataset.securityConfigured === "true";
+const messages = [errorBox, cooldownBox, rateLimitBox, slotRequiredBox, slotUnavailableBox];
 
 let loading = false;
 let selectedSlotId = "";
-
-declare global {
-  interface Window {
-    turnstile?: {
-      reset: () => void;
-    };
-  }
-}
 
 function inputValue(selector: string): string {
   return document.querySelector<HTMLInputElement | HTMLTextAreaElement>(selector)?.value.trim() ?? "";
@@ -86,7 +76,7 @@ function showSuccess(): void {
 
 function updateSubmitState(): void {
   if (!submitButton) return;
-  submitButton.disabled = loading || !securityConfigured || !selectedSlotId;
+  submitButton.disabled = loading || !selectedSlotId;
   submitButton.textContent = loading ? "Termin wird gebucht ..." : "Termin buchen";
 }
 
@@ -250,12 +240,6 @@ form?.addEventListener("submit", async (event) => {
     return;
   }
 
-  const turnstileToken = inputValue('input[name="cf-turnstile-response"]');
-  if (!turnstileToken) {
-    showMessage(verificationBox);
-    return;
-  }
-
   if (!supabaseUrl || !publishableKey) {
     showMessage(errorBox);
     return;
@@ -281,7 +265,6 @@ form?.addEventListener("submit", async (event) => {
         phone: inputValue("#f-telefon"),
         message: inputValue("#f-nachricht"),
         website: inputValue("#f-website"),
-        turnstileToken,
       }),
       signal: controller.signal,
     });
@@ -291,15 +274,12 @@ form?.addEventListener("submit", async (event) => {
     };
 
     if (!response.ok || !result.ok) {
-      window.turnstile?.reset();
       setLoading(false);
       if (response.status === 409 || result.code === "slot_unavailable") {
         showMessage(slotUnavailableBox);
         void loadSlots();
       } else if (response.status === 429 || result.code === "rate_limited") {
         showMessage(rateLimitBox);
-      } else if (result.code === "verification_failed") {
-        showMessage(verificationBox);
       } else {
         showMessage(errorBox);
       }
@@ -310,7 +290,6 @@ form?.addEventListener("submit", async (event) => {
     showSuccess();
   } catch (error) {
     console.error("Die Anfrage konnte nicht gespeichert werden:", error);
-    window.turnstile?.reset();
     setLoading(false);
     showMessage(errorBox);
   } finally {

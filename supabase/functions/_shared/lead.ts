@@ -6,14 +6,13 @@ export type LeadSubmission = {
   phone: string;
   message: string;
   website: string;
-  turnstileToken: string;
 };
 
 export type LeadValidationResult =
   | { ok: true; data: LeadSubmission }
   | {
     ok: false;
-    code: "invalid_request" | "verification_failed";
+    code: "invalid_request";
     message: string;
   };
 
@@ -43,7 +42,6 @@ export function validateLeadSubmission(value: unknown): LeadValidationResult {
     phone: stringValue(payload.phone),
     message: stringValue(payload.message),
     website: stringValue(payload.website),
-    turnstileToken: stringValue(payload.turnstileToken),
   };
 
   if (!data.name || data.name.length > 160) {
@@ -101,16 +99,5 @@ export function validateLeadSubmission(value: unknown): LeadValidationResult {
       message: "Bitte geben Sie eine gÃ¼ltige Telefonnummer ein.",
     };
   }
-  if (
-    !data.website &&
-    (!data.turnstileToken || data.turnstileToken.length > 2_048)
-  ) {
-    return {
-      ok: false,
-      code: "verification_failed",
-      message: "Bitte bestätigen Sie, dass Sie kein Roboter sind.",
-    };
-  }
-
   return { ok: true, data };
 }

@@ -1,13 +1,6 @@
 import { validateLeadSubmission } from "../_shared/lead.ts";
 import { adminClient, requireEnvironment } from "../_shared/supabase.ts";
 
-type TurnstileResult = {
-  success: boolean;
-  action?: string;
-  hostname?: string;
-  "error-codes"?: string[];
-};
-
 function corsHeaders(request: Request): Record<string, string> {
   const origin = request.headers.get("origin") ?? "*";
   const allowed = (Deno.env.get("ALLOWED_ORIGINS") ?? "")
@@ -70,39 +63,6 @@ async function hashIp(ip: string): Promise<string> {
   ).join("");
 }
 
-async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
-  const response = await fetch(
-    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      signal: AbortSignal.timeout(8_000),
-      body: JSON.stringify({
-        secret: requireEnvironment("TURNSTILE_SECRET_KEY"),
-        response: token,
-        remoteip: ip === "unknown" ? undefined : ip,
-        idempotency_key: crypto.randomUUID(),
-      }),
-    },
-  );
-  if (!response.ok) return false;
-
-  const result = await response.json() as TurnstileResult;
-  if (!result.success || (result.action && result.action !== "contact")) {
-    return false;
-  }
-
-  const allowedHostnames = (Deno.env.get("TURNSTILE_HOSTNAMES") ?? "")
-    .split(",")
-    .map((value) => value.trim().toLowerCase())
-    .filter(Boolean);
-  return !allowedHostnames.length ||
-    Boolean(
-      result.hostname &&
-        allowedHostnames.includes(result.hostname.toLowerCase()),
-    );
-}
-
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: corsHeaders(request) });
@@ -128,15 +88,6 @@ Deno.serve(async (request) => {
     if (payload.data.website) return json(request, { ok: true }, 201);
 
     const ip = clientIp(request);
-    if (!await verifyTurnstile(payload.data.turnstileToken, ip)) {
-      return json(request, {
-        ok: false,
-        code: "verification_failed",
-        message:
-          "Die Sicherheitsprüfung ist abgelaufen oder fehlgeschlagen. Bitte versuchen Sie es erneut.",
-      }, 400);
-    }
-
     const supabase = adminClient();
     const { data: allowed, error: limitError } = await supabase.rpc(
       "record_lead_submission_attempt",

@@ -19,7 +19,6 @@ const validPayload = {
   phone: "+41 78 809 00 94",
   message: "Wir verlieren Zeit beim Übertragen von Anfragen.",
   website: "",
-  turnstileToken: "verified-token",
 };
 
 const lead = {
@@ -40,13 +39,9 @@ test("normalizes and validates a lead submission", () => {
   if (result.ok) assert.equal(result.data.email, "max@muster.ch");
 });
 
-test("rejects malformed email and missing Turnstile tokens", () => {
+test("rejects malformed email addresses", () => {
   assert.equal(
     validateLeadSubmission({ ...validPayload, email: "invalid" }).ok,
-    false,
-  );
-  assert.equal(
-    validateLeadSubmission({ ...validPayload, turnstileToken: "" }).ok,
     false,
   );
 });
@@ -56,14 +51,13 @@ test("requires a valid slot and phone number for real bookings", () => {
   assert.equal(validateLeadSubmission({ ...validPayload, phone: "" }).ok, false);
 });
 
-test("allows a honeypot submission to be discarded without booking fields or Turnstile", () => {
+test("allows a honeypot submission to be discarded without booking fields", () => {
   assert.equal(
     validateLeadSubmission({
       ...validPayload,
       slotId: "",
       phone: "",
       website: "https://spam.example",
-      turnstileToken: "",
     }).ok,
     true,
   );
