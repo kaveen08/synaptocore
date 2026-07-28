@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Session } from "@supabase/supabase-js";
+import { FunctionsHttpError, type Session } from "@supabase/supabase-js";
 import { toast } from "sonner";
 
 import { getSupabase } from "@/lib/supabase";
@@ -263,6 +263,46 @@ export function useAdminData() {
     toast.success(data ? "E-Mail-Versand wird erneut versucht." : "Keine fehlgeschlagene E-Mail gefunden.");
   }
 
+  async function sendReply(lead: Lead, subject: string, body: string) {
+    setMutationBusy(true);
+    const { data, error } = await supabase.functions.invoke("send-admin-reply", {
+      body: { leadId: lead.id, subject, body },
+    });
+    setMutationBusy(false);
+
+    if (error || !data?.ok) {
+      let serverMessage: string | undefined;
+      if (error instanceof FunctionsHttpError) {
+        try {
+          const response = await error.context.json() as { message?: string };
+          serverMessage = response.message;
+        } catch {
+          // Keep the actionable fallback below when the gateway has no JSON body.
+        }
+      }
+      console.error(error ?? data);
+      toast.error(
+        serverMessage ??
+          data?.message ??
+          "Die E-Mail konnte nicht gesendet werden. Bitte verbinden Sie info@systemio.ch erneut.",
+      );
+      return false;
+    }
+
+    const values: LeadUpdate = {
+      replied_at: data.repliedAt,
+      unread: false,
+      ...(lead.folder_id === "inbox" ? { folder_id: "progress" } : {}),
+    };
+    setLeads((current) =>
+      current.map((item) =>
+        item.id === lead.id ? { ...item, ...values } as Lead : item
+      )
+    );
+    toast.success("E-Mail wurde von info@systemio.ch gesendet.");
+    return true;
+  }
+
   async function createAppointmentSlot(startsAt: string) {
     setMutationBusy(true);
     const { data, error } = await supabase
@@ -393,6 +433,7 @@ export function useAdminData() {
     renameFolder,
     deleteFolder,
     retryLeadMail,
+    sendReply,
     createAppointmentSlot,
     deleteAppointmentSlot,
     cancelAppointmentBooking,

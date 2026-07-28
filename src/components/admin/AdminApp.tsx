@@ -19,7 +19,7 @@ import { LeadsView } from "./leads/LeadsView";
 import { LeadDetail } from "./leads/LeadDetail";
 import { buildDraft } from "./lib/draft";
 import { packageShort } from "./lib/format";
-import type { Folder, Lead, LeadUpdate } from "./lib/types";
+import type { Folder, Lead } from "./lib/types";
 
 export default function AdminApp() {
   const data = useAdminData();
@@ -134,11 +134,9 @@ export default function AdminApp() {
     }, 450);
   }
 
-  async function saveReply() {
+  async function sendReply() {
     if (!selectedLead || !replyBody.trim()) return;
-    const values: LeadUpdate = { replied_at: new Date().toISOString(), unread: false };
-    if (selectedLead.folder_id === "inbox") values.folder_id = "progress";
-    if (await data.updateLead(selectedLead.id, values, "Antwort als erledigt markiert.")) {
+    if (await data.sendReply(selectedLead, replySubject, replyBody)) {
       setReplyOpen(false);
       setMobileLeadOpen(false);
     }
@@ -291,7 +289,7 @@ export default function AdminApp() {
         onSubjectChange={setReplySubject}
         onBodyChange={setReplyBody}
         onGenerate={generateDraft}
-        onSave={() => void saveReply()}
+        onSend={() => void sendReply()}
       />
 
       <DeleteLeadDialog

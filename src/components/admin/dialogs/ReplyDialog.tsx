@@ -19,7 +19,7 @@ export function ReplyDialog({
   onSubjectChange,
   onBodyChange,
   onGenerate,
-  onSave,
+  onSend,
 }: {
   open: boolean;
   lead: Lead | null;
@@ -31,7 +31,7 @@ export function ReplyDialog({
   onSubjectChange: (value: string) => void;
   onBodyChange: (value: string) => void;
   onGenerate: () => void;
-  onSave: () => void;
+  onSend: () => void;
 }) {
   const mailto = lead
     ? `mailto:${encodeURIComponent(lead.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
@@ -41,9 +41,9 @@ export function ReplyDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[92svh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Antwort vorbereiten</DialogTitle>
+          <DialogTitle>E-Mail senden</DialogTitle>
           <DialogDescription>
-            An {lead?.name} · {lead?.email}
+            Von info@systemio.ch an {lead?.name} · {lead?.email}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-5">
@@ -72,9 +72,12 @@ export function ReplyDialog({
           <Button variant="outline" render={<a href={mailto} target="_blank" rel="noreferrer" />}>
             <Mail /> Im E-Mail-Programm öffnen
           </Button>
-          <Button onClick={onSave} disabled={!body.trim() || busy}>
+          <Button
+            onClick={onSend}
+            disabled={!subject.trim() || !body.trim() || busy}
+          >
             {busy ? <LoaderCircle className="animate-spin" /> : <Send />}
-            Als beantwortet markieren
+            {busy ? "E-Mail wird gesendet …" : "E-Mail senden"}
           </Button>
         </DialogFooter>
       </DialogContent>
