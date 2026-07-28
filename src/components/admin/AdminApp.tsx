@@ -38,6 +38,11 @@ export default function AdminApp() {
   const [replySubject, setReplySubject] = useState("");
   const [replyBody, setReplyBody] = useState("");
   const [aiDrafting, setAiDrafting] = useState(false);
+  const [replySending, setReplySending] = useState(false);
+  const [mailboxStatus, setMailboxStatus] = useState<"loading" | "connected" | "not_connected">("loading");
+  const [mailboxSetupOpen, setMailboxSetupOpen] = useState(false);
+  const [mailboxPassword, setMailboxPassword] = useState("");
+  const [mailboxConnecting, setMailboxConnecting] = useState(false);
 
   const activeFolder =
     view.name === "leads"
@@ -123,6 +128,14 @@ export default function AdminApp() {
     setReplySubject(`Re: Ihre Anfrage bei Systemio — ${packageShort(lead.selected_package)}`);
     setReplyBody("");
     setReplyOpen(true);
+    setMailboxStatus("loading");
+    setMailboxSetupOpen(false);
+    setMailboxPassword("");
+    void data.getMailboxStatus().then((connected) => {
+      const nextStatus = connected ? "connected" : "not_connected";
+      setMailboxStatus(nextStatus);
+      if (!connected) setMailboxSetupOpen(true);
+    });
   }
 
   function generateDraft() {
@@ -136,9 +149,24 @@ export default function AdminApp() {
 
   async function sendReply() {
     if (!selectedLead || !replyBody.trim()) return;
-    if (await data.sendReply(selectedLead, replySubject, replyBody)) {
+    setReplySending(true);
+    const sent = await data.sendReply(selectedLead, replySubject, replyBody);
+    setReplySending(false);
+    if (sent) {
       setReplyOpen(false);
       setMobileLeadOpen(false);
+    }
+  }
+
+  async function connectMailbox() {
+    if (!mailboxPassword) return;
+    setMailboxConnecting(true);
+    const connected = await data.connectMailbox(mailboxPassword);
+    setMailboxConnecting(false);
+    if (connected) {
+      setMailboxStatus("connected");
+      setMailboxSetupOpen(false);
+      setMailboxPassword("");
     }
   }
 
@@ -284,12 +312,19 @@ export default function AdminApp() {
         subject={replySubject}
         body={replyBody}
         aiDrafting={aiDrafting}
-        busy={data.mutationBusy}
+        sending={replySending}
+        mailboxStatus={mailboxStatus}
+        mailboxSetupOpen={mailboxSetupOpen}
+        mailboxPassword={mailboxPassword}
+        mailboxConnecting={mailboxConnecting}
         onOpenChange={setReplyOpen}
         onSubjectChange={setReplySubject}
         onBodyChange={setReplyBody}
         onGenerate={generateDraft}
         onSend={() => void sendReply()}
+        onMailboxSetupOpenChange={setMailboxSetupOpen}
+        onMailboxPasswordChange={setMailboxPassword}
+        onConnectMailbox={() => void connectMailbox()}
       />
 
       <DeleteLeadDialog

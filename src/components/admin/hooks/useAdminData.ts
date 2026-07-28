@@ -303,6 +303,51 @@ export function useAdminData() {
     return true;
   }
 
+  async function getMailboxStatus() {
+    const { data, error } = await supabase.functions.invoke(
+      "configure-mailbox",
+      { body: { action: "status" } },
+    );
+    if (error || !data?.ok) {
+      console.error(error ?? data);
+      return null;
+    }
+    return Boolean(data.connected);
+  }
+
+  async function connectMailbox(password: string) {
+    setMutationBusy(true);
+    const { data, error } = await supabase.functions.invoke(
+      "configure-mailbox",
+      { body: { action: "connect", password } },
+    );
+    setMutationBusy(false);
+
+    if (error || !data?.ok) {
+      let serverMessage: string | undefined;
+      if (error instanceof FunctionsHttpError) {
+        try {
+          const response = await error.context.json() as { message?: string };
+          serverMessage = response.message;
+        } catch {
+          // Keep the actionable fallback below when the gateway has no JSON body.
+        }
+      }
+      console.error(error ?? data);
+      toast.error(
+        serverMessage ??
+          data?.message ??
+          "Das Swizzonic-Postfach konnte nicht verbunden werden.",
+      );
+      return false;
+    }
+
+    toast.success(
+      "Swizzonic-Postfach verbunden. Ausstehende E-Mails werden automatisch versendet.",
+    );
+    return true;
+  }
+
   async function createAppointmentSlot(startsAt: string) {
     setMutationBusy(true);
     const { data, error } = await supabase
@@ -434,6 +479,8 @@ export function useAdminData() {
     deleteFolder,
     retryLeadMail,
     sendReply,
+    getMailboxStatus,
+    connectMailbox,
     createAppointmentSlot,
     deleteAppointmentSlot,
     cancelAppointmentBooking,

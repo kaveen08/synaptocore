@@ -1,12 +1,9 @@
 import { createClient } from "npm:@supabase/supabase-js@2.110.0";
 
-import {
-  getGmailAccessToken,
-  type GmailCredentials,
-  sendGmailMessage,
-} from "../_shared/gmail.ts";
+import { loadMailboxCredentials } from "../_shared/mailbox.ts";
 import { escapeHtml } from "../_shared/mail.ts";
-import { requireEnvironment } from "../_shared/supabase.ts";
+import { sendSmtpMessage, SmtpError } from "../_shared/smtp.ts";
+import { adminClient, requireEnvironment } from "../_shared/supabase.ts";
 
 const MAX_SUBJECT_LENGTH = 200;
 const MAX_BODY_LENGTH = 10_000;
@@ -44,14 +41,6 @@ function originAllowed(request: Request): boolean {
     .map((value) => value.trim())
     .filter(Boolean);
   return !origin || !allowed.length || allowed.includes(origin);
-}
-
-function gmailCredentials(): GmailCredentials {
-  return {
-    clientId: requireEnvironment("GOOGLE_CLIENT_ID"),
-    clientSecret: requireEnvironment("GOOGLE_CLIENT_SECRET"),
-    refreshToken: requireEnvironment("GOOGLE_REFRESH_TOKEN"),
-  };
 }
 
 function userClient(request: Request) {
@@ -133,10 +122,11 @@ Deno.serve(async (request) => {
       return json(request, { ok: false, code: "not_authorized" }, 403);
     }
 
-    const inbox = Deno.env.get("GMAIL_ACCOUNT")?.trim() ||
-      "info@systemio.ch";
-    const accessToken = await getGmailAccessToken(gmailCredentials());
-    const sent = await sendGmailMessage(accessToken, {
+    const inbox = "info@systemio.ch";
+    const credentials = await loadMailboxCredentials(adminClient());
+    const messageId =
+      `<admin-reply-${lead.id}-${crypto.randomUUID()}@systemio.local>`;
+    await sendSmtpMessage(credentials, {
       to: lead.email,
       replyTo: inbox,
       subject: payload.subject,
@@ -146,7 +136,7 @@ Deno.serve(async (request) => {
       }</div>`,
       fromEmail: inbox,
       fromName: "Systemio",
-      messageId: `<admin-reply-${lead.id}-${crypto.randomUUID()}@systemio.local>`,
+      messageId,
     });
 
     const repliedAt = new Date().toISOString();
@@ -162,23 +152,31 @@ Deno.serve(async (request) => {
 
     return json(request, {
       ok: true,
-      messageId: sent.id,
+      messageId,
       repliedAt,
     });
   } catch (error) {
     console.error("send-admin-reply failed", error);
     const message = safeError(error);
-    const gmailAuthFailed = message.startsWith("Gmail OAuth failed:");
+    const mailboxMissing = message === "Swizzonic mailbox is not connected.";
+    const mailboxAuthFailed = error instanceof SmtpError &&
+      error.responseCode === 535;
     return json(
       request,
       {
         ok: false,
-        code: gmailAuthFailed ? "gmail_auth_failed" : "send_failed",
-        message: gmailAuthFailed
-          ? "Das Postfach info@systemio.ch muss erneut mit Google verbunden werden."
+        code: mailboxMissing
+          ? "mailbox_not_connected"
+          : mailboxAuthFailed
+          ? "mailbox_auth_failed"
+          : "send_failed",
+        message: mailboxMissing
+          ? "Bitte verbinden Sie zuerst das Swizzonic-Postfach info@systemio.ch."
+          : mailboxAuthFailed
+          ? "Swizzonic hat die Anmeldung abgelehnt. Bitte verbinden Sie das Postfach erneut."
           : "Die E-Mail konnte nicht gesendet werden.",
       },
-      gmailAuthFailed ? 503 : 500,
+      mailboxMissing || mailboxAuthFailed ? 503 : 500,
     );
   }
 });

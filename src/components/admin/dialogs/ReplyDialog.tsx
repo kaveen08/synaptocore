@@ -1,4 +1,4 @@
-import { LoaderCircle, Mail, Send, Sparkles } from "lucide-react";
+import { BadgeCheck, LoaderCircle, LockKeyhole, Mail, PlugZap, Send, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -14,24 +14,38 @@ export function ReplyDialog({
   subject,
   body,
   aiDrafting,
-  busy,
+  sending,
+  mailboxStatus,
+  mailboxSetupOpen,
+  mailboxPassword,
+  mailboxConnecting,
   onOpenChange,
   onSubjectChange,
   onBodyChange,
   onGenerate,
   onSend,
+  onMailboxSetupOpenChange,
+  onMailboxPasswordChange,
+  onConnectMailbox,
 }: {
   open: boolean;
   lead: Lead | null;
   subject: string;
   body: string;
   aiDrafting: boolean;
-  busy: boolean;
+  sending: boolean;
+  mailboxStatus: "loading" | "connected" | "not_connected";
+  mailboxSetupOpen: boolean;
+  mailboxPassword: string;
+  mailboxConnecting: boolean;
   onOpenChange: (open: boolean) => void;
   onSubjectChange: (value: string) => void;
   onBodyChange: (value: string) => void;
   onGenerate: () => void;
   onSend: () => void;
+  onMailboxSetupOpenChange: (open: boolean) => void;
+  onMailboxPasswordChange: (value: string) => void;
+  onConnectMailbox: () => void;
 }) {
   const mailto = lead
     ? `mailto:${encodeURIComponent(lead.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
@@ -47,6 +61,68 @@ export function ReplyDialog({
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-5">
+          <div className="rounded-lg border bg-muted/30">
+            <div className="flex items-center justify-between gap-4 px-3 py-2.5">
+              <div className="flex min-w-0 items-center gap-2.5">
+                {mailboxStatus === "connected" ? (
+                  <BadgeCheck className="size-4 shrink-0 text-emerald-600" />
+                ) : (
+                  <PlugZap className="size-4 shrink-0 text-muted-foreground" />
+                )}
+                <div className="min-w-0">
+                  <p className="text-sm font-medium">Swizzonic-Postfach</p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {mailboxStatus === "loading"
+                      ? "Verbindung wird geprüft …"
+                      : mailboxStatus === "connected"
+                        ? "info@systemio.ch ist verbunden"
+                        : "Noch nicht verbunden"}
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onMailboxSetupOpenChange(!mailboxSetupOpen)}
+                disabled={mailboxStatus === "loading" || mailboxConnecting || sending}
+              >
+                {mailboxStatus === "connected" ? "Neu verbinden" : "Verbinden"}
+              </Button>
+            </div>
+
+            {mailboxSetupOpen && (
+              <div className="grid gap-3 border-t px-3 py-3">
+                <p className="text-xs leading-5 text-muted-foreground">
+                  Geben Sie einmalig das Passwort des Swizzonic-Postfachs ein.
+                  Es wird verschlüsselt gespeichert und danach nicht mehr an den Browser zurückgegeben.
+                </p>
+                <div className="grid gap-2">
+                  <Label htmlFor="mailbox-password">Postfach-Passwort</Label>
+                  <div className="relative">
+                    <LockKeyhole className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      id="mailbox-password"
+                      type="password"
+                      autoComplete="current-password"
+                      value={mailboxPassword}
+                      onChange={(event) => onMailboxPasswordChange(event.target.value)}
+                      placeholder="Passwort von info@systemio.ch"
+                      className="pl-8"
+                    />
+                  </div>
+                </div>
+                <Button
+                  variant="secondary"
+                  onClick={onConnectMailbox}
+                  disabled={!mailboxPassword || mailboxConnecting || sending}
+                >
+                  {mailboxConnecting ? <LoaderCircle className="animate-spin" /> : <PlugZap />}
+                  {mailboxConnecting ? "Verbindung wird getestet …" : "Verbinden und testen"}
+                </Button>
+              </div>
+            )}
+          </div>
+
           <div className="grid gap-2">
             <Label htmlFor="reply-subject">Betreff</Label>
             <Input id="reply-subject" value={subject} onChange={(event) => onSubjectChange(event.target.value)} />
@@ -74,10 +150,16 @@ export function ReplyDialog({
           </Button>
           <Button
             onClick={onSend}
-            disabled={!subject.trim() || !body.trim() || busy}
+            disabled={
+              !subject.trim() ||
+              !body.trim() ||
+              sending ||
+              mailboxConnecting ||
+              mailboxStatus !== "connected"
+            }
           >
-            {busy ? <LoaderCircle className="animate-spin" /> : <Send />}
-            {busy ? "E-Mail wird gesendet …" : "E-Mail senden"}
+            {sending ? <LoaderCircle className="animate-spin" /> : <Send />}
+            {sending ? "E-Mail wird gesendet …" : "E-Mail senden"}
           </Button>
         </DialogFooter>
       </DialogContent>

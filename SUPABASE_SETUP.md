@@ -68,33 +68,29 @@ npm run build
 
 ## 5. Activate lead email notifications
 
-The notification code is versioned in `supabase/functions/submit-lead` and
-`supabase/functions/gmail-worker`. Production activation additionally requires
-Google OAuth credentials; never commit those values.
-
-### Gmail API
-
-1. In Google Cloud, enable the Gmail API and create an OAuth client for
-   `info@systemio.ch`.
-2. Request offline access with the narrow scopes
-   `https://www.googleapis.com/auth/gmail.send` and
-   `https://www.googleapis.com/auth/gmail.metadata`.
-3. Put the consent app in production and complete any Google verification
-   required for durable restricted-scope access. Do not rely on a seven-day
-   testing refresh token.
-4. Generate one refresh token for `info@systemio.ch`.
+The notification code is versioned in `supabase/functions/submit-lead`,
+`supabase/functions/gmail-worker`, `supabase/functions/configure-mailbox`, and
+`supabase/functions/send-admin-reply`. The legacy worker slug is retained for
+the existing cron schedule; delivery uses the Swizzonic SMTP mailbox, not
+Gmail.
 
 Create an ignored file such as `supabase/functions/.env.production` from
 `supabase/functions/.env.example`, replace every placeholder, then upload it:
 
 ```powershell
 npx supabase secrets set --env-file supabase/functions/.env.production
-npx supabase functions deploy submit-lead gmail-worker --use-api
+npx supabase functions deploy submit-lead gmail-worker configure-mailbox send-admin-reply --use-api
 ```
 
 `RATE_LIMIT_SECRET` and `AUTOMATION_SECRET` must be different random values of
-at least 32 bytes. `ALLOWED_ORIGINS` is a comma-separated list of production
+at least 32 bytes. `MAILBOX_CREDENTIALS_KEY` must be a base64-encoded random
+32-byte value. `ALLOWED_ORIGINS` is a comma-separated list of production
 origins. `ADMIN_URL` must be the absolute production `/admin/` URL.
+
+After deployment, open an inquiry in `/admin/`, choose **Verbinden** in the
+Swizzonic mailbox panel, and enter the password for `info@systemio.ch`. The
+server verifies the credentials against `smtp.mail-ch.ch:465` before encrypting
+and storing them. The browser never receives the stored password.
 
 ### Database and scheduled worker
 
@@ -150,6 +146,6 @@ select cron.schedule(
 ```
 
 Check worker runs in `cron.job_run_details` and Edge Function logs. A valid
-submission must create one lead plus exactly two `lead_mail_events`. Replying to
-the internal Gmail notification should mark the lead answered within two worker
-runs.
+submission must create one lead plus exactly two `lead_mail_events`. After the
+Swizzonic mailbox is connected, queued messages are delivered on the next
+worker run.
