@@ -217,6 +217,40 @@ export function customerConfirmation(
   };
 }
 
+export function passwordRecoveryNotice(
+  inbox: string,
+  recoveryUrl: string,
+): MailContent {
+  const link = escapeHtml(recoveryUrl);
+
+  return {
+    to: inbox,
+    replyTo: inbox,
+    subject: "Passwort für den Systemio-Adminbereich zurücksetzen",
+    text: [
+      "Passwort zurücksetzen",
+      "",
+      "Für den internen Bereich von Systemio wurde ein Passwort-Link angefordert.",
+      "Öffnen Sie diesen Link, um ein neues Passwort zu setzen:",
+      "",
+      recoveryUrl,
+      "",
+      "Der Link ist eine Stunde gültig und funktioniert nur einmal.",
+      "Wenn Sie das nicht angefordert haben, können Sie diese E-Mail ignorieren.",
+      "Ihr Passwort bleibt dann unverändert.",
+    ].join("\n"),
+    html: emailShell(`
+      <p style="margin:0 0 8px;color:#5b6577;font-size:13px">Interner Bereich</p>
+      <h1 style="margin:0 0 18px;font-size:25px;line-height:1.25">Passwort zurücksetzen</h1>
+      <p style="margin:0;font-size:16px;line-height:1.7">Für den internen Bereich von Systemio wurde ein Passwort-Link angefordert. Setzen Sie damit ein neues Passwort.</p>
+      <p style="margin:26px 0 0"><a href="${link}" style="display:inline-block;background:#0d6d7d;color:#ffffff;text-decoration:none;padding:11px 16px">Neues Passwort setzen</a></p>
+      <p style="margin:20px 0 0;color:#5b6577;font-size:13px;line-height:1.7">Falls der Button nicht funktioniert, öffnen Sie diese Adresse:<br><a href="${link}" style="color:#0d6d7d;word-break:break-all">${link}</a></p>
+      <hr style="border:0;border-top:1px solid #dfe3ea;margin:26px 0">
+      <p style="margin:0;color:#5b6577;font-size:13px;line-height:1.7">Der Link ist eine Stunde gültig und funktioniert nur einmal. Wenn Sie das nicht angefordert haben, ignorieren Sie diese E-Mail — Ihr Passwort bleibt unverändert.</p>
+    `),
+  };
+}
+
 export function retryDelayMinutes(attempt: number): number | null {
   const delays = [1, 5, 15, 60, 360];
   return delays[attempt - 1] ?? null;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FunctionsHttpError } from "@supabase/supabase-js";
 import { ArrowRight, LoaderCircle, LockKeyhole } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -11,10 +12,12 @@ import { BrandMark } from "../layout/BrandMark";
 const supabase = getSupabase();
 
 export function LoginScreen() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("info@systemio.ch");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [resetting, setResetting] = useState(false);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
 
   async function signIn(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,6 +26,43 @@ export function LoginScreen() {
     const { error: signInError } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
     setLoading(false);
     if (signInError) setError("E-Mail oder Passwort ist ungültig.");
+  }
+
+  /**
+   * The link is generated and delivered server side so that it always arrives in
+   * the Swizzonic mailbox of the admin address, independent of the Supabase
+   * built-in mailer.
+   */
+  async function resetPassword() {
+    const normalizedEmail = email.trim();
+    if (!normalizedEmail) {
+      setError("Geben Sie zuerst Ihre E-Mail-Adresse ein.");
+      return;
+    }
+    setResetting(true);
+    setError("");
+    setNotice("");
+    const { data, error: resetError } = await supabase.functions.invoke("send-password-reset", {
+      body: { email: normalizedEmail },
+    });
+    setResetting(false);
+
+    if (resetError || !data?.ok) {
+      let serverMessage: string | undefined;
+      if (resetError instanceof FunctionsHttpError) {
+        try {
+          const response = (await resetError.context.json()) as { message?: string };
+          serverMessage = response.message;
+        } catch {
+          // Keep the fallback below when the gateway has no JSON body.
+        }
+      }
+      console.error(resetError ?? data);
+      setError(serverMessage ?? data?.message ?? "Der Passwort-Link konnte nicht angefordert werden.");
+      return;
+    }
+
+    setNotice("Falls ein Konto vorhanden ist, wurde ein Passwort-Link an diese Adresse gesendet.");
   }
 
   return (
@@ -86,10 +126,18 @@ export function LoginScreen() {
                 {error}
               </div>
             )}
+            {notice && (
+              <div className="rounded-lg border border-primary/20 bg-primary/5 px-3 py-2.5 text-sm text-primary" role="status">
+                {notice}
+              </div>
+            )}
             <Button type="submit" size="lg" className="mt-1 w-full" disabled={loading}>
               {loading ? <LoaderCircle className="animate-spin" /> : <ArrowRight />}
               {loading ? "Anmeldung läuft …" : "Anmelden"}
             </Button>
+            <button type="button" className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground disabled:cursor-wait" onClick={() => void resetPassword()} disabled={resetting}>
+              {resetting ? "Passwort-Link wird angefordert …" : "Passwort festlegen oder zurücksetzen"}
+            </button>
           </div>
         </form>
       </section>

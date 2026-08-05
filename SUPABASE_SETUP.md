@@ -38,14 +38,14 @@ Editor and run it once.
 ## 3. Create and authorize the admin user
 
 In Supabase Dashboard -> Authentication -> Users, create the email/password
-user that should access `/admin/`. Then run this in the SQL Editor, replacing
-the email:
+user `info@systemio.ch` that should access `/admin/`. Then run this in the SQL
+Editor:
 
 ```sql
 insert into systemio_private.admin_users (user_id)
 select id
 from auth.users
-where email = 'admin@example.com'
+where email = 'info@systemio.ch'
 on conflict (user_id) do nothing;
 ```
 
@@ -79,13 +79,15 @@ Create an ignored file such as `supabase/functions/.env.production` from
 
 ```powershell
 npx supabase secrets set --env-file supabase/functions/.env.production
-npx supabase functions deploy submit-lead gmail-worker configure-mailbox send-admin-reply --use-api
+npx supabase functions deploy submit-lead gmail-worker configure-mailbox send-admin-reply send-password-reset --use-api
 ```
 
 `RATE_LIMIT_SECRET` and `AUTOMATION_SECRET` must be different random values of
 at least 32 bytes. `MAILBOX_CREDENTIALS_KEY` must be a base64-encoded random
 32-byte value. `ALLOWED_ORIGINS` is a comma-separated list of production
-origins. `ADMIN_URL` must be the absolute production `/admin/` URL.
+origins. `ADMIN_URL` must be the absolute production `/admin/` URL — currently
+`https://systemio.vercel.app/admin/`. Password recovery links redirect to that
+exact URL, so change it only together with the redirect allowlist in step 6.
 
 After deployment, open an inquiry in `/admin/`, choose **Verbinden** in the
 Swizzonic mailbox panel, and enter the password for `info@systemio.ch`. The
@@ -149,3 +151,41 @@ Check worker runs in `cron.job_run_details` and Edge Function logs. A valid
 submission must create one lead plus exactly two `lead_mail_events`. After the
 Swizzonic mailbox is connected, queued messages are delivered on the next
 worker run.
+
+## 6. Enable admin password recovery
+
+The sign-in screen at `/admin/` offers **Passwort festlegen oder zurücksetzen**.
+The `send-password-reset` function looks the address up in the private admin
+allowlist, generates a one-time recovery link with the Auth admin API, and
+delivers it through the connected Swizzonic mailbox. The link therefore always
+arrives in the admin mailbox itself and never depends on the rate-limited
+Supabase built-in mailer.
+
+Because delivery uses the Swizzonic mailbox, the mailbox must be connected
+**before** you ever need the reset. Sign in to `/admin/`, open the mailbox panel
+and choose **Verbinden** once. Without that connection the function answers
+`mailbox_not_connected` and no link is sent — and the mailbox can only be
+connected from inside the signed-in workspace.
+
+Two things must line up, otherwise Supabase Auth silently rewrites the link
+target back to the site URL:
+
+1. Push `20260805103000_admin_password_reset.sql` (`npx supabase db push`). It
+   adds `public.admin_recovery_email`, the throttle table, and the grants.
+2. In Supabase Dashboard -> Authentication -> URL Configuration set
+
+   - **Site URL**: `https://systemio.vercel.app`
+   - **Redirect URLs**: add `https://systemio.vercel.app/admin/`
+
+   These mirror `auth.site_url` and `auth.additional_redirect_urls` in
+   `supabase/config.toml`, so `npx supabase config push` applies both. The
+   `systemio.ch` entries stay in the allowlist so the custom domain keeps working
+   once it points at the site.
+3. Keep the `ADMIN_URL` function secret on `https://systemio.vercel.app/admin/`
+   (`npx supabase secrets set ADMIN_URL=https://systemio.vercel.app/admin/`).
+
+To verify: open `https://systemio.vercel.app/admin/`, enter the admin address,
+choose the reset link, and open the mail in `info@systemio.ch`. The button leads
+to `.../auth/v1/verify?...&redirect_to=https://systemio.vercel.app/admin/`, which
+returns to the admin screen with the password form. Requests are throttled to
+three per address and five per IP address every 15 minutes.

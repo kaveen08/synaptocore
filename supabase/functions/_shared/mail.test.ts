@@ -8,6 +8,7 @@ import {
   escapeHtml,
   formatAppointment,
   ownerNotification,
+  passwordRecoveryNotice,
   retryDelayMinutes,
 } from "./mail.ts";
 
@@ -100,6 +101,19 @@ test("builds appointment confirmation copy and a multipart MIME message", () => 
 
 test("formats appointment times for the Zurich booking flow", () => {
   assert.match(formatAppointment(lead.appointment_start) ?? "", /2026/u);
+});
+
+test("sends the recovery link to the admin mailbox and keeps it clickable", () => {
+  const recoveryUrl =
+    "https://kcynzqtltrgtgwbhsjsc.supabase.co/auth/v1/verify?token=abc&type=recovery&redirect_to=https://systemio.vercel.app/admin/";
+  const notice = passwordRecoveryNotice("info@systemio.ch", recoveryUrl);
+
+  assert.equal(notice.to, "info@systemio.ch");
+  assert.match(notice.subject, /Passwort/u);
+  assert.ok(notice.text.includes(recoveryUrl));
+  assert.match(notice.html, /href="[^"]*systemio\.vercel\.app/u);
+  assert.doesNotMatch(notice.html, /href="[^"]*"[^>]*>[^<]*<script/u);
+  assert.ok(notice.html.includes("&amp;type=recovery"));
 });
 
 test("uses bounded retry delays and stops after six attempts", () => {

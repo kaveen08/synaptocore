@@ -5,7 +5,7 @@ import {
   SmtpError,
   testSmtpCredentials,
 } from "../_shared/smtp.ts";
-import { adminClient, requireEnvironment } from "../_shared/supabase.ts";
+import { adminClient, publishableKey, requireEnvironment } from "../_shared/supabase.ts";
 
 const MAILBOX_USERNAME = "info@systemio.ch";
 const SMTP_HOST = "smtp.mail-ch.ch";
@@ -52,7 +52,7 @@ function userClient(request: Request) {
 
   return createClient(
     requireEnvironment("SUPABASE_URL"),
-    requireEnvironment("SUPABASE_ANON_KEY"),
+    publishableKey(),
     {
       auth: { persistSession: false, autoRefreshToken: false },
       global: { headers: { Authorization: authorization } },

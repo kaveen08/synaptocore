@@ -3,7 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2.110.0";
 import { loadMailboxCredentials } from "../_shared/mailbox.ts";
 import { escapeHtml } from "../_shared/mail.ts";
 import { sendSmtpMessage, SmtpError } from "../_shared/smtp.ts";
-import { adminClient, requireEnvironment } from "../_shared/supabase.ts";
+import { adminClient, publishableKey, requireEnvironment } from "../_shared/supabase.ts";
 
 const MAX_SUBJECT_LENGTH = 200;
 const MAX_BODY_LENGTH = 10_000;
@@ -49,7 +49,7 @@ function userClient(request: Request) {
 
   return createClient(
     requireEnvironment("SUPABASE_URL"),
-    requireEnvironment("SUPABASE_ANON_KEY"),
+    publishableKey(),
     {
       auth: { persistSession: false, autoRefreshToken: false },
       global: { headers: { Authorization: authorization } },
