@@ -163,9 +163,16 @@ Supabase built-in mailer.
 
 Because delivery uses the Swizzonic mailbox, the mailbox must be connected
 **before** you ever need the reset. Sign in to `/admin/`, open the mailbox panel
-and choose **Verbinden** once. Without that connection the function answers
-`mailbox_not_connected` and no link is sent — and the mailbox can only be
-connected from inside the signed-in workspace.
+and choose **Verbinden** once. Until then the function falls back to the
+Supabase Auth mailer, which is capped at two emails per hour and only delivers
+reliably to project members — so treat the fallback as a safety net, not as the
+delivery path.
+
+To make that safety net dependable as well, add the same mailbox as custom SMTP
+in Supabase Dashboard -> Authentication -> SMTP Settings
+(`smtp.mail-ch.ch`, port `465`, user `info@systemio.ch`, sender
+`info@systemio.ch`) and raise **Rate Limits -> Emails sent per hour**. Auth then
+delivers through Swizzonic even when the workspace connection is missing.
 
 Two things must line up, otherwise Supabase Auth silently rewrites the link
 target back to the site URL:
