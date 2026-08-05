@@ -5,18 +5,25 @@ export function StatCard({
   value,
   hint,
   delta,
+  loading,
 }: {
   label: string;
   value: string;
   hint?: string;
   delta?: number;
+  /** Shows a placeholder instead of a misleading zero while data is in flight. */
+  loading?: boolean;
 }) {
   return (
     <div className="rounded-xl border border-border bg-card p-5">
       <p className="text-xs font-medium text-muted-foreground">{label}</p>
       <div className="mt-2 flex items-baseline gap-2">
-        <p className="text-3xl font-semibold tracking-[-0.02em] tabular-nums">{value}</p>
-        {delta !== undefined && delta !== 0 && (
+        {loading ? (
+          <span className="my-1 block h-7 w-12 animate-pulse rounded bg-muted" />
+        ) : (
+          <p className="text-3xl font-semibold tracking-[-0.02em] tabular-nums">{value}</p>
+        )}
+        {!loading && delta !== undefined && delta !== 0 && (
           <span
             className={cn(
               "rounded-full px-1.5 py-0.5 text-[11px] font-semibold tabular-nums",

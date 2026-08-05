@@ -13,6 +13,7 @@ export function DashboardView({
   folders,
   mailEvents,
   busy,
+  loading,
   onOpenFolder,
   onOpenLead,
   onRetryMail,
@@ -21,6 +22,8 @@ export function DashboardView({
   folders: Folder[];
   mailEvents: LeadMailEvent[];
   busy: boolean;
+  /** True while the first data load is still running. */
+  loading?: boolean;
   onOpenFolder: (folder: Folder) => void;
   onOpenLead: (lead: Lead) => void;
   onRetryMail: (leadId: string) => void;
@@ -36,13 +39,15 @@ export function DashboardView({
             value={String(stats.newLast7)}
             delta={stats.newDelta}
             hint="im Vergleich zur Vorwoche"
+            loading={loading}
           />
-          <StatCard label="Ungelesen" value={String(stats.unread)} hint="warten auf eine erste Sichtung" />
-          <StatCard label="Offen" value={String(stats.open)} hint="alle Anfragen ausserhalb von «Closed»" />
+          <StatCard label="Ungelesen" value={String(stats.unread)} hint="warten auf eine erste Sichtung" loading={loading} />
+          <StatCard label="Offen" value={String(stats.open)} hint="alle Anfragen ausserhalb von «Closed»" loading={loading} />
           <StatCard
             label="Antwortquote"
             value={stats.replyRate === null ? "–" : `${stats.replyRate}%`}
             hint="Anteil beantworteter Anfragen"
+            loading={loading}
           />
         </div>
 

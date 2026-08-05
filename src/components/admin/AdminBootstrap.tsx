@@ -7,7 +7,8 @@ import { LoadingScreen } from "./auth/LoadingScreen";
 import { LoginScreen } from "./auth/LoginScreen";
 import { UpdatePasswordScreen } from "./auth/UpdatePasswordScreen";
 
-const AdminApp = lazy(() => import("./AdminApp"));
+const loadAdminApp = () => import("./AdminApp");
+const AdminApp = lazy(loadAdminApp);
 const supabase = getSupabase();
 
 /**
@@ -20,6 +21,10 @@ export default function AdminBootstrap() {
 
   useEffect(() => {
     let mounted = true;
+
+    // Warm the workspace chunk while the sign-in form is still on screen, so
+    // signing in does not wait for a download it could have done earlier.
+    void loadAdminApp();
 
     void supabase.auth.getSession().then(({ data }) => {
       if (mounted) setSession(data.session);
@@ -44,7 +49,7 @@ export default function AdminBootstrap() {
 
   return (
     <Suspense fallback={<LoadingScreen />}>
-      <AdminApp />
+      <AdminApp session={session} />
     </Suspense>
   );
 }

@@ -27,24 +27,32 @@ function attachAppointments(leads: Lead[], slots: AppointmentSlot[], bookings: A
   });
 }
 
-export function useAdminData() {
-  const [authState, setAuthState] = useState<AuthState>("loading");
-  const [session, setSession] = useState<Session | null>();
+/**
+ * `initialSession` comes from the bootstrap, which has already resolved the
+ * session. Reusing it lets the first queries start on mount instead of after a
+ * second `getSession()` round trip, and lets the workspace render right away
+ * with skeletons rather than a blocking loading screen.
+ */
+export function useAdminData(initialSession?: Session | null) {
+  const [authState, setAuthState] = useState<AuthState>(initialSession ? "authorized" : "loading");
+  const [session, setSession] = useState<Session | null | undefined>(initialSession);
   const [folders, setFolders] = useState<Folder[]>([]);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [mailEvents, setMailEvents] = useState<LeadMailEvent[]>([]);
   const [appointmentSlots, setAppointmentSlots] = useState<AppointmentSlot[]>([]);
   const [appointmentBookings, setAppointmentBookings] = useState<AppointmentBooking[]>([]);
-  const [dataLoading, setDataLoading] = useState(false);
+  const [dataLoading, setDataLoading] = useState(Boolean(initialSession));
   const [refreshing, setRefreshing] = useState(false);
   const [mutationBusy, setMutationBusy] = useState(false);
 
   useEffect(() => {
     let mounted = true;
 
-    void supabase.auth.getSession().then(({ data }) => {
-      if (mounted) setSession(data.session);
-    });
+    if (initialSession === undefined) {
+      void supabase.auth.getSession().then(({ data }) => {
+        if (mounted) setSession(data.session);
+      });
+    }
 
     const {
       data: { subscription },

@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import type { Session } from "@supabase/supabase-js";
 import { Toaster } from "sonner";
 
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
@@ -21,8 +22,8 @@ import { buildDraft } from "./lib/draft";
 import { packageShort } from "./lib/format";
 import type { Folder, Lead } from "./lib/types";
 
-export default function AdminApp() {
-  const data = useAdminData();
+export default function AdminApp({ session }: { session?: Session | null } = {}) {
+  const data = useAdminData(session);
   const [view, setView] = useHashView();
 
   const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
@@ -246,6 +247,7 @@ export default function AdminApp() {
               folders={data.folders}
               mailEvents={data.mailEvents}
               busy={data.mutationBusy}
+              loading={data.dataLoading}
               onOpenFolder={(folder) => setView({ name: "leads", folderId: folder.id })}
               onOpenLead={handleOpenLeadFromDashboard}
               onRetryMail={(leadId) => void data.retryLeadMail(leadId)}
