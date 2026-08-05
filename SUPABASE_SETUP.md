@@ -164,8 +164,9 @@ Supabase built-in mailer.
 Because delivery uses the Swizzonic mailbox, the mailbox must be connected
 **before** you ever need the reset. Sign in to `/admin/`, open the mailbox panel
 and choose **Verbinden** once. Until then the function falls back to the
-Supabase Auth mailer, which is capped at two emails per hour and only delivers
-reliably to project members — so treat the fallback as a safety net, not as the
+Supabase Auth mailer, which the platform caps at two emails per hour — the cap
+cannot be raised without custom SMTP, and the built-in service only delivers
+reliably to project members. Treat the fallback as a safety net, never as the
 delivery path.
 
 To make that safety net dependable as well, add the same mailbox as custom SMTP

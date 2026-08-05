@@ -168,8 +168,10 @@ Deno.serve(async (request) => {
     const actionLink = link?.properties?.action_link;
     if (!actionLink) throw new Error("Auth returned no recovery link.");
 
+    let mailboxAvailable = false;
     try {
       const credentials = await loadMailboxCredentials(supabase);
+      mailboxAvailable = true;
       await sendSmtpMessage(credentials, {
         ...passwordRecoveryNotice(recipient, actionLink),
         fromEmail: INBOX,
@@ -184,7 +186,17 @@ Deno.serve(async (request) => {
       console.error("mailbox delivery failed, using Auth mailer", mailboxError);
       const { error: fallbackError } = await supabase.auth
         .resetPasswordForEmail(recipient, { redirectTo });
-      if (fallbackError) throw fallbackError;
+      if (fallbackError) {
+        // The Supabase mailer is capped at two messages per hour and only
+        // delivers reliably to project members, so name the real remedy.
+        return json(request, {
+          ok: false,
+          code: mailboxAvailable ? "send_failed" : "mailbox_not_connected",
+          message: mailboxAvailable
+            ? "Der Passwort-Link konnte nicht versendet werden."
+            : "Der Versand ist nicht möglich, solange das Postfach info@systemio.ch nicht verbunden ist. Verbinden Sie es im Adminbereich oder hinterlegen Sie es als SMTP-Server in Supabase.",
+        }, 503);
+      }
       return json(request, { ok: true, sent: true, via: "supabase" });
     }
   } catch (error) {
