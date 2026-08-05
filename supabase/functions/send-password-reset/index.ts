@@ -1,6 +1,6 @@
 import { passwordRecoveryNotice } from "../_shared/mail.ts";
 import { loadMailboxCredentials } from "../_shared/mailbox.ts";
-import { sendSmtpMessage, SmtpError } from "../_shared/smtp.ts";
+import { sendSmtpMessage } from "../_shared/smtp.ts";
 import { adminClient, requireEnvironment } from "../_shared/supabase.ts";
 
 const INBOX = "info@systemio.ch";
@@ -156,49 +156,47 @@ Deno.serve(async (request) => {
       return json(request, { ok: true, sent: false });
     }
 
+    const redirectTo = adminUrl();
     const { data: link, error: linkError } = await supabase.auth.admin
       .generateLink({
         type: "recovery",
         email: recipient,
-        options: { redirectTo: adminUrl() },
+        options: { redirectTo },
       });
     if (linkError) throw linkError;
 
     const actionLink = link?.properties?.action_link;
     if (!actionLink) throw new Error("Auth returned no recovery link.");
 
-    const credentials = await loadMailboxCredentials(supabase);
-    await sendSmtpMessage(credentials, {
-      ...passwordRecoveryNotice(recipient, actionLink),
-      fromEmail: INBOX,
-      fromName: "Systemio",
-      messageId: `<password-reset-${crypto.randomUUID()}@systemio.local>`,
-    });
-
-    return json(request, { ok: true, sent: true });
+    try {
+      const credentials = await loadMailboxCredentials(supabase);
+      await sendSmtpMessage(credentials, {
+        ...passwordRecoveryNotice(recipient, actionLink),
+        fromEmail: INBOX,
+        fromName: "Systemio",
+        messageId: `<password-reset-${crypto.randomUUID()}@systemio.local>`,
+      });
+      return json(request, { ok: true, sent: true, via: "mailbox" });
+    } catch (mailboxError) {
+      // Being locked out is exactly the moment when nobody can sign in to
+      // connect or repair the mailbox, so fall back to the Supabase mailer
+      // rather than leaving the account without a way back in.
+      console.error("mailbox delivery failed, using Auth mailer", mailboxError);
+      const { error: fallbackError } = await supabase.auth
+        .resetPasswordForEmail(recipient, { redirectTo });
+      if (fallbackError) throw fallbackError;
+      return json(request, { ok: true, sent: true, via: "supabase" });
+    }
   } catch (error) {
     console.error("send-password-reset failed", error);
-    const message = (error instanceof Error ? error.message : String(error))
-      .slice(0, 500);
-    const mailboxMissing = message === "Swizzonic mailbox is not connected.";
-    const mailboxAuthFailed = error instanceof SmtpError &&
-      error.responseCode === 535;
     return json(
       request,
       {
         ok: false,
-        code: mailboxMissing
-          ? "mailbox_not_connected"
-          : mailboxAuthFailed
-          ? "mailbox_auth_failed"
-          : "send_failed",
-        message: mailboxMissing
-          ? "Das Postfach info@systemio.ch ist nicht verbunden. Der Link kann erst danach versendet werden."
-          : mailboxAuthFailed
-          ? "Swizzonic hat die Anmeldung abgelehnt. Bitte verbinden Sie das Postfach erneut."
-          : "Der Passwort-Link konnte nicht versendet werden.",
+        code: "send_failed",
+        message: "Der Passwort-Link konnte nicht versendet werden.",
       },
-      mailboxMissing || mailboxAuthFailed ? 503 : 500,
+      500,
     );
   }
 });

@@ -62,7 +62,11 @@ export function LoginScreen() {
       return;
     }
 
-    setNotice("Falls ein Konto vorhanden ist, wurde ein Passwort-Link an diese Adresse gesendet.");
+    setNotice(
+      data.via === "supabase"
+        ? "Falls ein Konto vorhanden ist, wurde ein Passwort-Link gesendet. Das Postfach ist nicht verbunden — prüfen Sie auch den Spam-Ordner."
+        : "Falls ein Konto vorhanden ist, wurde ein Passwort-Link an diese Adresse gesendet.",
+    );
   }
 
   return (
