@@ -12,7 +12,7 @@ import { BrandMark } from "../layout/BrandMark";
 const supabase = getSupabase();
 
 export function LoginScreen() {
-  const [email, setEmail] = useState("info@systemio.ch");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [resetting, setResetting] = useState(false);

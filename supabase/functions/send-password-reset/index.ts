@@ -187,6 +187,7 @@ Deno.serve(async (request) => {
       const { error: fallbackError } = await supabase.auth
         .resetPasswordForEmail(recipient, { redirectTo });
       if (fallbackError) {
+        console.error("auth mailer fallback failed", fallbackError);
         // The Supabase mailer is capped at two messages per hour and only
         // delivers reliably to project members, so name the real remedy.
         return json(request, {

@@ -192,6 +192,11 @@ target back to the site URL:
 3. Keep the `ADMIN_URL` function secret on `https://systemio.vercel.app/admin/`
    (`npx supabase secrets set ADMIN_URL=https://systemio.vercel.app/admin/`).
 
+Two admin logins exist: `info@systemio.ch` and `synaptocore@gmail.com`. Recovery
+for the Gmail address is delivered by the Supabase mailer today — that works but
+stays limited to two messages per hour, and Auth additionally refuses a second
+link for the same address within 60 seconds.
+
 To verify: open `https://systemio.vercel.app/admin/`, enter the admin address,
 choose the reset link, and open the mail in `info@systemio.ch`. The button leads
 to `.../auth/v1/verify?...&redirect_to=https://systemio.vercel.app/admin/`, which
